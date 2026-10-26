@@ -246,33 +246,39 @@
   .arrow { flex: none; color: var(--muted); transition: transform .15s ease, color .15s ease; }
   .link:hover .arrow { color: var(--link); transform: translateX(3px); }
 
-  /* ebooks */
-  .books { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  /* ebooks: compact rows with a small cover */
+  .books { display: grid; gap: 10px; }
   .book {
-    display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line);
-    border-radius: var(--radius); overflow: hidden; transition: border-color .15s ease, transform .15s ease;
+    display: flex; gap: 14px; padding: 12px; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); transition: border-color .15s ease, transform .15s ease;
   }
-  .book:hover { border-color: var(--hover-line); transform: translateY(-2px); }
-  .cover { aspect-ratio: 3 / 4; overflow: hidden; background: var(--card-hover); position: relative; }
+  .book:hover { border-color: var(--hover-line); transform: translateY(-1px); }
+  .cover {
+    flex: none; align-self: flex-start; width: 72px; aspect-ratio: 3 / 4; border-radius: 8px; overflow: hidden;
+    background: var(--card-hover); position: relative; box-shadow: 0 4px 12px -6px rgba(0,0,0,.35);
+  }
   .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* combo: the two covers fanned out */
+  .cover.duo { overflow: visible; background: none; box-shadow: none; }
+  .cover.duo img { position: absolute; width: 76%; height: 76%; border-radius: 6px; box-shadow: 0 4px 10px -4px rgba(0,0,0,.45); }
+  .cover.duo img:first-child { left: 0; top: 0; }
+  .cover.duo img:last-child { right: 0; bottom: 0; }
+  .book .body { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
   .tag {
-    align-self: flex-start; margin-bottom: 8px; font-size: 10px; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; padding: 4px 8px; border-radius: 6px; background: var(--btn); color: var(--on-btn);
+    font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 6px; background: var(--btn); color: var(--on-btn);
   }
-  .tag.free { background: var(--accent); color: var(--on-accent); }
-  .book .body { padding: 12px 13px 14px; display: flex; flex-direction: column; flex: 1; }
-  .book .t { font-size: 14px; }
-  .book .d { flex: 1; }
-  .book .go { margin-top: 10px; font-size: 12.5px; font-weight: 700; color: var(--link); }
-  .price { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; }
-  .price .row { display: flex; align-items: baseline; gap: 8px; }
-  .price b { font: 600 22px/1 "Fraunces", Georgia, serif; color: var(--heading); }
-  .price s { font-size: 13px; font-weight: 600; color: var(--muted); }
-  .price small {
-    align-self: flex-start; font-size: 10.5px; font-weight: 700; letter-spacing: .02em;
-    color: var(--on-accent); background: var(--accent);
-    padding: 3px 7px; border-radius: 6px; white-space: nowrap;
-  }
+  .tag.free, .tag.promo { background: var(--accent); color: var(--on-accent); }
+  .tag.promo { letter-spacing: .02em; text-transform: none; }
+  .book .t { font-size: 14.5px; }
+  .book .d { font-size: 12.5px; }
+  .book .d b { color: var(--heading); }
+  .book .foot { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 8px; }
+  .price { display: flex; align-items: baseline; gap: 6px; }
+  .price b { font: 600 20px/1 "Fraunces", Georgia, serif; color: var(--heading); }
+  .price s { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+  .book .go { font-size: 12.5px; font-weight: 700; color: var(--link); white-space: nowrap; }
   .note { margin-top: 10px; font-size: 11.5px; color: var(--muted); text-align: center; }
 
   /* guides */
@@ -518,20 +524,37 @@
       <a class="book" href="/ebook/sebelum-anda-labur.pdf" data-umami-event="Ebook percuma: download" target="_blank" rel="noopener">
         <div class="cover"><img src="/assets/cover-free.jpg" alt="Ebook Sebelum Anda Labur" loading="lazy"></div>
         <div class="body">
-          <span class="tag free" data-en="Free">Percuma</span>
+          <span class="tags"><span class="tag free" data-en="Free">Percuma</span></span>
           <span class="t">Sebelum Anda Labur</span>
           <span class="d" data-en="Unit trusts in brief and how to start the right way.">Unit trust secara ringkas &amp; cara mula dengan betul.</span>
-          <span class="go" data-en="Download PDF →">Muat turun PDF →</span>
+          <span class="foot"><span class="go" data-en="Download PDF →">Muat turun PDF →</span></span>
         </div>
       </a>
-      <a class="book" id="paidBook" data-umami-event="Ebook berbayar: buka" href="https://wa.me/60194024401?text=EBOOK%20-%20Saya%20berminat%20dengan%20ebook%20Unit%20Trust%20Dari%20Zero%20(RM29)" target="_blank" rel="noopener">
+      <a class="book paid" data-product="ut" data-umami-event="Ebook: Unit Trust Dari Zero" href="https://wa.me/60194024401?text=EBOOK%20-%20Saya%20berminat%20dengan%20ebook%20Unit%20Trust%20Dari%20Zero" target="_blank" rel="noopener">
         <div class="cover"><img src="/assets/cover-paid.jpg" alt="Ebook Unit Trust Dari Zero" loading="lazy"></div>
         <div class="body">
-          <span class="tag" data-en="Full ebook">Ebook penuh</span>
+          <span class="tags"><span class="tag" data-en="Full ebook">Ebook penuh</span><span class="tag promo" data-en="Promo until 30 Nov">Promo hingga 30 Nov</span></span>
           <span class="t">Unit Trust Dari Zero</span>
           <span class="d" data-en="From “what is this?” to reading a fund fact sheet like a pro.">Dari “apa benda ni” sampai boleh baca fund fact sheet.</span>
-          <span class="price"><span class="row"><b>RM29</b><s>RM39</s></span><small data-en="Promo until 30 Nov">Promo hingga 30 Nov</small></span>
-          <span class="go" data-en="Get it →">Dapatkan →</span>
+          <span class="foot"><span class="price"><b>RM29</b><s>RM39</s></span><span class="go" data-en="Get it →">Dapatkan →</span></span>
+        </div>
+      </a>
+      <a class="book paid" data-product="urus" data-umami-event="Ebook: Urus Duit Dari Zero" href="https://wa.me/60194024401?text=EBOOK%20-%20Saya%20berminat%20dengan%20ebook%20Urus%20Duit%20Dari%20Zero" target="_blank" rel="noopener">
+        <div class="cover"><img src="/assets/cover-urus-duit.jpg" alt="Ebook Urus Duit Dari Zero" loading="lazy"></div>
+        <div class="body">
+          <span class="tags"><span class="tag" data-en="Full ebook">Ebook penuh</span><span class="tag promo" data-en="Promo until 30 Nov">Promo hingga 30 Nov</span></span>
+          <span class="t">Urus Duit Dari Zero</span>
+          <span class="d" data-en="Take control of your money, get out of debt and start building your future.">Kawal duit, keluar dari hutang dan mula bina masa depan.</span>
+          <span class="foot"><span class="price"><b>RM29</b><s>RM39</s></span><span class="go" data-en="Get it →">Dapatkan →</span></span>
+        </div>
+      </a>
+      <a class="book paid combo" data-product="combo" data-umami-event="Ebook: Kombo 2 ebook" href="https://wa.me/60194024401?text=EBOOK%20-%20Saya%20berminat%20dengan%20ebook%20Urus%20Duit%20+%20Unit%20Trust%20Dari%20Zero" target="_blank" rel="noopener">
+        <div class="cover duo"><img src="/assets/cover-urus-duit.jpg" alt="" loading="lazy"><img src="/assets/cover-paid.jpg" alt="" loading="lazy"></div>
+        <div class="body">
+          <span class="tags"><span class="tag" data-en="2-ebook combo">Kombo 2 ebook</span><span class="tag promo" data-en="Promo until 30 Nov">Promo hingga 30 Nov</span></span>
+          <span class="t">Urus Duit + Unit Trust Dari Zero</span>
+          <span class="d" data-en="Both ebooks together, save <b class='save'>RM9</b>.">Dua-dua ebook sekali, jimat <b class="save">RM9</b>.</span>
+          <span class="foot"><span class="price"><b>RM49</b><s>RM59</s></span><span class="go" data-en="Get it →">Dapatkan →</span></span>
         </div>
       </a>
     </div>
@@ -707,7 +730,7 @@
   <div class="sheet">
     <button type="button" class="x" data-close aria-label="Close">&times;</button>
     <h3 id="buyTitle" data-en="Get the ebook">Dapatkan ebook</h3>
-    <p class="why"><b>Unit Trust Dari Zero</b> · <span class="buy-price"></span></p>
+    <p class="why"><b class="buy-name"></b> · <span class="buy-price"></span></p>
     <div class="sheet-btns" id="tngLinkBox" hidden>
       <a class="primary tng" id="tngLink" data-umami-event="Ebook: bayar TNG" target="_blank" rel="noopener"></a>
     </div>
@@ -746,21 +769,31 @@
       el.setAttribute('data-en', el.getAttribute('data-en').replace('{app}', inApp || 'social media'));
     });
 
-    // Ebook promo: RM29 until 30 Nov 2026 (Malaysia time), then the normal RM39; ?promoEnded=1 previews the after state
+    // Ebook prices: promo until 30 Nov 2026 (Malaysia time), then the normal price; ?promoEnded=1 previews the after state
     var promoOver = Date.now() >= Date.parse('2026-12-01T00:00:00+08:00') ||
       new URLSearchParams(location.search).get('promoEnded') === '1';
-    var book = document.getElementById('paidBook');
-    if (promoOver) {
-      var price = book.querySelector('.price');
-      price.innerHTML = '<span class="row"><b>RM39</b></span>';
-      book.href = book.href.replace('(RM29)', '(RM39)');
+    var PRODUCTS = {
+      ut: { name: 'Unit Trust Dari Zero', promo: 29, normal: 39 },
+      urus: { name: 'Urus Duit Dari Zero', promo: 29, normal: 39 },
+      combo: { name: 'Kombo Urus Duit Dari Zero + Unit Trust Dari Zero', promo: 49, normal: 59 }
+    };
+    function priceNow(key) { return promoOver ? PRODUCTS[key].normal : PRODUCTS[key].promo; }
+    function renderPrices() {
+      document.querySelectorAll('.book.paid').forEach(function (b) {
+        var key = b.dataset.product, p = PRODUCTS[key], now = priceNow(key);
+        b.querySelector('.price').innerHTML = '<b>RM' + now + '</b>' + (promoOver ? '' : '<s>RM' + p.normal + '</s>');
+        var promoTag = b.querySelector('.tag.promo');
+        if (promoTag) promoTag.hidden = promoOver;
+        b.href = 'https://wa.me/60194024401?text=' + encodeURIComponent('EBOOK - Saya berminat dengan ebook ' + p.name + ' (RM' + now + ')');
+      });
+      var save = document.querySelector('.book.combo .save');
+      if (save) save.textContent = 'RM' + (priceNow('ut') + priceNow('urus') - priceNow('combo'));
     }
 
-    // Ebook checkout: paste a TNG payment link here and/or add assets/tng-qr.png; until one exists the card keeps its WhatsApp link
-    var EBOOK_PRICE = promoOver ? 39 : 29;
+    // Ebook checkout: paste a TNG payment link here and/or add assets/tng-qr.png; until one exists the cards keep their WhatsApp links
     var TNG_PAY_LINK = 'https://payment.tngdigital.com.my/sc/bDLosGkZ2e';
     var TNG_QR = 'assets/tng-qr.png';
-    var qrReady = false;
+    var qrReady = false, buyKey = 'ut';
     var qrProbe = new Image();
     qrProbe.onload = function () {
       qrReady = true;
@@ -769,11 +802,14 @@
       document.getElementById('tngQrBox').hidden = false;
     };
     qrProbe.src = TNG_QR;
-    book.addEventListener('click', function (e) {
-      if (!TNG_PAY_LINK && !qrReady) return;
-      e.preventDefault();
-      renderBuy();
-      openCalc('buyEbook');
+    document.querySelectorAll('.book.paid').forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        if (!TNG_PAY_LINK && !qrReady) return;
+        e.preventDefault();
+        buyKey = b.dataset.product;
+        renderBuy();
+        openCalc('buyEbook');
+      });
     });
 
     var nodes = document.querySelectorAll('[data-en]');
@@ -799,14 +835,16 @@
         a.href = 'https://wa.me/60194024401?text=' + encodeURIComponent(waText);
       });
       renderCalcs();
+      renderPrices();
       renderBuy();
     }
 
     function renderBuy() {
-      var en = current === 'en', amt = 'RM' + EBOOK_PRICE;
+      var en = current === 'en', p = PRODUCTS[buyKey], amt = 'RM' + priceNow(buyKey);
       document.querySelectorAll('#buyEbook .amt').forEach(function (b) { b.textContent = amt; });
+      document.querySelector('#buyEbook .buy-name').textContent = p.name;
       document.querySelector('#buyEbook .buy-price').textContent = promoOver ? amt
-        : amt + (en ? ' (promo until 30 Nov, normally RM39)' : ' (promo hingga 30 Nov, harga biasa RM39)');
+        : amt + (en ? ' (promo until 30 Nov, normally RM' + p.normal + ')' : ' (promo hingga 30 Nov, harga biasa RM' + p.normal + ')');
       var link = document.getElementById('tngLink');
       document.getElementById('tngLinkBox').hidden = !TNG_PAY_LINK;
       if (TNG_PAY_LINK) {
@@ -814,8 +852,8 @@
         link.textContent = (en ? 'Pay ' : 'Bayar ') + amt + (en ? ' with Touch ’n Go' : ' dengan Touch ’n Go');
       }
       var msg = en
-        ? 'EBOOK - I have paid ' + amt + ' via Touch ’n Go for the ebook Unit Trust Dari Zero, with my phone number in the payment details. Receipt attached.'
-        : 'EBOOK - Saya dah bayar ' + amt + ' melalui Touch ’n Go untuk ebook Unit Trust Dari Zero, dengan nombor telefon saya dalam butiran bayaran. Resit dilampirkan.';
+        ? 'EBOOK - I have paid ' + amt + ' via Touch ’n Go for ' + p.name + ', with my phone number in the payment details. Receipt attached.'
+        : 'EBOOK - Saya dah bayar ' + amt + ' melalui Touch ’n Go untuk ' + p.name + ', dengan nombor telefon saya dalam butiran bayaran. Resit dilampirkan.';
       document.getElementById('paidBtn').href = 'https://wa.me/60194024401?text=' + encodeURIComponent(msg);
     }
     // Only an explicit pick is saved, so a visitor who never chose still sees the language screen next time
@@ -861,7 +899,7 @@
       var a = e.target.closest && e.target.closest('a[href]');
       if (!a || !inApp || a.hasAttribute('data-skip-remind')) return;
       if (!/(^|\.)(whatsform\.com|wa\.me|whatsapp\.com|tngdigital\.com\.my)$/.test(a.hostname)) return;
-      if (a.id === 'paidBook' && (TNG_PAY_LINK || qrReady)) return;
+      if (a.classList.contains('paid') && (TNG_PAY_LINK || qrReady)) return;
       e.preventDefault();
       e.stopPropagation();
       document.getElementById('continueLink').href = a.href;
