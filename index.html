@@ -88,6 +88,9 @@
     opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease;
   }
   .sheet-bg.show { opacity: 1; visibility: visible; }
+  /* the in-app reminder also reappears over other sheets when a WhatsApp link is tapped */
+  #inapp { z-index: 70; }
+  #inapp.link-mode .gen, #inapp:not(.link-mode) .lnk { display: none; }
   .sheet {
     width: 100%; max-width: 420px; background: var(--white); color: var(--navy);
     border-radius: 22px; padding: 22px 20px 18px; transform: translateY(24px); transition: transform .3s ease;
@@ -316,6 +319,16 @@
   .result .msg.warn { color: var(--yellow); }
   .fine { margin-top: 10px; font-size: 11px; color: #7A8AA0; line-height: 1.5; }
   html.sheet-open body { overflow: hidden; }
+  /* ebook checkout */
+  .sheet-btns a.tng { background: #0055D4; }
+  .qr { margin: 16px 0 4px; padding: 16px; border-radius: 16px; background: #F3F5F8; text-align: center; }
+  .qr img { display: block; width: 220px; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; background: #FFFFFF; }
+  .qr figcaption { margin-top: 10px; font-size: 12px; line-height: 1.5; color: #4A5B73; }
+  .qr .save {
+    display: inline-block; margin-top: 10px; padding: 8px 14px; border-radius: 99px;
+    border: 1px solid #D5DBE3; font-size: 12.5px; font-weight: 700; color: var(--navy);
+  }
+  [hidden] { display: none !important; }
 
   .toast {
     position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
@@ -511,8 +524,10 @@
     <span data-en="Tap here">Tekan sini</span>
   </div>
   <div class="sheet">
-    <h3 id="inappTitle" data-en="Open in your phone’s browser">Buka dalam browser telefon anda</h3>
-    <p class="why" data-en="You’re viewing this inside the {app} app. Guides (PDF) and WhatsApp links work best in Safari or Chrome.">Anda sedang buka page ini dalam aplikasi {app}. Panduan (PDF) dan link WhatsApp lebih lancar dalam Safari atau Chrome.</p>
+    <h3 id="inappTitle" class="gen" data-en="Open in your phone’s browser">Buka dalam browser telefon anda</h3>
+    <h3 class="lnk" data-en="Open in your browser first">Buka dalam browser dulu</h3>
+    <p class="why gen" data-en="You’re viewing this inside the {app} app. Guides (PDF) and WhatsApp links work best in Safari or Chrome.">Anda sedang buka page ini dalam aplikasi {app}. Panduan (PDF) dan link WhatsApp lebih lancar dalam Safari atau Chrome.</p>
+    <p class="why lnk" data-en="This button opens WhatsApp. Inside the {app} app, WhatsApp links sometimes don’t open. Open this page in Safari or Chrome first, then tap the button again.">Butang ini akan buka WhatsApp. Dalam aplikasi {app}, link WhatsApp kadang-kadang tak terbuka. Buka page ini dalam Safari atau Chrome dulu, kemudian tekan semula butang tadi.</p>
     <ol class="steps">
       <li><span class="n">1</span><span data-en="Tap <span class='k'>⋯</span> at the top-right of your screen">Tekan <span class="k">⋯</span> di penjuru kanan atas skrin</span></li>
       <li><span class="n">2</span><span data-en="Choose <b>“Open in browser”</b>">Pilih <b>“Open in browser”</b> (Buka dalam pelayar)</span></li>
@@ -521,7 +536,8 @@
     <div class="sheet-btns">
       <a class="primary" id="openChrome" hidden data-en="Open in Chrome now">Buka terus dalam Chrome</a>
       <button type="button" class="primary" id="copyLink" data-en="Copy link instead">Atau salin link</button>
-      <button type="button" class="ghost" id="stayHere" data-en="Continue here">Teruskan di sini</button>
+      <button type="button" class="ghost gen" id="stayHere" data-en="Continue here">Teruskan di sini</button>
+      <a class="ghost lnk" id="continueLink" data-skip-remind target="_blank" rel="noopener" data-en="Continue to WhatsApp anyway">Teruskan juga ke WhatsApp</a>
     </div>
   </div>
 </div>
@@ -564,6 +580,32 @@
   </div>
 </div>
 
+<div class="sheet-bg calc" id="buyEbook" role="dialog" aria-modal="true" aria-labelledby="buyTitle">
+  <div class="sheet">
+    <button type="button" class="x" data-close aria-label="Close">&times;</button>
+    <h3 id="buyTitle" data-en="Get the ebook">Dapatkan ebook</h3>
+    <p class="why"><b>Unit Trust Dari Zero</b> · <span class="buy-price"></span></p>
+    <div class="sheet-btns" id="tngLinkBox" hidden>
+      <a class="primary tng" id="tngLink" target="_blank" rel="noopener"></a>
+    </div>
+    <figure class="qr" id="tngQrBox" hidden>
+      <img id="tngQr" alt="Touch 'n Go QR" width="220" height="220">
+      <figcaption data-en="Scan with Touch 'n Go eWallet or any banking app (DuitNow QR). On this phone? Save the QR, then in TNG tap Scan and pick it from your gallery.">Scan dengan Touch 'n Go eWallet atau mana-mana app bank (DuitNow QR). Buka di phone ini? Simpan QR, kemudian dalam TNG tekan Scan dan pilih dari galeri.</figcaption>
+      <a class="save" id="tngQrSave" download="tng-qr-khairul-khalis.png" data-en="Save QR">Simpan QR</a>
+    </figure>
+    <ol class="steps">
+      <li><span class="n">1</span><span data-en="Pay <b class='amt'></b> with Touch 'n Go">Bayar <b class="amt"></b> melalui Touch 'n Go</span></li>
+      <li><span class="n">2</span><span data-en="Take a screenshot of the receipt">Screenshot resit bayaran</span></li>
+      <li><span class="n">3</span><span data-en="Tap <b>“I've paid”</b> and send the receipt on WhatsApp">Tekan <b>“Saya dah bayar”</b> dan hantar resit melalui WhatsApp</span></li>
+      <li><span class="n">4</span><span data-en="The ebook (PDF) is sent to you on WhatsApp">Ebook (PDF) dihantar kepada anda melalui WhatsApp</span></li>
+    </ol>
+    <div class="sheet-btns">
+      <a class="primary" id="paidBtn" target="_blank" rel="noopener" data-en="I've paid, send receipt">Saya dah bayar, hantar resit</a>
+    </div>
+    <p class="fine" data-en="Make sure you pay the exact amount. The ebook is a separate educational product and is not linked to, and does not require, any investment.">Pastikan jumlah bayaran tepat. Ebook ialah produk pendidikan berasingan, tidak berkaitan dengan dan tidak mewajibkan apa-apa pelaburan.</p>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -583,12 +625,32 @@
     // Ebook promo: RM29 until 30 Nov 2026 (Malaysia time), then the normal RM39; ?promoEnded=1 previews the after state
     var promoOver = Date.now() >= Date.parse('2026-12-01T00:00:00+08:00') ||
       new URLSearchParams(location.search).get('promoEnded') === '1';
+    var book = document.getElementById('paidBook');
     if (promoOver) {
-      var book = document.getElementById('paidBook');
       var price = book.querySelector('.price');
       price.innerHTML = '<span class="row"><b>RM39</b></span>';
       book.href = book.href.replace('(RM29)', '(RM39)');
     }
+
+    // Ebook checkout: paste a TNG payment link here and/or add assets/tng-qr.png; until one exists the card keeps its WhatsApp link
+    var EBOOK_PRICE = promoOver ? 39 : 29;
+    var TNG_PAY_LINK = '';
+    var TNG_QR = 'assets/tng-qr.png';
+    var qrReady = false;
+    var qrProbe = new Image();
+    qrProbe.onload = function () {
+      qrReady = true;
+      document.getElementById('tngQr').src = TNG_QR;
+      document.getElementById('tngQrSave').href = TNG_QR;
+      document.getElementById('tngQrBox').hidden = false;
+    };
+    qrProbe.src = TNG_QR;
+    book.addEventListener('click', function (e) {
+      if (!TNG_PAY_LINK && !qrReady) return;
+      e.preventDefault();
+      renderBuy();
+      openCalc('buyEbook');
+    });
 
     var nodes = document.querySelectorAll('[data-en]');
     nodes.forEach(function (el) { el.setAttribute('data-ms', el.innerHTML); });
@@ -613,6 +675,24 @@
         a.href = 'https://wa.me/60194024401?text=' + encodeURIComponent(waText);
       });
       renderCalcs();
+      renderBuy();
+    }
+
+    function renderBuy() {
+      var en = current === 'en', amt = 'RM' + EBOOK_PRICE;
+      document.querySelectorAll('#buyEbook .amt').forEach(function (b) { b.textContent = amt; });
+      document.querySelector('#buyEbook .buy-price').textContent = promoOver ? amt
+        : amt + (en ? ' (promo until 30 Nov, normally RM39)' : ' (promo hingga 30 Nov, harga biasa RM39)');
+      var link = document.getElementById('tngLink');
+      document.getElementById('tngLinkBox').hidden = !TNG_PAY_LINK;
+      if (TNG_PAY_LINK) {
+        link.href = TNG_PAY_LINK;
+        link.textContent = (en ? 'Pay ' : 'Bayar ') + amt + (en ? ' with Touch ’n Go' : ' dengan Touch ’n Go');
+      }
+      var msg = en
+        ? 'EBOOK - I have paid ' + amt + ' via Touch ’n Go for the ebook Unit Trust Dari Zero. Receipt attached.'
+        : 'EBOOK - Saya dah bayar ' + amt + ' melalui Touch ’n Go untuk ebook Unit Trust Dari Zero. Resit dilampirkan.';
+      document.getElementById('paidBtn').href = 'https://wa.me/60194024401?text=' + encodeURIComponent(msg);
     }
     // Only an explicit pick is saved, so a visitor who never chose still sees the language screen next time
     function rememberLang(lang) {
@@ -642,20 +722,38 @@
       sheet.classList.remove('show');
       try { sessionStorage.setItem('inappSeen', '1'); } catch (e) {}
     }
+    function prepChromeButton() {
+      if (!/Android/i.test(ua)) return;
+      var chrome = document.getElementById('openChrome');
+      chrome.href = 'intent://' + location.host + location.pathname + location.search +
+        '#Intent;scheme=' + location.protocol.replace(':', '') + ';package=com.android.chrome;end';
+      chrome.hidden = false;
+      document.getElementById('copyLink').className = 'ghost';
+    }
     function maybeShowSheet() {
       var seen = null;
       try { seen = sessionStorage.getItem('inappSeen'); } catch (e) {}
       if (!inApp || seen) return;
-      if (/Android/i.test(ua)) {
-        var chrome = document.getElementById('openChrome');
-        chrome.href = 'intent://' + location.host + location.pathname + location.search +
-          '#Intent;scheme=' + location.protocol.replace(':', '') + ';package=com.android.chrome;end';
-        chrome.hidden = false;
-        document.getElementById('copyLink').className = 'ghost';
-      }
+      sheet.classList.remove('link-mode');
+      prepChromeButton();
       setTimeout(function () { sheet.classList.add('show'); }, 350);
     }
     document.getElementById('stayHere').addEventListener('click', closeSheet);
+    document.getElementById('continueLink').addEventListener('click', closeSheet);
+
+    // Inside TikTok/IG/LinkedIn, remind again before any WhatsApp or whatsform link (they often fail to open there)
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a || !inApp || a.hasAttribute('data-skip-remind')) return;
+      if (!/(^|\.)(whatsform\.com|wa\.me|whatsapp\.com)$/.test(a.hostname)) return;
+      if (a.id === 'paidBook' && (TNG_PAY_LINK || qrReady)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('continueLink').href = a.href;
+      sheet.classList.add('link-mode');
+      prepChromeButton();
+      sheet.classList.add('show');
+    }, true);
     sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
     document.getElementById('copyLink').addEventListener('click', function () {
       var url = location.origin + location.pathname;
