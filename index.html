@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Khairul Khalis · Unit Trust Advisor</title>
+<meta name="description" content="Khairul Khalis, perunding unit trust (UTC) berdaftar FIMM. Daftar akaun unit trust & PRS, panduan langkah demi langkah dan ebook.">
+<meta name="theme-color" content="#0A2342">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Khairul Khalis · Unit Trust Advisor">
+<meta property="og:description" content="Daftar akaun unit trust & PRS, panduan langkah demi langkah dan ebook.">
+<meta property="og:url" content="https://khairulkhalis.com/">
+<meta property="og:image" content="https://khairulkhalis.com/assets/og-maxwealth.jpg?v=1">
+<meta property="og:image:secure_url" content="https://khairulkhalis.com/assets/og-maxwealth.jpg?v=1">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="MaxWealth Consultancy, Inspiring Financial Excellence">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://khairulkhalis.com/assets/og-maxwealth.jpg?v=1">
+<link rel="canonical" href="https://khairulkhalis.com/">
+<link rel="icon" href="/assets/profile.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --navy-2: #0F2D54;
+    --navy-3: #16396A;
+    --yellow: #FFD60A;
+    --white: #FFFFFF;
+    --text: #E8EEF6;
+    --muted: #9FB1C9;
+    --line: rgba(255,255,255,.09);
+    --card: rgba(255,255,255,.04);
+    --card-hover: rgba(255,255,255,.075);
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--navy);
+    background-image:
+      radial-gradient(900px 500px at 50% -120px, rgba(255,214,10,.10), transparent 70%),
+      radial-gradient(700px 600px at 100% 100%, rgba(22,57,106,.9), transparent 70%);
+    background-attachment: fixed;
+    color: var(--text);
+    font: 15px/1.55 "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  /* top bar */
+  /* white brand bands carry the MaxWealth logo in its original colours */
+  /* white behind the logo, then an eased fade into the navy */
+  .bar {
+    padding-bottom: 64px; margin-bottom: -40px; position: relative; z-index: 1;
+    background: linear-gradient(180deg,
+      #FFFFFF 0%, #FFFFFF 52%, rgba(255,255,255,.86) 62%, rgba(255,255,255,.62) 72%,
+      rgba(255,255,255,.36) 82%, rgba(255,255,255,.14) 91%, rgba(255,255,255,0) 100%);
+  }
+  .bar-in {
+    max-width: 520px; margin: 0 auto; padding: 14px 16px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  /* logo is enlarged with negative margins so the white band keeps its original size */
+  .bar img { display: block; height: 60px; width: auto; margin: -7px 0 -3px; }
+  .bar .lang { border-color: #D5DBE3; background: #F3F5F8; }
+  .bar .lang button { color: #4A5B73; }
+  .bar .lang button[aria-pressed="true"] { background: var(--navy); color: var(--yellow); }
+  .endbar {
+    text-align: center; padding: 72px 16px calc(22px + env(safe-area-inset-bottom));
+    background: linear-gradient(0deg,
+      #FFFFFF 0%, #FFFFFF 52%, rgba(255,255,255,.86) 62%, rgba(255,255,255,.62) 72%,
+      rgba(255,255,255,.36) 82%, rgba(255,255,255,.14) 91%, rgba(255,255,255,0) 100%);
+  }
+  .endbar img { display: block; height: 56px; width: auto; margin: 0 auto; }
+  .endbar p { margin-top: 10px; font-size: 11px; color: #4A5B73; }
+
+
+  /* in-app browser reminder */
+  .sheet-bg {
+    position: fixed; inset: 0; z-index: 60; background: rgba(4,14,28,.72);
+    display: flex; align-items: flex-end; justify-content: center; padding: 16px;
+    opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease;
+  }
+  .sheet-bg.show { opacity: 1; visibility: visible; }
+  .sheet {
+    width: 100%; max-width: 420px; background: var(--white); color: var(--navy);
+    border-radius: 22px; padding: 22px 20px 18px; transform: translateY(24px); transition: transform .3s ease;
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+  .sheet-bg.show .sheet { transform: none; }
+  .sheet-bg .pin {
+    position: fixed; top: 10px; right: 14px; display: flex; flex-direction: column; align-items: center;
+    color: var(--yellow); font-weight: 700; font-size: 12px; text-align: center; pointer-events: none;
+    animation: bob 1.2s ease-in-out infinite;
+  }
+  .sheet-bg .pin svg { width: 34px; height: 34px; }
+  @keyframes bob { 50% { transform: translateY(-6px); } }
+  .sheet h3 { font: 600 20px/1.25 "Fraunces", Georgia, serif; color: var(--navy); }
+  .sheet .why { margin-top: 6px; font-size: 13.5px; color: #4A5B73; }
+  .steps { list-style: none; margin: 16px 0 4px; display: grid; gap: 10px; }
+  .steps li { display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 1.4; }
+  .steps .n {
+    flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: var(--yellow);
+    display: grid; place-items: center; font-weight: 700; font-size: 13px;
+  }
+  .steps .k {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 22px; padding: 0 6px;
+    border-radius: 6px; background: #EEF1F5; border: 1px solid #D5DBE3; font-weight: 700; font-size: 13px; vertical-align: middle;
+  }
+  .sheet-btns { display: grid; gap: 8px; margin-top: 16px; }
+  .sheet-btns button, .sheet-btns a {
+    display: block; width: 100%; text-align: center; font: 700 14.5px/1 "Plus Jakarta Sans", system-ui, sans-serif;
+    padding: 15px; border-radius: 14px; cursor: pointer; border: 0;
+  }
+  .sheet-btns .primary { background: var(--navy); color: var(--white); }
+  .sheet-btns .ghost { background: none; color: #4A5B73; padding: 10px; font-weight: 600; }
+  .sheet-btns [hidden] { display: none; }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 99px; padding: 3px; background: var(--card); }
+  .lang button {
+    border: 0; background: none; color: var(--muted); font: 600 12px/1 inherit; letter-spacing: .04em;
+    padding: 7px 12px; border-radius: 99px; cursor: pointer;
+  }
+  .lang button[aria-pressed="true"] { background: var(--yellow); color: var(--navy); }
+
+  /* hero */
+  .hero { text-align: center; padding: 10px 0 26px; }
+  .avatar {
+    width: 136px; height: 136px; border-radius: 50%; margin: 0 auto 18px; position: relative;
+    padding: 3px; background: linear-gradient(140deg, var(--yellow), rgba(255,214,10,.15) 60%);
+  }
+  .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; border: 3px solid var(--navy); }
+  .avatar .badge {
+    position: absolute; right: 4px; bottom: 8px; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--yellow); border: 3px solid var(--navy); display: grid; place-items: center;
+  }
+  h1 { font: 600 30px/1.15 "Fraunces", Georgia, serif; color: var(--white); letter-spacing: -.01em; }
+  .role { margin-top: 6px; color: var(--yellow); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  .sub { margin-top: 10px; color: var(--muted); font-size: 14px; }
+  .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+  .chip { font-size: 12px; color: var(--text); border: 1px solid var(--line); background: var(--card); padding: 6px 11px; border-radius: 99px; }
+  .chip b { color: var(--white); }
+
+  /* primary CTA */
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--yellow); color: var(--navy); font-weight: 700; font-size: 15.5px;
+    padding: 16px 20px; border-radius: 99px; margin: 4px 0 30px;
+    box-shadow: 0 10px 30px -10px rgba(255,214,10,.55);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 34px -10px rgba(255,214,10,.7); }
+  .cta svg { width: 20px; height: 20px; }
+
+  /* sections */
+  section { margin-bottom: 30px; }
+  .label {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  }
+  .label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .link {
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px; margin-bottom: 10px;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .link:hover { background: var(--card-hover); border-color: rgba(255,214,10,.35); transform: translateY(-1px); }
+  .ic {
+    flex: none; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+    background: rgba(255,214,10,.12); color: var(--yellow);
+  }
+  .ic svg { width: 21px; height: 21px; }
+  .txt { flex: 1; min-width: 0; }
+  .t { display: block; color: var(--white); font-weight: 600; font-size: 15px; line-height: 1.3; }
+  .d { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .arrow { flex: none; color: var(--muted); transition: transform .15s ease, color .15s ease; }
+  .link:hover .arrow { color: var(--yellow); transform: translateX(3px); }
+
+  /* adviser code */
+  .code {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin: -2px 0 10px; padding: 12px 16px; border-radius: 14px;
+    border: 1px dashed rgba(255,214,10,.4); background: rgba(255,214,10,.05); font-size: 13px; color: var(--text);
+  }
+  .code b { font-family: ui-monospace, Menlo, monospace; color: var(--yellow); font-size: 15px; letter-spacing: .1em; margin-left: 4px; }
+  .code button {
+    flex: none; border: 1px solid rgba(255,214,10,.5); background: none; color: var(--yellow);
+    font: 600 12px/1 inherit; padding: 8px 12px; border-radius: 99px; cursor: pointer;
+  }
+  .code button:hover { background: rgba(255,214,10,.12); }
+
+  /* ebooks */
+  .books { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .book {
+    display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); overflow: hidden; transition: border-color .15s ease, transform .15s ease;
+  }
+  .book:hover { border-color: rgba(255,214,10,.35); transform: translateY(-2px); }
+  .cover { aspect-ratio: 3 / 4; overflow: hidden; background: var(--navy-2); position: relative; }
+  .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tag {
+    align-self: flex-start; margin-bottom: 8px; font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; padding: 4px 8px; border-radius: 6px; background: var(--white); color: var(--navy);
+  }
+  .tag.free { background: var(--yellow); }
+  .book .body { padding: 12px 13px 14px; display: flex; flex-direction: column; flex: 1; }
+  .book .t { font-size: 14px; }
+  .book .d { flex: 1; }
+  .book .go { margin-top: 10px; font-size: 12.5px; font-weight: 700; color: var(--yellow); }
+  .price { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; }
+  .price .row { display: flex; align-items: baseline; gap: 8px; }
+  .price b { font: 600 22px/1 "Fraunces", Georgia, serif; color: var(--white); }
+  .price s { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .price small {
+    align-self: flex-start; font-size: 10.5px; font-weight: 700; letter-spacing: .02em;
+    color: var(--yellow); background: rgba(255,214,10,.12); border: 1px solid rgba(255,214,10,.35);
+    padding: 3px 7px; border-radius: 6px; white-space: nowrap;
+  }
+  .note { margin-top: 10px; font-size: 11.5px; color: var(--muted); text-align: center; }
+
+  /* guides */
+  .guide { display: flex; align-items: center; gap: 14px; padding: 12px 12px 12px 16px; margin-bottom: 10px;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .guide .pdf { display: flex; gap: 6px; flex: none; }
+  .guide .pdf a {
+    font-size: 12px; font-weight: 700; padding: 8px 11px; border-radius: 10px; border: 1px solid var(--line);
+    color: var(--text); transition: all .15s ease;
+  }
+  .guide .pdf a:hover { border-color: var(--yellow); color: var(--yellow); }
+  .guide .pdf a.on { background: var(--yellow); border-color: var(--yellow); color: var(--navy); }
+
+  /* footer */
+  footer { margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); text-align: center; }
+  .social { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; }
+  .social a {
+    width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+    border: 1px solid var(--line); background: var(--card); color: var(--text); transition: all .15s ease;
+  }
+  .social a:hover { color: var(--navy); background: var(--yellow); border-color: var(--yellow); }
+  .social svg { width: 18px; height: 18px; }
+  .reg { font-size: 12px; color: var(--text); line-height: 1.6; }
+  .reg a { color: var(--yellow); text-decoration: underline; text-underline-offset: 2px; }
+  .disc { margin-top: 12px; font-size: 11px; color: var(--muted); line-height: 1.6; text-align: left; }
+
+  /* language gate */
+  .gate {
+    position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column;
+    background: var(--navy); overflow-y: auto;
+    background-image: radial-gradient(700px 420px at 50% -80px, rgba(255,214,10,.12), transparent 70%);
+    transition: opacity .35s ease, visibility .35s ease;
+  }
+  .gate.hide { opacity: 0; visibility: hidden; }
+  html.gated body { overflow: hidden; }
+  html.skip-gate .gate { display: none; }
+  .gate .bar-in { justify-content: center; padding: 16px; }
+  .gate .bar img { height: 72px; margin: -9px 0 -3px; }
+  .gate-in {
+    flex: 1; width: 100%; max-width: 392px; margin: 0 auto; padding: 28px 16px 40px; text-align: center;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .gate .avatar { width: 112px; height: 112px; margin-bottom: 16px; }
+  .gate h2 { font: 600 24px/1.2 "Fraunces", Georgia, serif; color: var(--white); }
+  .gate p { margin-top: 6px; color: var(--muted); font-size: 14px; }
+  .gate-btns { display: grid; gap: 10px; margin-top: 26px; }
+  .gate-btns button {
+    display: flex; align-items: center; justify-content: space-between; width: 100%;
+    font: 600 15.5px/1 "Plus Jakarta Sans", system-ui, sans-serif; padding: 18px 20px; border-radius: 16px;
+    cursor: pointer; transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .gate-btns button small { font-size: 12px; font-weight: 600; letter-spacing: .1em; opacity: .7; }
+  .gate-btns .ms { background: var(--yellow); color: var(--navy); border: 1px solid var(--yellow); }
+  .gate-btns .en { background: var(--card); color: var(--white); border: 1px solid var(--line); }
+  .gate-btns button:hover { transform: translateY(-2px); }
+  .gate-btns .en:hover { border-color: rgba(255,214,10,.5); }
+
+  /* calculators */
+  button.link { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .sheet-bg.calc { align-items: center; }
+  .calc .sheet { position: relative; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow-y: auto; }
+  .calc .sheet h3 { padding-right: 36px; }
+  .calc .x {
+    position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; border: 0;
+    background: #EEF1F5; color: var(--navy); font-size: 22px; line-height: 1; cursor: pointer;
+  }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .fields label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; font-weight: 600; color: #4A5B73; }
+  .inp {
+    display: flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 12px;
+    border: 1px solid #D5DBE3; background: #F7F9FB; transition: border-color .15s ease;
+  }
+  .inp:focus-within { border-color: var(--navy); background: var(--white); }
+  .inp i { font-style: normal; font-size: 13px; color: #7A8AA0; }
+  .inp input {
+    flex: 1; min-width: 0; width: 100%; border: 0; background: none; outline: none; padding: 12px 0;
+    font: 600 16px/1 "Plus Jakarta Sans", system-ui, sans-serif; color: var(--navy);
+  }
+  .result { margin-top: 16px; padding: 16px; border-radius: 16px; background: var(--navy); color: var(--text); }
+  .result .big small { display: block; font-size: 12px; color: var(--muted); }
+  .result .big b { display: block; margin-top: 2px; font: 600 30px/1.1 "Fraunces", Georgia, serif; color: var(--yellow); }
+  .result .split { display: flex; height: 10px; border-radius: 99px; overflow: hidden; margin: 14px 0 10px; background: rgba(255,255,255,.12); }
+  .result .split span { display: block; height: 100%; transition: width .3s ease; }
+  .result .split .a { background: #FFFFFF; }
+  .result .split .b { background: var(--yellow); }
+  .result dl { display: grid; gap: 6px; font-size: 13px; }
+  .result dl div { display: flex; justify-content: space-between; gap: 12px; }
+  .result dt { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  .result dt i { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+  .result dd { font-weight: 700; color: var(--white); }
+  .result .msg { font-size: 13px; color: var(--text); margin-top: 10px; line-height: 1.5; }
+  .result .msg.warn { color: var(--yellow); }
+  .fine { margin-top: 10px; font-size: 11px; color: #7A8AA0; line-height: 1.5; }
+  html.sheet-open body { overflow: hidden; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
+    background: var(--white); color: var(--navy); font-weight: 600; font-size: 13px; padding: 10px 16px;
+    border-radius: 99px; transition: all .2s ease; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 340px) {
+    .guide { flex-wrap: wrap; }
+    .guide .pdf { width: 100%; padding-left: 56px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<script>
+  // Skip the language screen when the link already says ?lang= or the visitor picked a language before (remembered on this device)
+  (function () {
+    var chosen = new URLSearchParams(location.search).get('lang');
+    if (!chosen) { try { chosen = localStorage.getItem('langChosen'); } catch (e) {} }
+    document.documentElement.classList.add(chosen ? 'skip-gate' : 'gated');
+  })();
+</script>
+
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="bar"><div class="bar-in"><img src="/assets/maxwealth-logo.png" alt="MaxWealth Consultancy, Inspiring Financial Excellence" width="800" height="241"></div></div>
+  <div class="gate-in">
+    <div class="avatar"><img src="/assets/profile.jpg?v=2" alt="Khairul Khalis" width="112" height="112"></div>
+    <h2 id="gateTitle">Selamat datang · Welcome</h2>
+    <p>Pilih bahasa anda · Choose your language</p>
+    <div class="gate-btns">
+      <button type="button" class="ms" data-pick="ms">Bahasa Melayu <small>BM</small></button>
+      <button type="button" class="en" data-pick="en">English <small>EN</small></button>
+    </div>
+  </div>
+</div>
+
+<div class="bar">
+  <div class="bar-in">
+    <img src="/assets/maxwealth-logo.png" alt="MaxWealth Consultancy, Inspiring Financial Excellence" width="800" height="241">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="ms" aria-pressed="true">BM</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <header class="hero">
+    <div class="avatar">
+      <img src="/assets/profile.jpg?v=2" alt="Khairul Khalis" width="136" height="136">
+      <span class="badge" title="FIMM registered"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    </div>
+    <h1>Khairul Khalis</h1>
+    <p class="role">Unit Trust Executive Advisor</p>
+    <p class="sub" data-en="FIMM-registered unit trust consultant (UTC). I help you understand before you invest, matched to your goals and risk profile.">Perunding unit trust (UTC) berdaftar FIMM. Saya bantu anda faham dulu sebelum melabur, ikut matlamat dan profil risiko anda.</p>
+    <div class="chips">
+      <span class="chip" data-en="Since <b>2021</b>">Sejak <b>2021</b></span>
+      <span class="chip" data-en="<b>300+</b> clients"><b>300+</b> klien</span>
+      <span class="chip" data-en="<b>RM10 million+</b> AUM"><b>RM10 juta+</b> AUM</span>
+      <span class="chip">Manulife Investment</span>
+    </div>
+  </header>
+
+  <a class="cta" href="https://whatsform.com/ut8prskay" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.4 13.4 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.9L.1 24l6.3-1.6A11.8 11.8 0 0 0 24 12.2a11.7 11.7 0 0 0-3.6-8.6z"/></svg>
+    <span data-en="WhatsApp me / my PA">WhatsApp saya / PA saya</span>
+  </a>
+
+  <section>
+    <h2 class="label" data-en="Start investing">Mula melabur</h2>
+    <a class="link" href="https://client.asia.manulifeam.com/en_MY/NewUser?invitation_url=8e4d7c50-fed4-11f0-ac63-b9c251055f4f_rzk7z4m3gtsdl1wj7tla9m59yzqxze2cxwgtpcqwrmxqqkbqyejemhy83v7sriho.1769884932245" target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+      <span class="txt"><span class="t" data-en="Open a Unit Trust or PRS account">Daftar akaun Unit Trust atau PRS</span><span class="d" data-en="Online via Manulife Investment, about 10 minutes">Online melalui Manulife Investment, lebih kurang 10 minit</span></span>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+    <div class="code">
+      <span><span data-en="Adviser code:">Kod adviser:</span><b>F527</b></span>
+      <button type="button" id="copyCode" data-en="Copy">Salin</button>
+    </div>
+    <a class="link" href="https://whatsapp.com/channel/0029Vb6tZx5ADTOEl9TRTX2B" target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l15-6v14L3 13z"/><path d="M7 13v4a2 2 0 0 0 4 0v-3"/><path d="M21 9v4"/></svg></span>
+      <span class="txt"><span class="t" data-en="Unit Trust WhatsApp Channel">Saluran WhatsApp Unit Trust</span><span class="d" data-en="Market updates and tips, free to follow">Info pasaran &amp; tips, percuma untuk ikut</span></span>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+
+  <section>
+    <h2 class="label">Ebook</h2>
+    <div class="books">
+      <a class="book" href="/ebook/sebelum-anda-labur.pdf" target="_blank" rel="noopener">
+        <div class="cover"><img src="/assets/cover-free.jpg" alt="Ebook Sebelum Anda Labur" loading="lazy"></div>
+        <div class="body">
+          <span class="tag free" data-en="Free">Percuma</span>
+          <span class="t">Sebelum Anda Labur</span>
+          <span class="d" data-en="Unit trusts in brief and how to start the right way.">Unit trust secara ringkas &amp; cara mula dengan betul.</span>
+          <span class="go" data-en="Download PDF →">Muat turun PDF →</span>
+        </div>
+      </a>
+      <a class="book" id="paidBook" href="https://wa.me/60194024401?text=EBOOK%20-%20Saya%20berminat%20dengan%20ebook%20Unit%20Trust%20Dari%20Zero%20(RM29)" target="_blank" rel="noopener">
+        <div class="cover"><img src="/assets/cover-paid.jpg" alt="Ebook Unit Trust Dari Zero" loading="lazy"></div>
+        <div class="body">
+          <span class="tag" data-en="Full ebook">Ebook penuh</span>
+          <span class="t">Unit Trust Dari Zero</span>
+          <span class="d" data-en="From “what is this?” to reading a fund fact sheet like a pro.">Dari “apa benda ni” sampai boleh baca fund fact sheet.</span>
+          <span class="price"><span class="row"><b>RM29</b><s>RM39</s></span><small data-en="Promo until 30 Nov">Promo hingga 30 Nov</small></span>
+          <span class="go" data-en="Get it →">Dapatkan →</span>
+        </div>
+      </a>
+    </div>
+    <p class="note" data-en="The ebook is a separate educational product. Buying it does not require any investment.">Ebook ialah produk pendidikan berasingan. Membelinya tak mewajibkan apa-apa pelaburan.</p>
+  </section>
+
+  <section>
+    <h2 class="label" data-en="Step-by-step guides">Panduan langkah demi langkah</h2>
+
+    <div class="guide">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14l2 2 4-4"/></svg></span>
+      <span class="txt"><span class="t" data-en="Register a Unit Trust account">Daftar akaun Unit Trust</span><span class="d">PDF</span></span>
+      <span class="pdf">
+        <a href="/guides/panduan-daftar-akaun-unit-trust-bm.pdf" target="_blank" rel="noopener" data-l="ms">BM</a>
+        <a href="/guides/guide-register-unit-trust-account-en.pdf" target="_blank" rel="noopener" data-l="en">EN</a>
+      </span>
+    </div>
+
+    <div class="guide">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5-2.5 8-6 8-11V5l-8-3-8 3v6c0 5 3 8.5 8 11z"/><path d="M9 12l2 2 4-4"/></svg></span>
+      <span class="txt"><span class="t" data-en="Register a PRS account">Daftar akaun PRS</span><span class="d" data-en="Private Retirement Scheme">Skim Persaraan Swasta</span></span>
+      <span class="pdf">
+        <a href="/guides/panduan-daftar-akaun-prs-bm.pdf" target="_blank" rel="noopener" data-l="ms">BM</a>
+        <a href="/guides/guide-register-prs-account-en.pdf" target="_blank" rel="noopener" data-l="en">EN</a>
+      </span>
+    </div>
+
+    <div class="guide">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.8"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M15 14.2A5 5 0 0 1 21.5 19"/></svg></span>
+      <span class="txt"><span class="t" data-en="Open a joint Unit Trust account">Buka akaun Unit Trust bersama</span><span class="d" data-en="Joint account">Akaun joint</span></span>
+      <span class="pdf">
+        <a href="/guides/panduan-buka-akaun-unit-trust-bersama-bm.pdf" target="_blank" rel="noopener" data-l="ms">BM</a>
+        <a href="/guides/guide-open-joint-unit-trust-account-en.pdf" target="_blank" rel="noopener" data-l="en">EN</a>
+      </span>
+    </div>
+
+    <div class="guide">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4-4 4"/><path d="M3 7h18M7 21l-4-4 4-4"/><path d="M21 17H3"/></svg></span>
+      <span class="txt"><span class="t" data-en="How to switch funds">Cara tukar dana</span><span class="d">Fund switching</span></span>
+      <span class="pdf">
+        <a href="/guides/panduan-cara-tukar-dana-bm.pdf" target="_blank" rel="noopener" data-l="ms">BM</a>
+        <a href="/guides/guide-how-to-switch-funds-en.pdf" target="_blank" rel="noopener" data-l="en">EN</a>
+      </span>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="label" data-en="Calculators">Kalkulator</h2>
+    <button type="button" class="link" data-open="calcCompound">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M6 16v-3M10 16V10M14 16V7M18 16V4"/></svg></span>
+      <span class="txt"><span class="t" data-en="Compound interest calculator">Kalkulator faedah kompaun</span><span class="d" data-en="See how your savings could grow over the years">Lihat potensi simpanan anda membesar dari tahun ke tahun</span></span>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <button type="button" class="link" data-open="calcEpf">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/><path d="M8 6V4h8v2"/></svg></span>
+      <span class="txt"><span class="t" data-en="€PF investment eligibility">Kelayakan pelaburan KW$P</span><span class="d" data-en="How much of your Akaun Persaraan you can invest">Berapa dari Akaun Persaraan yang boleh dilabur</span></span>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </section>
+
+  <footer>
+    <div class="social">
+      <a href="https://www.tiktok.com/@kayspresso" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-1.8-2.5V9.7a5.7 5.7 0 1 0 4.9 5.7V9.1a7.3 7.3 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.2-1.6z"/></svg></a>
+      <a class="wa-ika" href="https://wa.me/60194024401" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.9L.1 24l6.3-1.6A11.8 11.8 0 0 0 24 12.2a11.7 11.7 0 0 0-3.6-8.6z"/></svg></a>
+      <a href="mailto:khairulkhalis@manulifeinvestment.com.my" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+    </div>
+    <p class="reg">
+      <span data-en="FIMM-registered unit trust consultant">Perunding unit trust berdaftar FIMM</span> · F01065736<br>
+      <span data-en="Representing Manulife Investment Management (M) Berhad through MaxWealth Consultancy">Mewakili Manulife Investment Management (M) Berhad melalui agensi MaxWealth Consultancy</span><br>
+      <a href="https://www.fimm.com.my" target="_blank" rel="noopener" data-en="Verify my registration at FIMM">Semak pendaftaran saya di FIMM</a>
+    </p>
+    <p class="disc" data-en="This page is for general information only and is not investment advice or an offer to buy or sell any investment product. Investors are advised to read and understand the Prospectus / Information Memorandum and Product Highlights Sheet (PHS) before investing. Unit trust investments carry risks, including the risk of capital loss. Unit prices and distributions, if any, may go down as well as up. Past performance is not indicative of future performance.">Laman ini untuk maklumat umum sahaja dan bukan nasihat pelaburan, tawaran atau ajakan untuk membeli atau menjual mana-mana produk pelaburan. Pelabur dinasihatkan membaca dan memahami Prospektus / Memorandum Maklumat dan Helaian Penonjolan Produk (PHS) sebelum melabur. Pelaburan unit trust melibatkan risiko termasuk risiko kehilangan modal. Harga unit dan pengagihan pendapatan, jika ada, boleh turun dan naik. Prestasi lalu bukan petunjuk prestasi masa depan.</p>
+  </footer>
+</main>
+
+<div class="endbar">
+  <img src="/assets/maxwealth-logo.png" alt="MaxWealth Consultancy" width="800" height="241" loading="lazy">
+  <p>© 2026 Khairul Khalis</p>
+</div>
+
+<div class="sheet-bg" id="inapp" role="dialog" aria-modal="true" aria-labelledby="inappTitle">
+  <div class="pin" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+    <span data-en="Tap here">Tekan sini</span>
+  </div>
+  <div class="sheet">
+    <h3 id="inappTitle" data-en="Open in your phone’s browser">Buka dalam browser telefon anda</h3>
+    <p class="why" data-en="You’re viewing this inside the {app} app. Guides (PDF) and WhatsApp links work best in Safari or Chrome.">Anda sedang buka page ini dalam aplikasi {app}. Panduan (PDF) dan link WhatsApp lebih lancar dalam Safari atau Chrome.</p>
+    <ol class="steps">
+      <li><span class="n">1</span><span data-en="Tap <span class='k'>⋯</span> at the top-right of your screen">Tekan <span class="k">⋯</span> di penjuru kanan atas skrin</span></li>
+      <li><span class="n">2</span><span data-en="Choose <b>“Open in browser”</b>">Pilih <b>“Open in browser”</b> (Buka dalam pelayar)</span></li>
+      <li><span class="n">3</span><span data-en="Done! The page opens in Safari or Chrome">Siap! Page akan dibuka dalam Safari atau Chrome</span></li>
+    </ol>
+    <div class="sheet-btns">
+      <a class="primary" id="openChrome" hidden data-en="Open in Chrome now">Buka terus dalam Chrome</a>
+      <button type="button" class="primary" id="copyLink" data-en="Copy link instead">Atau salin link</button>
+      <button type="button" class="ghost" id="stayHere" data-en="Continue here">Teruskan di sini</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-bg calc" id="calcCompound" role="dialog" aria-modal="true" aria-labelledby="ccTitle">
+  <div class="sheet">
+    <button type="button" class="x" data-close aria-label="Close">&times;</button>
+    <h3 id="ccTitle" data-en="Compound interest calculator">Kalkulator faedah kompaun</h3>
+    <p class="why" data-en="Type your numbers. Results update as you type.">Taip nombor anda. Keputusan dikira terus.</p>
+    <div class="fields">
+      <label><span data-en="Starting amount">Jumlah permulaan</span><span class="inp"><i>RM</i><input id="ccStart" type="number" inputmode="decimal" min="0" step="any" value="1000"></span></label>
+      <label><span data-en="Monthly top-up">Tambahan bulanan</span><span class="inp"><i>RM</i><input id="ccMonthly" type="number" inputmode="decimal" min="0" step="any" value="200"></span></label>
+      <label><span data-en="Return per year">Pulangan setahun</span><span class="inp"><input id="ccRate" type="number" inputmode="decimal" min="0" max="50" step="any" value="6"><i>%</i></span></label>
+      <label><span data-en="Years">Tempoh</span><span class="inp"><input id="ccYears" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"><i data-en="years">tahun</i></span></label>
+      <label><span data-en="One-time charge">Caj sekali (jualan)</span><span class="inp"><input id="ccSales" type="number" inputmode="decimal" min="0" max="10" step="any" value="5.5"><i>%</i></span></label>
+      <label><span data-en="Annual charge">Caj tahunan</span><span class="inp"><input id="ccFee" type="number" inputmode="decimal" min="0" max="5" step="any" value="1.5"><i data-en="% / yr">% / thn</i></span></label>
+    </div>
+    <div class="result" id="ccResult" aria-live="polite"></div>
+    <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate. The return per year is before the annual charge. The one-time charge is taken from every amount you put in (including monthly top-ups); the annual charge is deducted monthly from your investment value. Actual returns vary and are not guaranteed. See the fund’s PHS / prospectus for its actual charges.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap. Pulangan setahun ialah sebelum caj tahunan. Caj sekali ditolak daripada setiap wang yang anda masukkan (termasuk tambahan bulanan); caj tahunan ditolak setiap bulan daripada nilai pelaburan. Pulangan sebenar berubah-ubah dan tidak dijamin. Rujuk PHS / prospektus dana untuk caj sebenar.</p>
+    <div class="sheet-btns">
+      <a class="primary" href="https://whatsform.com/ut8prskay" target="_blank" rel="noopener" data-en="Plan this with me on WhatsApp">Rancang bersama saya di WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-bg calc" id="calcEpf" role="dialog" aria-modal="true" aria-labelledby="epfTitle">
+  <div class="sheet">
+    <button type="button" class="x" data-close aria-label="Close">&times;</button>
+    <h3 id="epfTitle" data-en="€PF investment eligibility">Kelayakan pelaburan KW$P</h3>
+    <p class="why" data-en="Under the €PF Members Investment Scheme you can invest 30% of the amount in your Akaun Persaraan above the Basic Savings for your age.">Melalui Skim Pelaburan Ahli KW$P, anda boleh labur 30% daripada jumlah dalam Akaun Persaraan yang melebihi Simpanan Asas mengikut umur anda.</p>
+    <div class="fields">
+      <label><span data-en="Your age">Umur anda</span><span class="inp"><input id="epfAge" type="number" inputmode="numeric" min="18" max="70" step="1" value="30"><i data-en="years">tahun</i></span></label>
+      <label><span data-en="Akaun Persaraan balance">Baki Akaun Persaraan</span><span class="inp"><i>RM</i><input id="epfBal" type="number" inputmode="decimal" min="0" step="any" value="50000"></span></label>
+    </div>
+    <div class="result" id="epfResult" aria-live="polite"></div>
+    <p class="fine" data-en="Based on the €PF Basic Savings table effective 1 January 2026. Minimum investment RM1,000; you must be below 55. Check your exact eligible amount in the KW$P app or i-Akaun.">Berdasarkan jadual Simpanan Asas KW$P berkuat kuasa 1 Januari 2026. Pelaburan minimum RM1,000; anda mesti berumur bawah 55 tahun. Semak jumlah layak sebenar dalam aplikasi KW$P atau i-Akaun.</p>
+    <div class="sheet-btns">
+      <a class="primary" href="https://whatsform.com/ut8prskay" target="_blank" rel="noopener" data-en="Invest your €PF with me">Labur KW$P anda bersama saya</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  (function () {
+    // Which in-app browser (if any) is showing this page; ?inapp=1 forces the reminder for testing
+    var ua = navigator.userAgent;
+    var apps = [['TikTok', /musical_ly|Bytedance|TikTok/i], ['Instagram', /Instagram/i], ['LinkedIn', /LinkedInApp/i],
+                ['Facebook', /FBAN|FBAV|FB_IAB/i], ['Threads', /Barcelona/i], ['X', /Twitter/i]];
+    var inApp = null;
+    apps.forEach(function (a) { if (!inApp && a[1].test(ua)) inApp = a[0]; });
+    if (!inApp && new URLSearchParams(location.search).get('inapp') === '1') inApp = 'TikTok';
+    document.querySelectorAll('#inapp [data-en]').forEach(function (el) {
+      el.innerHTML = el.innerHTML.replace('{app}', inApp || 'media sosial');
+      el.setAttribute('data-en', el.getAttribute('data-en').replace('{app}', inApp || 'social media'));
+    });
+
+    // Ebook promo: RM29 until 30 Nov 2026 (Malaysia time), then the normal RM39; ?promoEnded=1 previews the after state
+    var promoOver = Date.now() >= Date.parse('2026-12-01T00:00:00+08:00') ||
+      new URLSearchParams(location.search).get('promoEnded') === '1';
+    if (promoOver) {
+      var book = document.getElementById('paidBook');
+      var price = book.querySelector('.price');
+      price.innerHTML = '<span class="row"><b>RM39</b></span>';
+      book.href = book.href.replace('(RM29)', '(RM39)');
+    }
+
+    var nodes = document.querySelectorAll('[data-en]');
+    nodes.forEach(function (el) { el.setAttribute('data-ms', el.innerHTML); });
+    var toastEl = document.getElementById('toast');
+    var current = 'ms';
+
+    function setLang(lang) {
+      current = lang;
+      document.documentElement.lang = lang === 'en' ? 'en' : 'ms';
+      nodes.forEach(function (el) { el.innerHTML = el.getAttribute(lang === 'en' ? 'data-en' : 'data-ms'); });
+      document.querySelectorAll('.lang button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+      });
+      document.querySelectorAll('.guide .pdf a').forEach(function (a) {
+        a.classList.toggle('on', a.dataset.l === lang);
+      });
+      // Footer WhatsApp icon goes straight to Ika (Manager), with a starter message in the visitor's language
+      var waText = lang === 'en'
+        ? 'Hi, I found you through Khairul Khalis’s page. I’d like to ask about unit trust / PRS.'
+        : 'Hai, saya dapat dari page Khairul Khalis. Saya nak tanya tentang unit trust / PRS.';
+      document.querySelectorAll('.wa-ika').forEach(function (a) {
+        a.href = 'https://wa.me/60194024401?text=' + encodeURIComponent(waText);
+      });
+      renderCalcs();
+    }
+    // Only an explicit pick is saved, so a visitor who never chose still sees the language screen next time
+    function rememberLang(lang) {
+      try { localStorage.setItem('langChosen', lang); } catch (e) {}
+    }
+
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.dataset.lang); rememberLang(b.dataset.lang); });
+    });
+
+    document.getElementById('copyCode').addEventListener('click', function () {
+      var done = function () {
+        toastEl.textContent = current === 'en' ? 'Adviser code F527 copied' : 'Kod adviser F527 disalin';
+        toastEl.classList.add('show');
+        setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText('F527').then(done, done); else done();
+    });
+
+    var sheet = document.getElementById('inapp');
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(function () { toastEl.classList.remove('show'); }, 2600);
+    }
+    function closeSheet() {
+      sheet.classList.remove('show');
+      try { sessionStorage.setItem('inappSeen', '1'); } catch (e) {}
+    }
+    function maybeShowSheet() {
+      var seen = null;
+      try { seen = sessionStorage.getItem('inappSeen'); } catch (e) {}
+      if (!inApp || seen) return;
+      if (/Android/i.test(ua)) {
+        var chrome = document.getElementById('openChrome');
+        chrome.href = 'intent://' + location.host + location.pathname + location.search +
+          '#Intent;scheme=' + location.protocol.replace(':', '') + ';package=com.android.chrome;end';
+        chrome.hidden = false;
+        document.getElementById('copyLink').className = 'ghost';
+      }
+      setTimeout(function () { sheet.classList.add('show'); }, 350);
+    }
+    document.getElementById('stayHere').addEventListener('click', closeSheet);
+    sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+    document.getElementById('copyLink').addEventListener('click', function () {
+      var url = location.origin + location.pathname;
+      var done = function () {
+        closeSheet();
+        showToast(current === 'en' ? 'Link copied. Paste it in Safari or Chrome.' : 'Link disalin. Tampal dalam Safari atau Chrome.');
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { prompt('Copy:', url); closeSheet(); });
+      else { prompt('Copy:', url); closeSheet(); }
+    });
+
+    var gate = document.getElementById('gate');
+    document.querySelectorAll('[data-pick]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        setLang(b.dataset.pick);
+        rememberLang(b.dataset.pick);
+        gate.classList.add('hide');
+        document.documentElement.classList.remove('gated');
+        window.scrollTo(0, 0);
+        maybeShowSheet();
+      });
+    });
+    if (document.documentElement.classList.contains('skip-gate')) maybeShowSheet();
+
+    // Calculators open as sheets over the page; results are re-rendered on every keystroke and language switch
+    function openCalc(id) {
+      document.getElementById(id).classList.add('show');
+      document.documentElement.classList.add('sheet-open');
+    }
+    function closeCalc(el) {
+      el.classList.remove('show');
+      document.documentElement.classList.remove('sheet-open');
+    }
+    document.querySelectorAll('[data-open]').forEach(function (b) {
+      b.addEventListener('click', function () { openCalc(b.dataset.open); });
+    });
+    document.querySelectorAll('.sheet-bg.calc').forEach(function (bg) {
+      bg.addEventListener('click', function (e) { if (e.target === bg || e.target.hasAttribute('data-close')) closeCalc(bg); });
+      bg.querySelectorAll('input').forEach(function (i) { i.addEventListener('input', renderCalcs); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') document.querySelectorAll('.sheet-bg.calc.show').forEach(closeCalc);
+    });
+
+    function num(id) { var v = parseFloat(document.getElementById(id).value); return isFinite(v) && v > 0 ? v : 0; }
+    function rm(v) { return 'RM' + Math.round(v).toLocaleString('en-MY'); }
+    function row(color, label, value) {
+      return '<div><dt><i style="background:' + color + '"></i>' + label + '</dt><dd>' + value + '</dd></div>';
+    }
+
+    // €PF Basic Savings in Akaun Persaraan by age, effective 1 Jan 2026 (ages 18 to 55)
+    var BASIC = [900, 1100, 1500, 1900, 4000, 6200, 8500, 11000, 13700, 16600, 19600, 22900, 26300, 30000, 33900,
+      38100, 42400, 47000, 51900, 57000, 62400, 68100, 74000, 80200, 86700, 93600, 100000, 108000, 115000, 124000,
+      132000, 141000, 150000, 160000, 170000, 181000, 192000, 203000];
+
+    function renderCalcs() {
+      var en = current === 'en';
+
+      var start = num('ccStart'), monthly = num('ccMonthly'), rate = num('ccRate') / 100 / 12;
+      var years = Math.min(Math.round(num('ccYears')), 60), n = years * 12;
+      // One-time (sales) charge comes off every amount put in; the annual charge is taken monthly from the value
+      var sales = Math.min(num('ccSales'), 100) / 100, fee = Math.min(num('ccFee'), 100) / 100 / 12;
+      var total = start * (1 - sales), salesPaid = start * sales, feesPaid = 0;
+      for (var m = 0; m < n; m++) {
+        total *= 1 + rate;
+        feesPaid += total * fee;
+        total -= total * fee;
+        total += monthly * (1 - sales);
+        salesPaid += monthly * sales;
+      }
+      var paid = start + monthly * n, net = total - paid, charges = salesPaid + feesPaid;
+      var paidPct = total > paid ? paid / total * 100 : 100;
+      document.getElementById('ccResult').innerHTML =
+        '<div class="big"><small>' + (en ? 'Estimated value after ' + years + ' years, after charges' : 'Anggaran nilai selepas ' + years + ' tahun, selepas caj') +
+        '</small><b>' + rm(total) + '</b></div>' +
+        '<div class="split"><span class="a" style="width:' + paidPct + '%"></span><span class="b" style="width:' + (100 - paidPct) + '%"></span></div>' +
+        '<dl>' + row('#FFFFFF', en ? 'Your money in' : 'Wang anda masuk', rm(paid)) +
+        row('rgba(255,255,255,.35)', en ? 'Total charges' : 'Jumlah caj', '−' + rm(charges)) +
+        row('var(--yellow)', en ? 'Net growth' : 'Pertumbuhan bersih', (net < 0 ? '−' : '') + rm(Math.abs(net))) + '</dl>';
+
+      var age = Math.floor(num('epfAge')), bal = num('epfBal'), out;
+      if (age < 18) {
+        out = '<p class="msg warn">' + (en ? 'Enter an age of 18 or above.' : 'Masukkan umur 18 tahun ke atas.') + '</p>';
+      } else if (age >= 55) {
+        out = '<p class="msg warn">' + (en
+          ? 'At 55 and above, the Members Investment Scheme no longer applies. You can still invest part of your savings through the age 55/60 withdrawal (investment option). WhatsApp me to check.'
+          : 'Pada umur 55 tahun ke atas, Skim Pelaburan Ahli tidak lagi terpakai. Anda masih boleh melabur sebahagian simpanan melalui pengeluaran umur 55/60 (pilihan pelaburan). WhatsApp saya untuk semak.') + '</p>';
+      } else {
+        var basic = BASIC[age - 18], excess = Math.max(bal - basic, 0), can = excess * 0.3;
+        var ok = can >= 1000;
+        var msg = ok
+          ? (en ? 'You are eligible. The minimum investment is RM1,000.' : 'Anda layak. Pelaburan minimum ialah RM1,000.')
+          : excess <= 0
+            ? (en ? 'Your balance has not passed the Basic Savings for age ' + age + ' (' + rm(basic) + ') yet, so you can’t invest from €PF for now.'
+                  : 'Baki anda belum melebihi Simpanan Asas umur ' + age + ' (' + rm(basic) + '), jadi belum boleh melabur dari KW$P buat masa ini.')
+            : (en ? 'Below the RM1,000 minimum. Your balance needs to be at least ' + rm(basic + 1000 / 0.3) + ' to qualify.'
+                  : 'Kurang daripada minimum RM1,000. Baki anda perlu sekurang-kurangnya ' + rm(basic + 1000 / 0.3) + ' untuk layak.');
+        out = '<div class="big"><small>' + (en ? 'You can invest up to' : 'Anda boleh labur sehingga') + '</small><b>' + rm(ok ? can : 0) + '</b></div>' +
+          '<dl style="margin-top:12px">' + row('#FFFFFF', en ? 'Basic Savings (age ' + age + ')' : 'Simpanan Asas (umur ' + age + ')', rm(basic)) +
+          row('rgba(255,255,255,.35)', en ? 'Amount above Basic Savings' : 'Jumlah melebihi Simpanan Asas', rm(excess)) +
+          row('var(--yellow)', en ? '30% of that amount' : '30% daripada jumlah itu', rm(can)) + '</dl>' +
+          '<p class="msg' + (ok ? '' : ' warn') + '">' + msg + '</p>';
+      }
+      document.getElementById('epfResult').innerHTML = out;
+    }
+
+    var initial = new URLSearchParams(location.search).get('lang');
+    if (!initial) { try { initial = localStorage.getItem('langChosen'); } catch (e) {} }
+    setLang(initial === 'en' ? 'en' : 'ms');
+  })();
+</script>
+</body>
+</html>
