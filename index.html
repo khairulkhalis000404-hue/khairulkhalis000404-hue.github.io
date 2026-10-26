@@ -185,19 +185,6 @@
   .arrow { flex: none; color: var(--muted); transition: transform .15s ease, color .15s ease; }
   .link:hover .arrow { color: var(--yellow); transform: translateX(3px); }
 
-  /* adviser code */
-  .code {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    margin: -2px 0 10px; padding: 12px 16px; border-radius: 14px;
-    border: 1px dashed rgba(255,214,10,.4); background: rgba(255,214,10,.05); font-size: 13px; color: var(--text);
-  }
-  .code b { font-family: ui-monospace, Menlo, monospace; color: var(--yellow); font-size: 15px; letter-spacing: .1em; margin-left: 4px; }
-  .code button {
-    flex: none; border: 1px solid rgba(255,214,10,.5); background: none; color: var(--yellow);
-    font: 600 12px/1 inherit; padding: 8px 12px; border-radius: 99px; cursor: pointer;
-  }
-  .code button:hover { background: rgba(255,214,10,.12); }
-
   /* ebooks */
   .books { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .book {
@@ -397,7 +384,7 @@
 
   <a class="cta" href="https://whatsform.com/ut8prskay" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.4 13.4 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.9L.1 24l6.3-1.6A11.8 11.8 0 0 0 24 12.2a11.7 11.7 0 0 0-3.6-8.6z"/></svg>
-    <span data-en="WhatsApp me / my PA">WhatsApp saya / PA saya</span>
+    <span data-en="WhatsApp me">WhatsApp saya</span>
   </a>
 
   <section>
@@ -407,10 +394,6 @@
       <span class="txt"><span class="t" data-en="Open a Unit Trust or PRS account">Daftar akaun Unit Trust atau PRS</span><span class="d" data-en="Online via Manulife Investment, about 10 minutes">Online melalui Manulife Investment, lebih kurang 10 minit</span></span>
       <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
     </a>
-    <div class="code">
-      <span><span data-en="Adviser code:">Kod adviser:</span><b>F527</b></span>
-      <button type="button" id="copyCode" data-en="Copy">Salin</button>
-    </div>
     <a class="link" href="https://whatsapp.com/channel/0029Vb6tZx5ADTOEl9TRTX2B" target="_blank" rel="noopener">
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l15-6v14L3 13z"/><path d="M7 13v4a2 2 0 0 0 4 0v-3"/><path d="M21 9v4"/></svg></span>
       <span class="txt"><span class="t" data-en="Unit Trust WhatsApp Channel">Saluran WhatsApp Unit Trust</span><span class="d" data-en="Market updates and tips, free to follow">Info pasaran &amp; tips, percuma untuk ikut</span></span>
@@ -701,15 +684,6 @@
 
     document.querySelectorAll('.lang button').forEach(function (b) {
       b.addEventListener('click', function () { setLang(b.dataset.lang); rememberLang(b.dataset.lang); });
-    });
-
-    document.getElementById('copyCode').addEventListener('click', function () {
-      var done = function () {
-        toastEl.textContent = current === 'en' ? 'Adviser code F527 copied' : 'Kod adviser F527 disalin';
-        toastEl.classList.add('show');
-        setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
-      };
-      if (navigator.clipboard) navigator.clipboard.writeText('F527').then(done, done); else done();
     });
 
     var sheet = document.getElementById('inapp');
