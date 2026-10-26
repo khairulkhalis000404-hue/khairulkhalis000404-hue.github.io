@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Khairul Khalis · Unit Trust Advisor</title>
 <meta name="description" content="Khairul Khalis, perunding unit trust (UTC) berdaftar FIMM. Daftar akaun unit trust & PRS, panduan langkah demi langkah dan ebook.">
-<meta name="theme-color" content="#0A2342">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Khairul Khalis · Unit Trust Advisor">
 <meta property="og:description" content="Daftar akaun unit trust & PRS, panduan langkah demi langkah dan ebook.">
@@ -24,26 +26,72 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* Theme: white first, MaxWealth blue second, a little yellow; dark mode follows the phone's setting */
   :root {
-    --navy: #0A2342;
-    --navy-2: #0F2D54;
-    --navy-3: #16396A;
-    --yellow: #FFD60A;
-    --white: #FFFFFF;
-    --text: #E8EEF6;
-    --muted: #9FB1C9;
-    --line: rgba(255,255,255,.09);
-    --card: rgba(255,255,255,.04);
-    --card-hover: rgba(255,255,255,.075);
+    color-scheme: light dark;
+    --bg: #FFFFFF;
+    --glow: rgba(38,150,205,.10);
+    --card: #F5F8FC;
+    --card-hover: #EDF3FA;
+    --line: #E2E8F0;
+    --surface: #FFFFFF;
+    --text: #1A2E45;
+    --heading: #0E2A47;
+    --muted: #5A6B82;
+    --brand: #124674;
+    --brand-2: #2696CD;
+    --btn: #124674;
+    --on-btn: #FFFFFF;
+    --link: #124674;
+    --brand-soft: rgba(38,150,205,.12);
+    --hover-line: rgba(38,150,205,.45);
+    --accent: #FFD60A;
+    --on-accent: #0A2342;
+    --field: #F7F9FB;
+    --field-line: #D5DBE3;
+    --field-text: #10253D;
+    --overlay: rgba(10,25,45,.55);
+    --result-bg: #124674;
+    --result-text: #E8F1FA;
+    --result-muted: #B9CCE0;
+    --toast-bg: #10253D;
+    --toast-text: #FFFFFF;
+    --shadow: 0 10px 30px -12px rgba(18,70,116,.45);
     --radius: 18px;
+    /* kept for script-built result rows */
+    --yellow: var(--accent);
+    --white: #FFFFFF;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B1220;
+      --glow: rgba(38,150,205,.14);
+      --card: #121C2C;
+      --card-hover: #172437;
+      --line: rgba(255,255,255,.09);
+      --surface: #131D2D;
+      --text: #E6EDF6;
+      --heading: #FFFFFF;
+      --muted: #9AAAC0;
+      --btn: #1F7FB8;
+      --link: #5CB6E4;
+      --brand-soft: rgba(38,150,205,.16);
+      --hover-line: rgba(92,182,228,.45);
+      --field: #0F1828;
+      --field-line: rgba(255,255,255,.14);
+      --field-text: #E6EDF6;
+      --overlay: rgba(0,0,0,.62);
+      --result-bg: #0E2A47;
+      --toast-bg: #FFFFFF;
+      --toast-text: #0A2342;
+      --shadow: 0 10px 30px -12px rgba(0,0,0,.6);
+    }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body {
-    background: var(--navy);
-    background-image:
-      radial-gradient(900px 500px at 50% -120px, rgba(255,214,10,.10), transparent 70%),
-      radial-gradient(700px 600px at 100% 100%, rgba(22,57,106,.9), transparent 70%);
+    background: var(--bg);
+    background-image: radial-gradient(900px 500px at 50% -120px, var(--glow), transparent 70%);
     background-attachment: fixed;
     color: var(--text);
     font: 15px/1.55 "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
@@ -53,9 +101,7 @@
   a { color: inherit; text-decoration: none; }
   .wrap { max-width: 520px; margin: 0 auto; padding: 20px 16px 40px; }
 
-  /* top bar */
-  /* white brand bands carry the MaxWealth logo in its original colours */
-  /* white behind the logo, then an eased fade into the navy */
+  /* white brand bands carry the MaxWealth logo in its original colours; in dark mode they fade into the dark page */
   .bar {
     padding-bottom: 64px; margin-bottom: -40px; position: relative; z-index: 1;
     background: linear-gradient(180deg,
@@ -70,7 +116,7 @@
   .bar img { display: block; height: 60px; width: auto; margin: -7px 0 -3px; }
   .bar .lang { border-color: #D5DBE3; background: #F3F5F8; }
   .bar .lang button { color: #4A5B73; }
-  .bar .lang button[aria-pressed="true"] { background: var(--navy); color: var(--yellow); }
+  .bar .lang button[aria-pressed="true"] { background: #124674; color: #FFFFFF; }
   .endbar {
     text-align: center; padding: 72px 16px calc(22px + env(safe-area-inset-bottom));
     background: linear-gradient(0deg,
@@ -80,10 +126,9 @@
   .endbar img { display: block; height: 56px; width: auto; margin: 0 auto; }
   .endbar p { margin-top: 10px; font-size: 11px; color: #4A5B73; }
 
-
-  /* in-app browser reminder */
+  /* bottom sheets: in-app reminder, calculators, ebook checkout */
   .sheet-bg {
-    position: fixed; inset: 0; z-index: 60; background: rgba(4,14,28,.72);
+    position: fixed; inset: 0; z-index: 60; background: var(--overlay);
     display: flex; align-items: flex-end; justify-content: center; padding: 16px;
     opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease;
   }
@@ -92,72 +137,73 @@
   #inapp { z-index: 70; }
   #inapp.link-mode .gen, #inapp:not(.link-mode) .lnk { display: none; }
   .sheet {
-    width: 100%; max-width: 420px; background: var(--white); color: var(--navy);
-    border-radius: 22px; padding: 22px 20px 18px; transform: translateY(24px); transition: transform .3s ease;
+    width: 100%; max-width: 420px; background: var(--surface); color: var(--text);
+    border: 1px solid var(--line); border-radius: 22px; padding: 22px 20px 18px;
+    transform: translateY(24px); transition: transform .3s ease;
     margin-bottom: env(safe-area-inset-bottom);
   }
   .sheet-bg.show .sheet { transform: none; }
   .sheet-bg .pin {
     position: fixed; top: 10px; right: 14px; display: flex; flex-direction: column; align-items: center;
-    color: var(--yellow); font-weight: 700; font-size: 12px; text-align: center; pointer-events: none;
+    color: var(--accent); font-weight: 700; font-size: 12px; text-align: center; pointer-events: none;
     animation: bob 1.2s ease-in-out infinite;
   }
   .sheet-bg .pin svg { width: 34px; height: 34px; }
   @keyframes bob { 50% { transform: translateY(-6px); } }
-  .sheet h3 { font: 600 20px/1.25 "Fraunces", Georgia, serif; color: var(--navy); }
-  .sheet .why { margin-top: 6px; font-size: 13.5px; color: #4A5B73; }
+  .sheet h3 { font: 600 20px/1.25 "Fraunces", Georgia, serif; color: var(--heading); }
+  .sheet .why { margin-top: 6px; font-size: 13.5px; color: var(--muted); }
   .steps { list-style: none; margin: 16px 0 4px; display: grid; gap: 10px; }
   .steps li { display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 1.4; }
   .steps .n {
-    flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: var(--yellow);
+    flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--btn); color: var(--on-btn);
     display: grid; place-items: center; font-weight: 700; font-size: 13px;
   }
   .steps .k {
     display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 22px; padding: 0 6px;
-    border-radius: 6px; background: #EEF1F5; border: 1px solid #D5DBE3; font-weight: 700; font-size: 13px; vertical-align: middle;
+    border-radius: 6px; background: var(--card); border: 1px solid var(--line); font-weight: 700; font-size: 13px; vertical-align: middle;
   }
   .sheet-btns { display: grid; gap: 8px; margin-top: 16px; }
   .sheet-btns button, .sheet-btns a {
     display: block; width: 100%; text-align: center; font: 700 14.5px/1 "Plus Jakarta Sans", system-ui, sans-serif;
     padding: 15px; border-radius: 14px; cursor: pointer; border: 0;
   }
-  .sheet-btns .primary { background: var(--navy); color: var(--white); }
-  .sheet-btns .ghost { background: none; color: #4A5B73; padding: 10px; font-weight: 600; }
+  .sheet-btns .primary { background: var(--btn); color: var(--on-btn); }
+  .sheet-btns .ghost { background: none; color: var(--muted); padding: 10px; font-weight: 600; }
   .sheet-btns [hidden] { display: none; }
   .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 99px; padding: 3px; background: var(--card); }
   .lang button {
     border: 0; background: none; color: var(--muted); font: 600 12px/1 inherit; letter-spacing: .04em;
     padding: 7px 12px; border-radius: 99px; cursor: pointer;
   }
-  .lang button[aria-pressed="true"] { background: var(--yellow); color: var(--navy); }
+  .lang button[aria-pressed="true"] { background: var(--btn); color: var(--on-btn); }
 
   /* hero */
   .hero { text-align: center; padding: 10px 0 26px; }
   .avatar {
     width: 136px; height: 136px; border-radius: 50%; margin: 0 auto 18px; position: relative;
-    padding: 3px; background: linear-gradient(140deg, var(--yellow), rgba(255,214,10,.15) 60%);
+    padding: 3px; background: linear-gradient(140deg, var(--brand-2), rgba(38,150,205,.15) 60%);
   }
-  .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; border: 3px solid var(--navy); }
+  .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; border: 3px solid var(--bg); }
   .avatar .badge {
     position: absolute; right: 4px; bottom: 8px; width: 28px; height: 28px; border-radius: 50%;
-    background: var(--yellow); border: 3px solid var(--navy); display: grid; place-items: center;
+    background: var(--accent); border: 3px solid var(--bg); display: grid; place-items: center;
   }
-  h1 { font: 600 30px/1.15 "Fraunces", Georgia, serif; color: var(--white); letter-spacing: -.01em; }
-  .role { margin-top: 6px; color: var(--yellow); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  h1 { font: 600 30px/1.15 "Fraunces", Georgia, serif; color: var(--heading); letter-spacing: -.01em; }
+  .role { margin-top: 6px; color: var(--link); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
   .sub { margin-top: 10px; color: var(--muted); font-size: 14px; }
   .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
   .chip { font-size: 12px; color: var(--text); border: 1px solid var(--line); background: var(--card); padding: 6px 11px; border-radius: 99px; }
-  .chip b { color: var(--white); }
+  .chip b { color: var(--heading); }
 
   /* primary CTA */
   .cta {
     display: flex; align-items: center; justify-content: center; gap: 10px;
-    background: var(--yellow); color: var(--navy); font-weight: 700; font-size: 15.5px;
+    background: var(--btn); color: var(--on-btn); font-weight: 700; font-size: 15.5px;
     padding: 16px 20px; border-radius: 99px; margin: 4px 0 30px;
-    box-shadow: 0 10px 30px -10px rgba(255,214,10,.55);
+    box-shadow: var(--shadow);
     transition: transform .15s ease, box-shadow .15s ease;
   }
-  .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 34px -10px rgba(255,214,10,.7); }
+  .cta:hover { transform: translateY(-2px); }
   .cta svg { width: 20px; height: 20px; }
 
   /* sections */
@@ -173,17 +219,17 @@
     background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
     transition: background .15s ease, border-color .15s ease, transform .15s ease;
   }
-  .link:hover { background: var(--card-hover); border-color: rgba(255,214,10,.35); transform: translateY(-1px); }
+  .link:hover { background: var(--card-hover); border-color: var(--hover-line); transform: translateY(-1px); }
   .ic {
     flex: none; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
-    background: rgba(255,214,10,.12); color: var(--yellow);
+    background: var(--brand-soft); color: var(--link);
   }
   .ic svg { width: 21px; height: 21px; }
   .txt { flex: 1; min-width: 0; }
-  .t { display: block; color: var(--white); font-weight: 600; font-size: 15px; line-height: 1.3; }
+  .t { display: block; color: var(--heading); font-weight: 600; font-size: 15px; line-height: 1.3; }
   .d { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
   .arrow { flex: none; color: var(--muted); transition: transform .15s ease, color .15s ease; }
-  .link:hover .arrow { color: var(--yellow); transform: translateX(3px); }
+  .link:hover .arrow { color: var(--link); transform: translateX(3px); }
 
   /* ebooks */
   .books { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -191,25 +237,25 @@
     display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line);
     border-radius: var(--radius); overflow: hidden; transition: border-color .15s ease, transform .15s ease;
   }
-  .book:hover { border-color: rgba(255,214,10,.35); transform: translateY(-2px); }
-  .cover { aspect-ratio: 3 / 4; overflow: hidden; background: var(--navy-2); position: relative; }
+  .book:hover { border-color: var(--hover-line); transform: translateY(-2px); }
+  .cover { aspect-ratio: 3 / 4; overflow: hidden; background: var(--card-hover); position: relative; }
   .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .tag {
     align-self: flex-start; margin-bottom: 8px; font-size: 10px; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; padding: 4px 8px; border-radius: 6px; background: var(--white); color: var(--navy);
+    text-transform: uppercase; padding: 4px 8px; border-radius: 6px; background: var(--btn); color: var(--on-btn);
   }
-  .tag.free { background: var(--yellow); }
+  .tag.free { background: var(--accent); color: var(--on-accent); }
   .book .body { padding: 12px 13px 14px; display: flex; flex-direction: column; flex: 1; }
   .book .t { font-size: 14px; }
   .book .d { flex: 1; }
-  .book .go { margin-top: 10px; font-size: 12.5px; font-weight: 700; color: var(--yellow); }
+  .book .go { margin-top: 10px; font-size: 12.5px; font-weight: 700; color: var(--link); }
   .price { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; }
   .price .row { display: flex; align-items: baseline; gap: 8px; }
-  .price b { font: 600 22px/1 "Fraunces", Georgia, serif; color: var(--white); }
+  .price b { font: 600 22px/1 "Fraunces", Georgia, serif; color: var(--heading); }
   .price s { font-size: 13px; font-weight: 600; color: var(--muted); }
   .price small {
     align-self: flex-start; font-size: 10.5px; font-weight: 700; letter-spacing: .02em;
-    color: var(--yellow); background: rgba(255,214,10,.12); border: 1px solid rgba(255,214,10,.35);
+    color: var(--on-accent); background: var(--accent);
     padding: 3px 7px; border-radius: 6px; white-space: nowrap;
   }
   .note { margin-top: 10px; font-size: 11.5px; color: var(--muted); text-align: center; }
@@ -220,10 +266,10 @@
   .guide .pdf { display: flex; gap: 6px; flex: none; }
   .guide .pdf a {
     font-size: 12px; font-weight: 700; padding: 8px 11px; border-radius: 10px; border: 1px solid var(--line);
-    color: var(--text); transition: all .15s ease;
+    color: var(--text); background: var(--surface); transition: all .15s ease;
   }
-  .guide .pdf a:hover { border-color: var(--yellow); color: var(--yellow); }
-  .guide .pdf a.on { background: var(--yellow); border-color: var(--yellow); color: var(--navy); }
+  .guide .pdf a:hover { border-color: var(--link); color: var(--link); }
+  .guide .pdf a.on { background: var(--btn); border-color: var(--btn); color: var(--on-btn); }
 
   /* footer */
   footer { margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); text-align: center; }
@@ -232,17 +278,17 @@
     width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
     border: 1px solid var(--line); background: var(--card); color: var(--text); transition: all .15s ease;
   }
-  .social a:hover { color: var(--navy); background: var(--yellow); border-color: var(--yellow); }
+  .social a:hover { color: var(--on-btn); background: var(--btn); border-color: var(--btn); }
   .social svg { width: 18px; height: 18px; }
   .reg { font-size: 12px; color: var(--text); line-height: 1.6; }
-  .reg a { color: var(--yellow); text-decoration: underline; text-underline-offset: 2px; }
+  .reg a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
   .disc { margin-top: 12px; font-size: 11px; color: var(--muted); line-height: 1.6; text-align: left; }
 
   /* language gate */
   .gate {
     position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column;
-    background: var(--navy); overflow-y: auto;
-    background-image: radial-gradient(700px 420px at 50% -80px, rgba(255,214,10,.12), transparent 70%);
+    background: var(--bg); overflow-y: auto;
+    background-image: radial-gradient(700px 420px at 50% -80px, var(--glow), transparent 70%);
     transition: opacity .35s ease, visibility .35s ease;
   }
   .gate.hide { opacity: 0; visibility: hidden; }
@@ -255,7 +301,7 @@
     display: flex; flex-direction: column; justify-content: center;
   }
   .gate .avatar { width: 112px; height: 112px; margin-bottom: 16px; }
-  .gate h2 { font: 600 24px/1.2 "Fraunces", Georgia, serif; color: var(--white); }
+  .gate h2 { font: 600 24px/1.2 "Fraunces", Georgia, serif; color: var(--heading); }
   .gate p { margin-top: 6px; color: var(--muted); font-size: 14px; }
   .gate-btns { display: grid; gap: 10px; margin-top: 26px; }
   .gate-btns button {
@@ -264,10 +310,10 @@
     cursor: pointer; transition: transform .15s ease, background .15s ease, border-color .15s ease;
   }
   .gate-btns button small { font-size: 12px; font-weight: 600; letter-spacing: .1em; opacity: .7; }
-  .gate-btns .ms { background: var(--yellow); color: var(--navy); border: 1px solid var(--yellow); }
-  .gate-btns .en { background: var(--card); color: var(--white); border: 1px solid var(--line); }
+  .gate-btns .ms { background: var(--btn); color: var(--on-btn); border: 1px solid var(--btn); }
+  .gate-btns .en { background: var(--card); color: var(--heading); border: 1px solid var(--line); }
   .gate-btns button:hover { transform: translateY(-2px); }
-  .gate-btns .en:hover { border-color: rgba(255,214,10,.5); }
+  .gate-btns .en:hover { border-color: var(--hover-line); }
 
   /* calculators */
   button.link { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }
@@ -276,50 +322,50 @@
   .calc .sheet h3 { padding-right: 36px; }
   .calc .x {
     position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; border: 0;
-    background: #EEF1F5; color: var(--navy); font-size: 22px; line-height: 1; cursor: pointer;
+    background: var(--card); color: var(--text); font-size: 22px; line-height: 1; cursor: pointer;
   }
   .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
-  .fields label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; font-weight: 600; color: #4A5B73; }
+  .fields label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; font-weight: 600; color: var(--muted); }
   .inp {
     display: flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 12px;
-    border: 1px solid #D5DBE3; background: #F7F9FB; transition: border-color .15s ease;
+    border: 1px solid var(--field-line); background: var(--field); transition: border-color .15s ease;
   }
-  .inp:focus-within { border-color: var(--navy); background: var(--white); }
-  .inp i { font-style: normal; font-size: 13px; color: #7A8AA0; }
+  .inp:focus-within { border-color: var(--brand-2); background: var(--surface); }
+  .inp i { font-style: normal; font-size: 13px; color: var(--muted); }
   .inp input {
     flex: 1; min-width: 0; width: 100%; border: 0; background: none; outline: none; padding: 12px 0;
-    font: 600 16px/1 "Plus Jakarta Sans", system-ui, sans-serif; color: var(--navy);
+    font: 600 16px/1 "Plus Jakarta Sans", system-ui, sans-serif; color: var(--field-text);
   }
-  .result { margin-top: 16px; padding: 16px; border-radius: 16px; background: var(--navy); color: var(--text); }
-  .result .big small { display: block; font-size: 12px; color: var(--muted); }
-  .result .big b { display: block; margin-top: 2px; font: 600 30px/1.1 "Fraunces", Georgia, serif; color: var(--yellow); }
-  .result .split { display: flex; height: 10px; border-radius: 99px; overflow: hidden; margin: 14px 0 10px; background: rgba(255,255,255,.12); }
+  .result { margin-top: 16px; padding: 16px; border-radius: 16px; background: var(--result-bg); color: var(--result-text); }
+  .result .big small { display: block; font-size: 12px; color: var(--result-muted); }
+  .result .big b { display: block; margin-top: 2px; font: 600 30px/1.1 "Fraunces", Georgia, serif; color: var(--accent); }
+  .result .split { display: flex; height: 10px; border-radius: 99px; overflow: hidden; margin: 14px 0 10px; background: rgba(255,255,255,.14); }
   .result .split span { display: block; height: 100%; transition: width .3s ease; }
   .result .split .a { background: #FFFFFF; }
-  .result .split .b { background: var(--yellow); }
+  .result .split .b { background: var(--accent); }
   .result dl { display: grid; gap: 6px; font-size: 13px; }
   .result dl div { display: flex; justify-content: space-between; gap: 12px; }
-  .result dt { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  .result dt { display: flex; align-items: center; gap: 8px; color: var(--result-muted); }
   .result dt i { width: 9px; height: 9px; border-radius: 3px; flex: none; }
-  .result dd { font-weight: 700; color: var(--white); }
-  .result .msg { font-size: 13px; color: var(--text); margin-top: 10px; line-height: 1.5; }
-  .result .msg.warn { color: var(--yellow); }
-  .fine { margin-top: 10px; font-size: 11px; color: #7A8AA0; line-height: 1.5; }
+  .result dd { font-weight: 700; color: #FFFFFF; }
+  .result .msg { font-size: 13px; color: var(--result-text); margin-top: 10px; line-height: 1.5; }
+  .result .msg.warn { color: var(--accent); }
+  .fine { margin-top: 10px; font-size: 11px; color: var(--muted); line-height: 1.5; }
   html.sheet-open body { overflow: hidden; }
   /* ebook checkout */
-  .sheet-btns a.tng { background: #0055D4; }
-  .qr { margin: 16px 0 4px; padding: 16px; border-radius: 16px; background: #F3F5F8; text-align: center; }
+  .sheet-btns a.tng { background: #0055D4; color: #FFFFFF; }
+  .qr { margin: 16px 0 4px; padding: 16px; border-radius: 16px; background: var(--card); text-align: center; }
   .qr img { display: block; width: 220px; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; background: #FFFFFF; }
-  .qr figcaption { margin-top: 10px; font-size: 12px; line-height: 1.5; color: #4A5B73; }
+  .qr figcaption { margin-top: 10px; font-size: 12px; line-height: 1.5; color: var(--muted); }
   .qr .save {
     display: inline-block; margin-top: 10px; padding: 8px 14px; border-radius: 99px;
-    border: 1px solid #D5DBE3; font-size: 12.5px; font-weight: 700; color: var(--navy);
+    border: 1px solid var(--line); font-size: 12.5px; font-weight: 700; color: var(--text);
   }
   [hidden] { display: none !important; }
 
   .toast {
-    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
-    background: var(--white); color: var(--navy); font-weight: 600; font-size: 13px; padding: 10px 16px;
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0; z-index: 80;
+    background: var(--toast-bg); color: var(--toast-text); font-weight: 600; font-size: 13px; padding: 10px 16px;
     border-radius: 99px; transition: all .2s ease; pointer-events: none;
   }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -382,7 +428,7 @@
     </div>
   </header>
 
-  <a class="cta" href="https://whatsform.com/ut8prskay" data-umami-event="WhatsApp saya (butang kuning)" target="_blank" rel="noopener">
+  <a class="cta" href="/hubungi/" data-umami-event="WhatsApp saya (butang utama)">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.4 13.4 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.9L.1 24l6.3-1.6A11.8 11.8 0 0 0 24 12.2a11.7 11.7 0 0 0-3.6-8.6z"/></svg>
     <span data-en="WhatsApp me">WhatsApp saya</span>
   </a>
@@ -431,8 +477,8 @@
     <h2 class="label" data-en="Step-by-step guides">Panduan langkah demi langkah</h2>
 
     <div class="guide">
-      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14l2 2 4-4"/></svg></span>
-      <span class="txt"><span class="t" data-en="Register a Unit Trust account">Daftar akaun Unit Trust</span><span class="d">PDF</span></span>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="13.5" rx="6.5" ry="2.3"/><path d="M5.5 13.5v3c0 1.3 2.9 2.3 6.5 2.3s6.5-1 6.5-2.3v-3"/><path d="M5.5 16.5v3c0 1.3 2.9 2.3 6.5 2.3s6.5-1 6.5-2.3v-3"/><path d="M12 13.5V6.5"/><path d="M12 9C12 6.6 10.3 5 7.7 5c0 2.4 1.7 4 4.3 4z"/><path d="M12 7.3c0-2.2 1.5-3.7 3.9-3.7 0 2.2-1.5 3.7-3.9 3.7z"/></svg></span>
+      <span class="txt"><span class="t" data-en="Register a Unit Trust account">Daftar akaun Unit Trust</span><span class="d" data-en="Unit trust investment">Pelaburan unit trust</span></span>
       <span class="pdf">
         <a href="/guides/panduan-daftar-akaun-unit-trust-bm.pdf" data-umami-event="Panduan daftar UT (BM)" target="_blank" rel="noopener" data-l="ms">BM</a>
         <a href="/guides/guide-register-unit-trust-account-en.pdf" data-umami-event="Panduan daftar UT (EN)" target="_blank" rel="noopener" data-l="en">EN</a>
@@ -440,7 +486,7 @@
     </div>
 
     <div class="guide">
-      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5-2.5 8-6 8-11V5l-8-3-8 3v6c0 5 3 8.5 8 11z"/><path d="M9 12l2 2 4-4"/></svg></span>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="3" width="11" height="3.2" rx="1"/><path d="M8 6.2v1.6C6.2 8.9 5 10.6 5 12.8V18a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5.2c0-2.2-1.2-3.9-3-5V6.2"/><circle cx="12" cy="15" r="2.8"/><path d="M12 13.9v2.2"/></svg></span>
       <span class="txt"><span class="t" data-en="Register a PRS account">Daftar akaun PRS</span><span class="d" data-en="Private Retirement Scheme">Skim Persaraan Swasta</span></span>
       <span class="pdf">
         <a href="/guides/panduan-daftar-akaun-prs-bm.pdf" data-umami-event="Panduan daftar PRS (BM)" target="_blank" rel="noopener" data-l="ms">BM</a>
@@ -541,7 +587,7 @@
     <div class="result" id="ccResult" aria-live="polite"></div>
     <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate. The return per year is before the annual charge. The one-time charge is taken from every amount you put in (including monthly top-ups); the annual charge is deducted monthly from your investment value. Actual returns vary and are not guaranteed. See the fund’s PHS / prospectus for its actual charges.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap. Pulangan setahun ialah sebelum caj tahunan. Caj sekali ditolak daripada setiap wang yang anda masukkan (termasuk tambahan bulanan); caj tahunan ditolak setiap bulan daripada nilai pelaburan. Pulangan sebenar berubah-ubah dan tidak dijamin. Rujuk PHS / prospektus dana untuk caj sebenar.</p>
     <div class="sheet-btns">
-      <a class="primary" href="https://whatsform.com/ut8prskay" target="_blank" rel="noopener" data-en="Plan this with me on WhatsApp" data-umami-event="Kalkulator kompaun: WhatsApp">Rancang bersama saya di WhatsApp</a>
+      <a class="primary" id="ccToForm" href="/hubungi/?pick=lump,monthly" data-en="Plan this with me on WhatsApp" data-umami-event="Kalkulator kompaun: WhatsApp">Rancang bersama saya di WhatsApp</a>
     </div>
   </div>
 </div>
@@ -558,7 +604,7 @@
     <div class="result" id="epfResult" aria-live="polite"></div>
     <p class="fine" data-en="Based on the €PF Basic Savings table effective 1 January 2026. Minimum investment RM1,000; you must be below 55. Check your exact eligible amount in the KW$P app or i-Akaun.">Berdasarkan jadual Simpanan Asas KW$P berkuat kuasa 1 Januari 2026. Pelaburan minimum RM1,000; anda mesti berumur bawah 55 tahun. Semak jumlah layak sebenar dalam aplikasi KW$P atau i-Akaun.</p>
     <div class="sheet-btns">
-      <a class="primary" href="https://whatsform.com/ut8prskay" target="_blank" rel="noopener" data-en="Invest your €PF with me" data-umami-event="Kalkulator KW$P: WhatsApp">Labur KW$P anda bersama saya</a>
+      <a class="primary" id="epfToForm" href="/hubungi/?pick=epf" data-en="Invest your €PF with me" data-umami-event="Kalkulator KW$P: WhatsApp">Labur KW$P anda bersama saya</a>
     </div>
   </div>
 </div>
@@ -578,9 +624,10 @@
     </figure>
     <ol class="steps">
       <li><span class="n">1</span><span data-en="Pay exactly <b class='amt'></b> with Touch 'n Go (you type in the amount)">Bayar tepat <b class="amt"></b> melalui Touch 'n Go (masukkan jumlah sendiri)</span></li>
-      <li><span class="n">2</span><span data-en="Take a screenshot of the receipt">Screenshot resit bayaran</span></li>
-      <li><span class="n">3</span><span data-en="Tap <b>“I've paid”</b> and send the receipt on WhatsApp">Tekan <b>“Saya dah bayar”</b> dan hantar resit melalui WhatsApp</span></li>
-      <li><span class="n">4</span><span data-en="The ebook (PDF) is sent to you on WhatsApp">Ebook (PDF) dihantar kepada anda melalui WhatsApp</span></li>
+      <li><span class="n">2</span><span data-en="In the <b>payment details</b>, type <b>your phone number</b> so we can match your payment">Dalam ruangan <b>butiran bayaran</b> (payment details), tulis <b>nombor telefon anda</b> supaya bayaran mudah disemak</span></li>
+      <li><span class="n">3</span><span data-en="Take a screenshot of the receipt">Screenshot resit bayaran</span></li>
+      <li><span class="n">4</span><span data-en="Tap <b>“I've paid”</b> and send the receipt on WhatsApp">Tekan <b>“Saya dah bayar”</b> dan hantar resit melalui WhatsApp</span></li>
+      <li><span class="n">5</span><span data-en="The ebook (PDF) is sent to you on WhatsApp">Ebook (PDF) dihantar kepada anda melalui WhatsApp</span></li>
     </ol>
     <div class="sheet-btns">
       <a class="primary" id="paidBtn" data-umami-event="Ebook: saya dah bayar" target="_blank" rel="noopener" data-en="I've paid, send receipt">Saya dah bayar, hantar resit</a>
@@ -673,8 +720,8 @@
         link.textContent = (en ? 'Pay ' : 'Bayar ') + amt + (en ? ' with Touch ’n Go' : ' dengan Touch ’n Go');
       }
       var msg = en
-        ? 'EBOOK - I have paid ' + amt + ' via Touch ’n Go for the ebook Unit Trust Dari Zero. Receipt attached.'
-        : 'EBOOK - Saya dah bayar ' + amt + ' melalui Touch ’n Go untuk ebook Unit Trust Dari Zero. Resit dilampirkan.';
+        ? 'EBOOK - I have paid ' + amt + ' via Touch ’n Go for the ebook Unit Trust Dari Zero, with my phone number in the payment details. Receipt attached.'
+        : 'EBOOK - Saya dah bayar ' + amt + ' melalui Touch ’n Go untuk ebook Unit Trust Dari Zero, dengan nombor telefon saya dalam butiran bayaran. Resit dilampirkan.';
       document.getElementById('paidBtn').href = 'https://wa.me/60194024401?text=' + encodeURIComponent(msg);
     }
     // Only an explicit pick is saved, so a visitor who never chose still sees the language screen next time
@@ -786,6 +833,9 @@
       132000, 141000, 150000, 160000, 170000, 181000, 192000, 203000];
 
     function renderCalcs() {
+      var q = function (o) { return Object.keys(o).filter(function (k) { return o[k]; }).map(function (k) { return k + '=' + encodeURIComponent(o[k]); }).join('&'); };
+      document.getElementById('ccToForm').href = '/hubungi/?' + q({ pick: 'lump,monthly', lump: num('ccStart'), monthly: num('ccMonthly'), rate: num('ccRate'), years: num('ccYears') });
+      document.getElementById('epfToForm').href = '/hubungi/?' + q({ pick: 'epf', age: num('epfAge'), bal: num('epfBal') });
       var en = current === 'en';
 
       var start = num('ccStart'), monthly = num('ccMonthly'), rate = num('ccRate') / 100 / 12;

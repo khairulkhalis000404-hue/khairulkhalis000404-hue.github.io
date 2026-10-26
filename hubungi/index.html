@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daftar & rancang pelaburan · Khairul Khalis</title>
+<meta name="description" content="Daftar akaun unit trust, PRS atau pelaburan KW$P bersama Khairul Khalis, perunding unit trust berdaftar FIMM.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://khairulkhalis.com/hubungi/">
+<link rel="icon" href="/assets/profile.jpg?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Same theme as the main page: white first, MaxWealth blue second, a little yellow; dark mode follows the phone */
+  :root {
+    color-scheme: light dark;
+    --bg: #FFFFFF;
+    --glow: rgba(38,150,205,.10);
+    --card: #F5F8FC;
+    --line: #E2E8F0;
+    --surface: #FFFFFF;
+    --text: #1A2E45;
+    --heading: #0E2A47;
+    --muted: #5A6B82;
+    --brand-2: #2696CD;
+    --btn: #124674;
+    --on-btn: #FFFFFF;
+    --link: #124674;
+    --brand-soft: rgba(38,150,205,.12);
+    --hover-line: rgba(38,150,205,.45);
+    --accent: #FFD60A;
+    --field: #F7F9FB;
+    --field-line: #D5DBE3;
+    --field-text: #10253D;
+    --overlay: rgba(10,25,45,.55);
+    --result-bg: #124674;
+    --result-text: #E8F1FA;
+    --result-muted: #B9CCE0;
+    --error: #C62828;
+    --error-ring: rgba(198,40,40,.18);
+    --toast-bg: #10253D;
+    --toast-text: #FFFFFF;
+    --shadow: 0 10px 30px -12px rgba(18,70,116,.45);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B1220;
+      --glow: rgba(38,150,205,.14);
+      --card: #121C2C;
+      --line: rgba(255,255,255,.09);
+      --surface: #131D2D;
+      --text: #E6EDF6;
+      --heading: #FFFFFF;
+      --muted: #9AAAC0;
+      --btn: #1F7FB8;
+      --link: #5CB6E4;
+      --brand-soft: rgba(38,150,205,.16);
+      --hover-line: rgba(92,182,228,.45);
+      --field: #0F1828;
+      --field-line: rgba(255,255,255,.14);
+      --field-text: #E6EDF6;
+      --overlay: rgba(0,0,0,.62);
+      --result-bg: #0E2A47;
+      --error: #FF8A8A;
+      --error-ring: rgba(255,138,138,.22);
+      --toast-bg: #FFFFFF;
+      --toast-text: #0A2342;
+      --shadow: 0 10px 30px -12px rgba(0,0,0,.6);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    background-image: radial-gradient(900px 500px at 50% -120px, var(--glow), transparent 70%);
+    background-attachment: fixed;
+    color: var(--text);
+    font: 15px/1.55 "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  [hidden] { display: none !important; }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  /* white brand band with the MaxWealth logo, fading into the page */
+  .bar {
+    padding-bottom: 64px; margin-bottom: -40px; position: relative; z-index: 1;
+    background: linear-gradient(180deg,
+      #FFFFFF 0%, #FFFFFF 52%, rgba(255,255,255,.86) 62%, rgba(255,255,255,.62) 72%,
+      rgba(255,255,255,.36) 82%, rgba(255,255,255,.14) 91%, rgba(255,255,255,0) 100%);
+  }
+  .bar-in {
+    max-width: 520px; margin: 0 auto; padding: 14px 16px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .bar img { display: block; height: 60px; width: auto; margin: -7px 0 -3px; }
+  .lang { display: inline-flex; border: 1px solid #D5DBE3; border-radius: 99px; padding: 3px; background: #F3F5F8; }
+  .lang button {
+    border: 0; background: none; color: #4A5B73; font: 600 12px/1 inherit; letter-spacing: .04em;
+    padding: 7px 12px; border-radius: 99px; cursor: pointer;
+  }
+  .lang button[aria-pressed="true"] { background: #124674; color: #FFFFFF; }
+  .endbar {
+    text-align: center; padding: 72px 16px calc(22px + env(safe-area-inset-bottom));
+    background: linear-gradient(0deg,
+      #FFFFFF 0%, #FFFFFF 52%, rgba(255,255,255,.86) 62%, rgba(255,255,255,.62) 72%,
+      rgba(255,255,255,.36) 82%, rgba(255,255,255,.14) 91%, rgba(255,255,255,0) 100%);
+  }
+  .endbar img { display: block; height: 56px; width: auto; margin: 0 auto; }
+  .endbar p { margin-top: 10px; font-size: 11px; color: #4A5B73; }
+
+  .back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin: 4px 0 14px; }
+  .back:hover { color: var(--link); }
+  h1 { font: 600 28px/1.15 "Fraunces", Georgia, serif; color: var(--heading); }
+  .lead { margin-top: 8px; color: var(--muted); font-size: 14px; }
+
+  /* form cards */
+  .card { margin-top: 18px; padding: 18px 16px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+  .card h2 {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  .card h2 .n {
+    width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--btn); color: var(--on-btn); font-size: 12px; letter-spacing: 0;
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .full { grid-column: 1 / -1; }
+  label.f { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text); }
+  label.f small { font-weight: 500; color: var(--muted); }
+  .inp {
+    display: flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 12px;
+    border: 1px solid var(--field-line); background: var(--field); transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .inp:focus-within { border-color: var(--brand-2); box-shadow: 0 0 0 3px var(--brand-soft); background: var(--surface); }
+  .inp i { font-style: normal; font-size: 13px; color: var(--muted); }
+  .inp input, .inp textarea {
+    flex: 1; min-width: 0; width: 100%; border: 0; background: none; outline: none; padding: 12px 0;
+    font: 600 16px/1.3 "Plus Jakarta Sans", system-ui, sans-serif; color: var(--field-text);
+  }
+  .inp textarea { font-weight: 500; resize: vertical; min-height: 84px; }
+  .invalid .inp { border-color: var(--error); box-shadow: 0 0 0 3px var(--error-ring); }
+  .err { font-size: 12px; font-weight: 600; color: var(--error); }
+
+  /* choice chips */
+  .choices { display: grid; gap: 10px; }
+  .choice {
+    display: flex; align-items: flex-start; gap: 12px; padding: 14px; border-radius: 14px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--surface); transition: border-color .15s ease, background .15s ease;
+  }
+  .choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .choice .box {
+    flex: none; width: 22px; height: 22px; margin-top: 1px; border-radius: 7px; border: 2px solid var(--field-line);
+    display: grid; place-items: center; transition: all .15s ease;
+  }
+  .choice .box svg { width: 13px; height: 13px; opacity: 0; }
+  .choice .box svg path { stroke: var(--on-btn); }
+  .choice b { display: block; color: var(--heading); font-size: 14.5px; }
+  .choice span.d { display: block; margin-top: 2px; font-size: 12.5px; color: var(--muted); }
+  .choice:has(input:checked) { border-color: var(--hover-line); background: var(--brand-soft); }
+  .choice input:checked + .box { background: var(--btn); border-color: var(--btn); }
+  .choice input:checked + .box svg { opacity: 1; }
+  .choice input:focus-visible + .box { box-shadow: 0 0 0 3px var(--brand-soft); }
+
+  /* calculators that appear under the choices */
+  .panel { margin-top: 14px; padding: 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+  .panel h3 { font: 600 18px/1.2 "Fraunces", Georgia, serif; color: var(--heading); }
+  .panel .why { margin: 4px 0 12px; font-size: 13px; color: var(--muted); }
+  .panel label.f { color: var(--muted); }
+  .result { margin-top: 14px; padding: 14px; border-radius: 14px; background: var(--result-bg); color: var(--result-text); }
+  .result .big small { display: block; font-size: 12px; color: var(--result-muted); }
+  .result .big b { display: block; margin-top: 2px; font: 600 28px/1.1 "Fraunces", Georgia, serif; color: var(--accent); }
+  .result .split { display: flex; height: 10px; border-radius: 99px; overflow: hidden; margin: 12px 0 10px; background: rgba(255,255,255,.14); }
+  .result .split span { display: block; height: 100%; transition: width .3s ease; }
+  .result .split .a { background: #FFFFFF; }
+  .result .split .b { background: var(--accent); }
+  .result dl { display: grid; gap: 6px; font-size: 13px; }
+  .result dl div { display: flex; justify-content: space-between; gap: 12px; }
+  .result dt { display: flex; align-items: center; gap: 8px; color: var(--result-muted); }
+  .result dt i { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+  .result dd { font-weight: 700; color: #FFFFFF; }
+  .result .msg { font-size: 13px; margin-top: 10px; line-height: 1.5; }
+  .result .msg.warn { color: var(--accent); }
+  .fine { margin-top: 10px; font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .note { margin-top: 10px; font-size: 12px; color: var(--muted); }
+
+  .submit {
+    display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 22px;
+    background: var(--btn); color: var(--on-btn); font: 700 16px/1 "Plus Jakarta Sans", system-ui, sans-serif;
+    padding: 17px 20px; border: 0; border-radius: 99px; cursor: pointer;
+    box-shadow: var(--shadow); transition: transform .15s ease;
+  }
+  .submit:hover { transform: translateY(-2px); }
+  .submit svg { width: 20px; height: 20px; }
+  .form-err { margin-top: 12px; text-align: center; font-size: 13px; font-weight: 600; color: var(--error); }
+  .privacy { margin-top: 14px; font-size: 11.5px; color: var(--muted); text-align: center; line-height: 1.6; }
+
+  /* open-in-browser reminder (TikTok / IG / LinkedIn in-app browsers) */
+  .sheet-bg {
+    position: fixed; inset: 0; z-index: 70; background: var(--overlay);
+    display: flex; align-items: flex-end; justify-content: center; padding: 16px;
+    opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease;
+  }
+  .sheet-bg.show { opacity: 1; visibility: visible; }
+  .sheet {
+    width: 100%; max-width: 420px; background: var(--surface); color: var(--text); border: 1px solid var(--line);
+    border-radius: 22px; padding: 22px 20px 18px; transform: translateY(24px); transition: transform .3s ease;
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+  .sheet-bg.show .sheet { transform: none; }
+  .sheet-bg .pin {
+    position: fixed; top: 10px; right: 14px; display: flex; flex-direction: column; align-items: center;
+    color: var(--accent); font-weight: 700; font-size: 12px; pointer-events: none; animation: bob 1.2s ease-in-out infinite;
+  }
+  .sheet-bg .pin svg { width: 34px; height: 34px; }
+  @keyframes bob { 50% { transform: translateY(-6px); } }
+  .sheet h3 { font: 600 20px/1.25 "Fraunces", Georgia, serif; color: var(--heading); }
+  .sheet .why { margin-top: 6px; font-size: 13.5px; color: var(--muted); }
+  .steps { list-style: none; margin: 16px 0 4px; display: grid; gap: 10px; }
+  .steps li { display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 1.4; }
+  .steps .n {
+    flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--btn); color: var(--on-btn);
+    display: grid; place-items: center; font-weight: 700; font-size: 13px;
+  }
+  .steps .k {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 22px; padding: 0 6px;
+    border-radius: 6px; background: var(--card); border: 1px solid var(--line); font-weight: 700; font-size: 13px;
+  }
+  .sheet-btns { display: grid; gap: 8px; margin-top: 16px; }
+  .sheet-btns button, .sheet-btns a {
+    display: block; width: 100%; text-align: center; font: 700 14.5px/1 "Plus Jakarta Sans", system-ui, sans-serif;
+    padding: 15px; border-radius: 14px; cursor: pointer; border: 0;
+  }
+  .sheet-btns .primary { background: var(--btn); color: var(--on-btn); }
+  .sheet-btns .ghost { background: none; color: var(--muted); padding: 10px; font-weight: 600; }
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0; z-index: 80;
+    background: var(--toast-bg); color: var(--toast-text); font-weight: 600; font-size: 13px; padding: 10px 16px;
+    border-radius: 99px; transition: all .2s ease; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 360px) { .grid { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-in">
+    <a href="/"><img src="/assets/maxwealth-logo.png" alt="MaxWealth Consultancy, Inspiring Financial Excellence" width="800" height="241"></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="ms" aria-pressed="true">BM</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <a class="back" href="/"><span aria-hidden="true">←</span> <span data-en="Back to khairulkhalis.com">Kembali ke khairulkhalis.com</span></a>
+  <h1 data-en="Register &amp; plan your investment">Daftar &amp; rancang pelaburan</h1>
+  <p class="lead" data-en="Fill this in and tap send. WhatsApp opens with your details already written, so we can help you faster.">Isi borang ni dan tekan hantar. WhatsApp akan terbuka dengan maklumat anda siap ditulis, supaya kami boleh bantu dengan lebih cepat.</p>
+
+  <form id="form" novalidate>
+    <section class="card">
+      <h2><span class="n">1</span><span data-en="About you">Maklumat anda</span></h2>
+      <div class="grid">
+        <label class="f full" data-field="name"><span data-en="Full name">Nama penuh</span>
+          <span class="inp"><input id="name" name="name" type="text" autocomplete="name" required></span>
+          <span class="err" hidden data-en="Please enter your name">Sila isi nama anda</span></label>
+        <label class="f" data-field="age"><span data-en="Age">Umur</span>
+          <span class="inp"><input id="age" name="age" type="number" inputmode="numeric" min="18" max="100" step="1" required><i data-en="years">tahun</i></span>
+          <span class="err" hidden data-en="Age 18 and above">Umur 18 tahun ke atas</span></label>
+        <label class="f" data-field="city"><span data-en="Location">Lokasi</span>
+          <span class="inp"><input id="city" name="location" type="text" placeholder="Shah Alam" required></span>
+          <span class="err" hidden data-en="Please enter your location">Sila isi lokasi</span></label>
+        <label class="f full" data-field="phone"><span data-en="Phone number">No. telefon</span>
+          <span class="inp"><i>+60</i><input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="12-345 6789" required></span>
+          <span class="err" hidden data-en="Please enter a valid Malaysian number">Sila isi nombor telefon Malaysia yang sah</span></label>
+      </div>
+    </section>
+
+    <section class="card" data-field="choices">
+      <h2><span class="n">2</span><span data-en="What are you looking for?">Apa yang anda cari?</span></h2>
+      <div class="choices">
+        <label class="choice"><input type="checkbox" name="pick" value="lump"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <span><b data-en="One-time investment">Pelaburan sekali</b><span class="d" data-en="Fund transfer">Pindahan dana</span></span></label>
+        <label class="choice"><input type="checkbox" name="pick" value="monthly"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <span><b data-en="Regular savings plan">Simpanan bulanan</b><span class="d" data-en="Monthly deduction from your bank account">Potongan bulanan dari akaun bank</span></span></label>
+        <label class="choice"><input type="checkbox" name="pick" value="epf"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <span><b data-en="Invest with €PF">Labur guna KW$P</b><span class="d" data-en="From your Akaun Persaraan">Dari Akaun Persaraan</span></span></label>
+        <label class="choice"><input type="checkbox" name="pick" value="corp"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <span><b data-en="Corporate investment">Pelaburan korporat</b><span class="d" data-en="From your company's current account">Dari akaun semasa syarikat</span></span></label>
+        <label class="choice"><input type="checkbox" name="pick" value="prs"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <span><b data-en="PRS investment">Pelaburan PRS</b><span class="d" data-en="One-time or monthly">Sekali atau bulanan</span></span></label>
+      </div>
+      <p class="err" hidden data-en="Choose at least one">Pilih sekurang-kurangnya satu</p>
+
+      <div class="panel" id="epfBox" hidden>
+        <h3 data-en="How much €PF can you invest?">Berapa KW$P boleh dilabur?</h3>
+        <p class="why" data-en="30% of the amount in your Akaun Persaraan above the Basic Savings for your age (2026 table).">30% daripada jumlah dalam Akaun Persaraan yang melebihi Simpanan Asas mengikut umur anda (jadual 2026).</p>
+        <label class="f"><span data-en="Akaun Persaraan balance">Baki Akaun Persaraan</span>
+          <span class="inp"><i>RM</i><input id="epfBal" type="number" inputmode="decimal" min="0" step="any" placeholder="50000"></span>
+          <small data-en="Check it in the KW$P app or i-Akaun. Age is taken from section 1.">Semak dalam aplikasi KW$P atau i-Akaun. Umur diambil dari bahagian 1.</small></label>
+        <div class="result" id="epfResult" aria-live="polite"></div>
+      </div>
+
+      <div class="panel" id="growBox" hidden>
+        <h3 data-en="How much could it grow?">Berapa boleh berkembang?</h3>
+        <p class="why" data-en="Type your amounts. Results update as you type.">Taip jumlah anda. Keputusan dikira terus.</p>
+        <div class="grid">
+          <label class="f" id="lumpField"><span data-en="One-time amount">Jumlah sekali</span>
+            <span class="inp"><i>RM</i><input id="lump" type="number" inputmode="decimal" min="0" step="any" placeholder="10000"></span></label>
+          <label class="f" id="monthlyField"><span data-en="Monthly amount">Jumlah bulanan</span>
+            <span class="inp"><i>RM</i><input id="monthly" type="number" inputmode="decimal" min="0" step="any" placeholder="200"></span></label>
+          <label class="f"><span data-en="Return per year">Pulangan setahun</span>
+            <span class="inp"><input id="rate" type="number" inputmode="decimal" min="0" max="50" step="any" value="6"><i>%</i></span></label>
+          <label class="f"><span data-en="How long">Tempoh</span>
+            <span class="inp"><input id="years" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"><i data-en="years">tahun</i></span></label>
+        </div>
+        <div class="result" id="growResult" aria-live="polite"></div>
+        <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate and before any fees or charges. Actual returns vary and are not guaranteed.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap dan sebelum sebarang caj. Pulangan sebenar berubah-ubah dan tidak dijamin.</p>
+      </div>
+    </section>
+
+    <section class="card" id="apptCard" hidden data-field="appt">
+      <h2><span class="n">3</span><span data-en="Appointment">Temujanji</span></h2>
+      <p class="note" style="margin:-4px 0 12px" data-en="For investments of RM50,000 and above, and required for corporate investment.">Untuk pelaburan RM50,000 ke atas, dan wajib untuk pelaburan korporat.</p>
+      <div class="grid">
+        <label class="f"><span data-en="Date">Tarikh</span><span class="inp"><input id="apptDate" type="date"></span></label>
+        <label class="f"><span data-en="Time">Masa</span><span class="inp"><input id="apptTime" type="time"></span></label>
+      </div>
+      <p class="err" hidden data-en="Please choose a date for corporate investment">Sila pilih tarikh untuk pelaburan korporat</p>
+    </section>
+
+    <section class="card">
+      <h2><span class="n" id="noteNo">3</span><span data-en="Anything else? (optional)">Ada soalan lain? (pilihan)</span></h2>
+      <label class="f"><span class="inp"><textarea id="note" rows="3"></textarea></span></label>
+    </section>
+
+    <button type="submit" class="submit" data-umami-event="Borang: hantar">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.4 13.4 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.9L.1 24l6.3-1.6A11.8 11.8 0 0 0 24 12.2a11.7 11.7 0 0 0-3.6-8.6z"/></svg>
+      <span data-en="Send on WhatsApp">Hantar melalui WhatsApp</span>
+    </button>
+    <p class="form-err" id="formErr" hidden data-en="Please check the fields marked in red.">Sila semak ruangan yang bertanda merah.</p>
+    <p class="privacy" data-en="Your details are only sent to me on WhatsApp when you tap send. Nothing is stored on this website.">Maklumat anda hanya dihantar kepada saya melalui WhatsApp bila anda tekan hantar. Tiada apa-apa disimpan di website ini.</p>
+  </form>
+</main>
+
+<div class="endbar">
+  <img src="/assets/maxwealth-logo.png" alt="MaxWealth Consultancy" width="800" height="241" loading="lazy">
+  <p>© 2026 Khairul Khalis · <span data-en="FIMM-registered unit trust consultant">Perunding unit trust berdaftar FIMM</span></p>
+</div>
+
+<div class="sheet-bg" id="inapp" role="dialog" aria-modal="true" aria-labelledby="inappTitle">
+  <div class="pin" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+    <span data-en="Tap here">Tekan sini</span>
+  </div>
+  <div class="sheet">
+    <h3 id="inappTitle" data-en="Open in your browser first">Buka dalam browser dulu</h3>
+    <p class="why" data-en="Sending opens WhatsApp. Inside the {app} app, WhatsApp links sometimes don’t open. Open this page in Safari or Chrome first, then tap send again.">Hantar akan buka WhatsApp. Dalam aplikasi {app}, link WhatsApp kadang-kadang tak terbuka. Buka page ini dalam Safari atau Chrome dulu, kemudian tekan hantar semula.</p>
+    <ol class="steps">
+      <li><span class="n">1</span><span data-en="Tap <span class='k'>⋯</span> at the top-right of your screen">Tekan <span class="k">⋯</span> di penjuru kanan atas skrin</span></li>
+      <li><span class="n">2</span><span data-en="Choose <b>“Open in browser”</b>">Pilih <b>“Open in browser”</b> (Buka dalam pelayar)</span></li>
+      <li><span class="n">3</span><span data-en="Fill in and send again from Safari or Chrome">Isi dan hantar semula dari Safari atau Chrome</span></li>
+    </ol>
+    <div class="sheet-btns">
+      <a class="primary" id="openChrome" hidden data-umami-event="Borang in-app: buka Chrome" data-en="Open in Chrome now">Buka terus dalam Chrome</a>
+      <button type="button" class="primary" id="copyLink" data-umami-event="Borang in-app: salin link" data-en="Copy link instead">Atau salin link</button>
+      <a class="ghost" id="continueLink" target="_blank" rel="noopener" data-umami-event="Borang in-app: teruskan juga" data-en="Continue to WhatsApp anyway">Teruskan juga ke WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  (function () {
+    var WA_NUMBER = '60194024401';
+
+    // In-app browser detection (TikTok / IG / LinkedIn ...); ?inapp=1 forces it for testing
+    var ua = navigator.userAgent;
+    var apps = [['TikTok', /musical_ly|Bytedance|TikTok/i], ['Instagram', /Instagram/i], ['LinkedIn', /LinkedInApp/i],
+                ['Facebook', /FBAN|FBAV|FB_IAB/i], ['Threads', /Barcelona/i], ['X', /Twitter/i]];
+    var inApp = null;
+    apps.forEach(function (a) { if (!inApp && a[1].test(ua)) inApp = a[0]; });
+    if (!inApp && new URLSearchParams(location.search).get('inapp') === '1') inApp = 'TikTok';
+    document.querySelectorAll('#inapp [data-en]').forEach(function (el) {
+      el.innerHTML = el.innerHTML.replace('{app}', inApp || 'media sosial');
+      el.setAttribute('data-en', el.getAttribute('data-en').replace('{app}', inApp || 'social media'));
+    });
+
+    // Language: same remembered choice as the main page
+    var nodes = document.querySelectorAll('[data-en]');
+    nodes.forEach(function (el) { el.setAttribute('data-ms', el.innerHTML); });
+    var current = 'ms';
+    function setLang(lang) {
+      current = lang;
+      document.documentElement.lang = lang === 'en' ? 'en' : 'ms';
+      nodes.forEach(function (el) { el.innerHTML = el.getAttribute(lang === 'en' ? 'data-en' : 'data-ms'); });
+      document.querySelectorAll('.lang button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+      });
+      update();
+    }
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        setLang(b.dataset.lang);
+        try { localStorage.setItem('langChosen', b.dataset.lang); } catch (e) {}
+      });
+    });
+
+    var $ = function (id) { return document.getElementById(id); };
+    function num(id) { var v = parseFloat($(id).value); return isFinite(v) && v > 0 ? v : 0; }
+    function rm(v) { return 'RM' + Math.round(v).toLocaleString('en-MY'); }
+    function row(color, label, value) {
+      return '<div><dt><i style="background:' + color + '"></i>' + label + '</dt><dd>' + value + '</dd></div>';
+    }
+    function picks() {
+      return [].slice.call(document.querySelectorAll('input[name=pick]:checked')).map(function (c) { return c.value; });
+    }
+    function has(p, v) { return p.indexOf(v) !== -1; }
+
+    // KW$P Basic Savings in Akaun Persaraan by age, effective 1 Jan 2026 (ages 18 to 55), from the official i-Invest table
+    var BASIC = [900, 1100, 1500, 1900, 4000, 6200, 8500, 11000, 13700, 16600, 19600, 22900, 26300, 30000, 33900,
+      38100, 42400, 47000, 51900, 57000, 62400, 68100, 74000, 80200, 86700, 93600, 100000, 108000, 115000, 124000,
+      132000, 141000, 150000, 160000, 170000, 181000, 192000, 203000];
+
+    function epfCalc() {
+      var age = Math.floor(num('age')), bal = num('epfBal');
+      if (!age || !bal) return { ready: false };
+      if (age < 18) return { ready: true, age: age, bal: bal, note: 'young' };
+      if (age >= 55) return { ready: true, age: age, bal: bal, note: 'over55' };
+      var basic = BASIC[age - 18], excess = Math.max(bal - basic, 0), can = excess * 0.3;
+      return { ready: true, age: age, bal: bal, basic: basic, excess: excess, can: can, ok: can >= 1000 };
+    }
+    function growCalc(p) {
+      var lump = (has(p, 'lump') || has(p, 'corp') || has(p, 'prs')) ? num('lump') : 0;
+      var monthly = (has(p, 'monthly') || has(p, 'prs')) ? num('monthly') : 0;
+      var r = num('rate') / 100 / 12, years = Math.min(Math.round(num('years')), 60), n = years * 12;
+      var g = Math.pow(1 + r, n);
+      var total = r ? lump * g + monthly * (g - 1) / r : lump + monthly * n;
+      return { lump: lump, monthly: monthly, rate: num('rate'), years: years, total: total, paid: lump + monthly * n };
+    }
+
+    function update() {
+      var p = picks(), en = current === 'en';
+      $('epfBox').hidden = !has(p, 'epf');
+      var growOn = has(p, 'lump') || has(p, 'monthly') || has(p, 'corp') || has(p, 'prs');
+      $('growBox').hidden = !growOn;
+      $('lumpField').hidden = !(has(p, 'lump') || has(p, 'corp') || has(p, 'prs'));
+      $('monthlyField').hidden = !(has(p, 'monthly') || has(p, 'prs'));
+
+      var e = epfCalc(), out;
+      if (!e.ready) {
+        out = '<p class="msg">' + (en ? 'Enter your age (section 1) and your Akaun Persaraan balance.' : 'Isi umur (bahagian 1) dan baki Akaun Persaraan anda.') + '</p>';
+      } else if (e.note === 'young') {
+        out = '<p class="msg warn">' + (en ? 'Available from age 18.' : 'Untuk umur 18 tahun ke atas.') + '</p>';
+      } else if (e.note === 'over55') {
+        out = '<p class="msg warn">' + (en
+          ? 'At 55 and above, the Members Investment Scheme no longer applies, but you can still invest part of your savings through the Age 55/60 Withdrawal (Investment). Send this form and I will check it with you.'
+          : 'Pada umur 55 tahun ke atas, Skim Pelaburan Ahli tidak lagi terpakai, tetapi anda masih boleh melabur sebahagian simpanan melalui Pengeluaran Umur 55/60 (Pelaburan). Hantar borang ini dan saya semak bersama anda.') + '</p>';
+      } else {
+        out = '<div class="big"><small>' + (en ? 'You can invest up to' : 'Anda boleh labur sehingga') + '</small><b>' + rm(e.ok ? e.can : 0) + '</b></div>' +
+          '<dl style="margin-top:12px">' + row('#FFFFFF', en ? 'Basic Savings (age ' + e.age + ')' : 'Simpanan Asas (umur ' + e.age + ')', rm(e.basic)) +
+          row('rgba(255,255,255,.35)', en ? 'Amount above Basic Savings' : 'Jumlah melebihi Simpanan Asas', rm(e.excess)) +
+          row('var(--yellow)', en ? '30% of that amount' : '30% daripada jumlah itu', rm(e.can)) + '</dl>' +
+          '<p class="msg' + (e.ok ? '' : ' warn') + '">' + (e.ok
+            ? (en ? 'You are eligible. The minimum investment is RM1,000.' : 'Anda layak. Pelaburan minimum ialah RM1,000.')
+            : (en ? 'Below the RM1,000 minimum for now. Send the form anyway and I can look at other options with you.'
+                  : 'Belum capai minimum RM1,000 buat masa ini. Hantar juga borang ini, saya boleh semak pilihan lain bersama anda.')) + '</p>';
+      }
+      $('epfResult').innerHTML = out;
+
+      var g = growCalc(p);
+      if (!g.paid) {
+        $('growResult').innerHTML = '<p class="msg">' + (en ? 'Enter an amount to see the estimate.' : 'Isi jumlah untuk lihat anggaran.') + '</p>';
+      } else {
+        var paidPct = g.total > g.paid ? g.paid / g.total * 100 : 100;
+        $('growResult').innerHTML =
+          '<div class="big"><small>' + (en ? 'Estimated value after ' + g.years + ' years' : 'Anggaran nilai selepas ' + g.years + ' tahun') + '</small><b>' + rm(g.total) + '</b></div>' +
+          '<div class="split"><span class="a" style="width:' + paidPct + '%"></span><span class="b" style="width:' + (100 - paidPct) + '%"></span></div>' +
+          '<dl>' + row('#FFFFFF', en ? 'Your money in' : 'Wang anda masuk', rm(g.paid)) +
+          row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(g.total - g.paid, 0))) + '</dl>';
+      }
+
+      var bigLump = (has(p, 'lump') || has(p, 'prs')) && num('lump') >= 50000;
+      $('apptCard').hidden = !(has(p, 'corp') || bigLump);
+      $('noteNo').textContent = $('apptCard').hidden ? '3' : '4';
+    }
+    document.querySelectorAll('#form input').forEach(function (i) {
+      i.addEventListener('input', function () { update(); i.closest('[data-field]') && i.closest('[data-field]').classList.remove('invalid'); });
+      i.addEventListener('change', update);
+    });
+
+    // Validation: mark fields red and show the reason under them
+    function mark(field, bad) {
+      var el = document.querySelector('[data-field="' + field + '"]');
+      el.classList.toggle('invalid', bad);
+      var err = el.querySelector('.err');
+      if (err) err.hidden = !bad;
+      return bad;
+    }
+    function validate(p) {
+      var phone = $('phone').value.replace(/\D/g, '').replace(/^60/, '').replace(/^0/, '');
+      var bad = [];
+      if (mark('name', $('name').value.trim().length < 2)) bad.push('name');
+      if (mark('age', !(num('age') >= 18 && num('age') <= 100))) bad.push('age');
+      if (mark('city', $('city').value.trim().length < 2)) bad.push('city');
+      if (mark('phone', !/^1\d{7,9}$/.test(phone))) bad.push('phone');
+      if (mark('choices', p.length === 0)) bad.push('choices');
+      if (mark('appt', has(p, 'corp') && !$('apptDate').value)) bad.push('appt');
+      $('formErr').hidden = !bad.length;
+      if (bad.length) {
+        var first = document.querySelector('[data-field="' + bad[0] + '"]');
+        first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var f = first.querySelector('input'); if (f && bad[0] !== 'choices') setTimeout(function () { f.focus(); }, 300);
+      }
+      return { ok: !bad.length, phone: phone };
+    }
+
+    // The WhatsApp message, written in the visitor's language
+    function buildMessage(p, phone) {
+      var en = current === 'en';
+      var names = {
+        lump: en ? 'One-time investment' : 'Pelaburan sekali',
+        monthly: en ? 'Regular savings plan (monthly)' : 'Simpanan bulanan',
+        epf: en ? 'Invest with €PF' : 'Labur guna KW$P',
+        corp: en ? 'Corporate investment' : 'Pelaburan korporat',
+        prs: en ? 'PRS investment' : 'Pelaburan PRS'
+      };
+      var L = [];
+      L.push(en ? '*Registration / investment enquiry*' : '*Pendaftaran / pertanyaan pelaburan*');
+      L.push((en ? 'Name: ' : 'Nama: ') + $('name').value.trim());
+      L.push((en ? 'Age: ' : 'Umur: ') + Math.floor(num('age')));
+      L.push((en ? 'Location: ' : 'Lokasi: ') + $('city').value.trim());
+      L.push((en ? 'Phone: ' : 'Telefon: ') + '+60' + phone);
+      L.push((en ? 'Looking for: ' : 'Pilihan: ') + p.map(function (k) { return names[k]; }).join(', '));
+      var g = growCalc(p);
+      if (g.paid) {
+        if (g.lump) L.push((en ? 'One-time amount: ' : 'Jumlah sekali: ') + rm(g.lump));
+        if (g.monthly) L.push((en ? 'Monthly amount: ' : 'Jumlah bulanan: ') + rm(g.monthly));
+        L.push((en ? 'Period: ' : 'Tempoh: ') + g.years + (en ? ' years' : ' tahun'));
+        L.push((en ? 'Estimate at ' : 'Anggaran pada ') + g.rate + '%' + (en ? ' a year (illustration): ' : ' setahun (ilustrasi): ') + rm(g.total));
+      }
+      if (has(p, 'epf')) {
+        var e = epfCalc();
+        if (e.ready) {
+          L.push((en ? 'Akaun Persaraan balance: ' : 'Baki Akaun Persaraan: ') + rm(e.bal));
+          if (e.can !== undefined) L.push((en ? 'Can invest (30% above Basic Savings): ' : 'Boleh labur (30% melebihi Simpanan Asas): ') + rm(e.ok ? e.can : 0));
+          if (e.note === 'over55') L.push(en ? 'Age 55+: Age 55/60 Withdrawal (Investment)' : 'Umur 55+: Pengeluaran Umur 55/60 (Pelaburan)');
+        }
+      }
+      if (!$('apptCard').hidden && $('apptDate').value) {
+        L.push((en ? 'Appointment: ' : 'Temujanji: ') + $('apptDate').value + ($('apptTime').value ? ' ' + $('apptTime').value : ''));
+      }
+      var note = $('note').value.trim();
+      if (note) L.push((en ? 'Note: ' : 'Nota: ') + note);
+      return L.join('\n');
+    }
+
+    var sheet = $('inapp');
+    function showToast(msg) {
+      var t = $('toast'); t.textContent = msg; t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 2600);
+    }
+    function closeSheet() { sheet.classList.remove('show'); }
+    sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+    $('continueLink').addEventListener('click', closeSheet);
+    $('copyLink').addEventListener('click', function () {
+      var url = location.origin + location.pathname;
+      var done = function () { closeSheet(); showToast(current === 'en' ? 'Link copied. Paste it in Safari or Chrome.' : 'Link disalin. Tampal dalam Safari atau Chrome.'); };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { prompt('Copy:', url); closeSheet(); });
+      else { prompt('Copy:', url); closeSheet(); }
+    });
+
+    $('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var p = picks(), v = validate(p);
+      if (!v.ok) return;
+      var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(buildMessage(p, v.phone));
+      if (inApp) {
+        // WhatsApp often won't open from inside TikTok/IG, so remind first and let them continue anyway
+        $('continueLink').href = url;
+        if (/Android/i.test(ua)) {
+          var c = $('openChrome');
+          c.href = 'intent://' + location.host + location.pathname + '#Intent;scheme=' + location.protocol.replace(':', '') + ';package=com.android.chrome;end';
+          c.hidden = false;
+          $('copyLink').className = 'ghost';
+        }
+        sheet.classList.add('show');
+        return;
+      }
+      window.location.href = url;
+    });
+
+    // Prefill from the main page's calculators, e.g. /hubungi/?pick=epf&age=30&bal=50000
+    var qs = new URLSearchParams(location.search);
+    (qs.get('pick') || '').split(',').forEach(function (v) {
+      var c = document.querySelector('input[name=pick][value="' + v + '"]');
+      if (c) c.checked = true;
+    });
+    [['age', 'age'], ['bal', 'epfBal'], ['lump', 'lump'], ['monthly', 'monthly'], ['rate', 'rate'], ['years', 'years']].forEach(function (m) {
+      var v = parseFloat(qs.get(m[0]));
+      if (isFinite(v) && v > 0) $(m[1]).value = v;
+    });
+
+    var initial = qs.get('lang');
+    if (!initial) { try { initial = localStorage.getItem('langChosen'); } catch (e) {} }
+    setLang(initial === 'en' ? 'en' : 'ms');
+  })();
+</script>
+</body>
+</html>
