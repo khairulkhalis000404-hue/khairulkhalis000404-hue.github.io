@@ -324,6 +324,16 @@
     position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; border: 0;
     background: var(--card); color: var(--text); font-size: 22px; line-height: 1; cursor: pointer;
   }
+  /* TVM: choose what to work out */
+  .seg {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 14px; padding: 4px;
+    border-radius: 14px; background: var(--card); border: 1px solid var(--line);
+  }
+  .seg button {
+    border: 0; background: none; padding: 10px 8px; border-radius: 10px; cursor: pointer;
+    font: 600 13px/1.2 "Plus Jakarta Sans", system-ui, sans-serif; color: var(--muted);
+  }
+  .seg button[aria-pressed="true"] { background: var(--btn); color: var(--on-btn); }
   .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
   .fields label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; font-weight: 600; color: var(--muted); }
   .inp {
@@ -525,6 +535,11 @@
       <span class="txt"><span class="t" data-en="€PF investment eligibility">Kelayakan pelaburan KW$P</span><span class="d" data-en="How much of your Akaun Persaraan you can invest">Berapa dari Akaun Persaraan yang boleh dilabur</span></span>
       <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
     </button>
+    <button type="button" class="link" data-open="calcTvm" data-umami-event="Kalkulator TVM: buka">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M9.5 2.5h5M12 2.5V5"/></svg></span>
+      <span class="txt"><span class="t" data-en="TVM calculator (time value of money)">Kalkulator TVM (nilai masa wang)</span><span class="d" data-en="Work out a target, monthly saving, lump sum or time needed">Kira sasaran, simpanan bulanan, jumlah sekali atau tempoh</span></span>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
   </section>
 
   <footer>
@@ -605,6 +620,32 @@
     <p class="fine" data-en="Based on the €PF Basic Savings table effective 1 January 2026. Minimum investment RM1,000; you must be below 55. Check your exact eligible amount in the KW$P app or i-Akaun.">Berdasarkan jadual Simpanan Asas KW$P berkuat kuasa 1 Januari 2026. Pelaburan minimum RM1,000; anda mesti berumur bawah 55 tahun. Semak jumlah layak sebenar dalam aplikasi KW$P atau i-Akaun.</p>
     <div class="sheet-btns">
       <a class="primary" id="epfToForm" href="/hubungi/?pick=epf" data-en="Invest your €PF with me" data-umami-event="Kalkulator KW$P: WhatsApp">Labur KW$P anda bersama saya</a>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-bg calc" id="calcTvm" role="dialog" aria-modal="true" aria-labelledby="tvmTitle">
+  <div class="sheet">
+    <button type="button" class="x" data-close aria-label="Close">&times;</button>
+    <h3 id="tvmTitle" data-en="TVM calculator">Kalkulator TVM</h3>
+    <p class="why" data-en="Choose what to work out, then fill in the rest.">Pilih apa yang nak dikira, kemudian isi yang lain.</p>
+    <div class="seg" role="group" aria-label="Kira">
+      <button type="button" data-tvm="fv" aria-pressed="true" data-en="Final value">Nilai akhir</button>
+      <button type="button" data-tvm="pmt" aria-pressed="false" data-en="Monthly saving">Simpanan bulanan</button>
+      <button type="button" data-tvm="pv" aria-pressed="false" data-en="Lump sum now">Jumlah sekali</button>
+      <button type="button" data-tvm="n" aria-pressed="false" data-en="Time needed">Tempoh</button>
+    </div>
+    <div class="fields">
+      <label data-need="pmt pv n"><span data-en="Target amount">Sasaran</span><span class="inp"><i>RM</i><input id="tvFv" type="number" inputmode="decimal" min="0" step="any" value="100000"></span></label>
+      <label data-need="fv pmt n"><span data-en="Lump sum now">Jumlah sekali sekarang</span><span class="inp"><i>RM</i><input id="tvPv" type="number" inputmode="decimal" min="0" step="any" value="5000"></span></label>
+      <label data-need="fv pv n"><span data-en="Monthly saving">Simpanan bulanan</span><span class="inp"><i>RM</i><input id="tvPmt" type="number" inputmode="decimal" min="0" step="any" value="300"></span></label>
+      <label data-need="fv pmt pv n"><span data-en="Return per year">Pulangan setahun</span><span class="inp"><input id="tvRate" type="number" inputmode="decimal" min="0" max="50" step="any" value="6"><i>%</i></span></label>
+      <label data-need="fv pmt pv"><span data-en="Years">Tempoh</span><span class="inp"><input id="tvYears" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"><i data-en="years">tahun</i></span></label>
+    </div>
+    <div class="result" id="tvmResult" aria-live="polite"></div>
+    <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate, with savings made at the end of each month and before any fees or charges. Actual returns vary and are not guaranteed.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap, simpanan dibuat pada hujung setiap bulan dan sebelum sebarang caj. Pulangan sebenar berubah-ubah dan tidak dijamin.</p>
+    <div class="sheet-btns">
+      <a class="primary" id="tvmToForm" href="/hubungi/" data-en="Plan this with me on WhatsApp" data-umami-event="Kalkulator TVM: WhatsApp">Rancang bersama saya di WhatsApp</a>
     </div>
   </div>
 </div>
@@ -801,6 +842,15 @@
     });
     if (document.documentElement.classList.contains('skip-gate')) maybeShowSheet();
 
+    var tvmMode = 'fv';
+    document.querySelectorAll('[data-tvm]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        tvmMode = b.dataset.tvm;
+        document.querySelectorAll('[data-tvm]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        renderCalcs();
+      });
+    });
+
     // Calculators open as sheets over the page; results are re-rendered on every keystroke and language switch
     function openCalc(id) {
       document.getElementById(id).classList.add('show');
@@ -884,6 +934,51 @@
           '<p class="msg' + (ok ? '' : ' warn') + '">' + msg + '</p>';
       }
       document.getElementById('epfResult').innerHTML = out;
+
+      // TVM, monthly compounding, savings at the end of each month: FV = PV*g + PMT*(g-1)/r with g = (1+r)^n
+      document.querySelectorAll('#calcTvm [data-need]').forEach(function (l) {
+        l.hidden = l.getAttribute('data-need').split(' ').indexOf(tvmMode) === -1;
+      });
+      var tPv = num('tvPv'), tPmt = num('tvPmt'), tFv = num('tvFv'), tr = num('tvRate') / 100 / 12;
+      var tYears = Math.min(Math.round(num('tvYears')), 60), tn = tYears * 12;
+      var tg = Math.pow(1 + tr, tn), tA = tr ? (tg - 1) / tr : tn;
+      var yrs = en ? ' years' : ' tahun', perMonth = en ? ' / month' : ' / bulan';
+      var big, rows = '', note = '', toForm = {};
+      if (tvmMode === 'fv') {
+        var fv = tPv * tg + tPmt * tA, paidIn = tPv + tPmt * tn;
+        big = ['<small>' + (en ? 'Estimated value after ' + tYears + yrs : 'Anggaran nilai selepas ' + tYears + yrs) + '</small>', rm(fv)];
+        rows = row('#FFFFFF', en ? 'Your money in' : 'Wang anda masuk', rm(paidIn)) + row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(fv - paidIn, 0)));
+        toForm = { lump: tPv, monthly: tPmt };
+      } else if (tvmMode === 'pmt') {
+        var need = tn ? (tFv - tPv * tg) / tA : 0;
+        big = ['<small>' + (en ? 'Save every month for ' + tYears + yrs : 'Simpan setiap bulan selama ' + tYears + yrs) + '</small>', rm(Math.max(need, 0)) + perMonth];
+        if (need <= 0) note = en ? 'Your lump sum alone is estimated to reach the target.' : 'Jumlah sekali anda sahaja dianggarkan sudah cukup untuk capai sasaran.';
+        else rows = row('#FFFFFF', en ? 'Total saved monthly' : 'Jumlah simpanan bulanan', rm(need * tn)) + row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(tFv - tPv - need * tn, 0)));
+        toForm = { lump: tPv, monthly: Math.max(Math.ceil(need), 0) };
+      } else if (tvmMode === 'pv') {
+        var needPv = tn ? (tFv - tPmt * tA) / tg : 0;
+        big = ['<small>' + (en ? 'Invest now, once' : 'Labur sekarang, sekali') + '</small>', rm(Math.max(needPv, 0))];
+        if (needPv <= 0) note = en ? 'Your monthly saving alone is estimated to reach the target.' : 'Simpanan bulanan anda sahaja dianggarkan sudah cukup untuk capai sasaran.';
+        else rows = row('#FFFFFF', en ? 'Total saved monthly' : 'Jumlah simpanan bulanan', rm(tPmt * tn)) + row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(tFv - needPv - tPmt * tn, 0)));
+        toForm = { lump: Math.max(Math.ceil(needPv), 0), monthly: tPmt };
+      } else {
+        var months = null;
+        if (tFv <= tPv) months = 0;
+        else if (tr && tFv * tr + tPmt > 0 && tPv * tr + tPmt > 0) months = Math.ceil(Math.log((tFv * tr + tPmt) / (tPv * tr + tPmt)) / Math.log(1 + tr));
+        else if (!tr && tPmt > 0) months = Math.ceil((tFv - tPv) / tPmt);
+        var unit = function (v, one, many, ms) { return v + (en ? (v === 1 ? one : many) : ms); };
+        var span = months === null ? '–' : months > 1200 ? (en ? '100+ years' : '100+ tahun')
+          : unit(Math.floor(months / 12), ' year', ' years', ' tahun') + (months % 12 ? ' ' + unit(months % 12, ' month', ' months', ' bulan') : '');
+        big = ['<small>' + (en ? 'Time to reach your target' : 'Masa untuk capai sasaran') + '</small>', span];
+        if (months === null) note = en ? 'Enter a lump sum or a monthly saving.' : 'Isi jumlah sekali atau simpanan bulanan.';
+        else if (months <= 1200) rows = row('#FFFFFF', en ? 'Your money in' : 'Wang anda masuk', rm(tPv + tPmt * months)) + row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(tFv - tPv - tPmt * months, 0)));
+        toForm = { lump: tPv, monthly: tPmt, years: months ? Math.ceil(months / 12) : 0 };
+      }
+      document.getElementById('tvmResult').innerHTML = '<div class="big">' + big[0] + '<b>' + big[1] + '</b></div>' +
+        (rows ? '<dl style="margin-top:12px">' + rows + '</dl>' : '') + (note ? '<p class="msg">' + note + '</p>' : '');
+      var picks = [toForm.lump ? 'lump' : '', toForm.monthly ? 'monthly' : ''].filter(Boolean).join(',');
+      document.getElementById('tvmToForm').href = '/hubungi/?' + q({ pick: picks, lump: Math.round(toForm.lump || 0), monthly: Math.round(toForm.monthly || 0),
+        rate: num('tvRate'), years: toForm.years !== undefined ? toForm.years : tYears });
     }
 
     var initial = new URLSearchParams(location.search).get('lang');
