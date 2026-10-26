@@ -329,12 +329,12 @@
 
     <section class="card" id="apptCard" hidden data-field="appt">
       <h2><span class="n">3</span><span data-en="Appointment">Temujanji</span></h2>
-      <p class="note" style="margin:-4px 0 12px" data-en="For investments of RM50,000 and above, and required for corporate investment.">Untuk pelaburan RM50,000 ke atas, dan wajib untuk pelaburan korporat.</p>
+      <p class="note" style="margin:-4px 0 12px" data-en="For investments of RM50,000 and above, and required for corporate and €PF investment.">Untuk pelaburan RM50,000 ke atas, dan wajib untuk pelaburan korporat dan KW$P.</p>
       <div class="grid">
         <label class="f"><span data-en="Date">Tarikh</span><span class="inp"><input id="apptDate" type="date"></span></label>
         <label class="f"><span data-en="Time">Masa</span><span class="inp"><input id="apptTime" type="time"></span></label>
       </div>
-      <p class="err" hidden data-en="Please choose a date for corporate investment">Sila pilih tarikh untuk pelaburan korporat</p>
+      <p class="err" hidden data-en="Please choose a date (required for corporate and €PF investment)">Sila pilih tarikh (wajib untuk pelaburan korporat dan KW$P)</p>
     </section>
 
     <section class="card">
@@ -491,7 +491,8 @@
       }
 
       var bigLump = (has(p, 'lump') || has(p, 'prs')) && num('lump') >= 50000;
-      $('apptCard').hidden = !(has(p, 'corp') || bigLump);
+      // Corporate and KW$P investments always need an appointment
+      $('apptCard').hidden = !(has(p, 'corp') || has(p, 'epf') || bigLump);
       $('noteNo').textContent = $('apptCard').hidden ? '3' : '4';
     }
     document.querySelectorAll('#form input').forEach(function (i) {
@@ -515,7 +516,7 @@
       if (mark('city', $('city').value.trim().length < 2)) bad.push('city');
       if (mark('phone', !/^1\d{7,9}$/.test(phone))) bad.push('phone');
       if (mark('choices', p.length === 0)) bad.push('choices');
-      if (mark('appt', has(p, 'corp') && !$('apptDate').value)) bad.push('appt');
+      if (mark('appt', (has(p, 'corp') || has(p, 'epf')) && !$('apptDate').value)) bad.push('appt');
       $('formErr').hidden = !bad.length;
       if (bad.length) {
         var first = document.querySelector('[data-field="' + bad[0] + '"]');
