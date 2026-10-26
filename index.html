@@ -596,8 +596,8 @@
       <label><span data-en="Monthly top-up">Tambahan bulanan</span><span class="inp"><i>RM</i><input id="ccMonthly" type="number" inputmode="decimal" min="0" step="any" value="200"></span></label>
       <label><span data-en="Return per year">Pulangan setahun</span><span class="inp"><input id="ccRate" type="number" inputmode="decimal" min="0" max="50" step="any" value="6"><i>%</i></span></label>
       <label><span data-en="Years">Tempoh</span><span class="inp"><input id="ccYears" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"><i data-en="years">tahun</i></span></label>
-      <label><span data-en="One-time charge">Caj sekali (jualan)</span><span class="inp"><input id="ccSales" type="number" inputmode="decimal" min="0" max="10" step="any" value="5.5"><i>%</i></span></label>
-      <label><span data-en="Annual charge">Caj tahunan</span><span class="inp"><input id="ccFee" type="number" inputmode="decimal" min="0" max="5" step="any" value="1.5"><i data-en="% / yr">% / thn</i></span></label>
+      <label><span data-en="One-time charge">Caj sekali (jualan)</span><span class="inp"><input id="ccSales" type="number" inputmode="decimal" min="0" max="10" step="any" placeholder="0"><i>%</i></span></label>
+      <label><span data-en="Annual charge">Caj tahunan</span><span class="inp"><input id="ccFee" type="number" inputmode="decimal" min="0" max="5" step="any" placeholder="0"><i data-en="% / yr">% / thn</i></span></label>
     </div>
     <div class="result" id="ccResult" aria-live="polite"></div>
     <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate. The return per year is before the annual charge. The one-time charge is taken from every amount you put in (including monthly top-ups); the annual charge is deducted monthly from your investment value. Actual returns vary and are not guaranteed. See the fund’s PHS / prospectus for its actual charges.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap. Pulangan setahun ialah sebelum caj tahunan. Caj sekali ditolak daripada setiap wang yang anda masukkan (termasuk tambahan bulanan); caj tahunan ditolak setiap bulan daripada nilai pelaburan. Pulangan sebenar berubah-ubah dan tidak dijamin. Rujuk PHS / prospektus dana untuk caj sebenar.</p>
@@ -903,14 +903,14 @@
         salesPaid += monthly * sales;
       }
       var paid = start + monthly * n, net = total - paid, charges = salesPaid + feesPaid;
-      var paidPct = total > paid ? paid / total * 100 : 100;
+      var paidPct = total > paid ? paid / total * 100 : 100, ccCharged = sales > 0 || fee > 0;
       document.getElementById('ccResult').innerHTML =
-        '<div class="big"><small>' + (en ? 'Estimated value after ' + years + ' years, after charges' : 'Anggaran nilai selepas ' + years + ' tahun, selepas caj') +
-        '</small><b>' + rm(total) + '</b></div>' +
+        '<div class="big"><small>' + (en ? 'Estimated value after ' + years + ' years' : 'Anggaran nilai selepas ' + years + ' tahun') +
+        (ccCharged ? (en ? ', after charges' : ', selepas caj') : '') + '</small><b>' + rm(total) + '</b></div>' +
         '<div class="split"><span class="a" style="width:' + paidPct + '%"></span><span class="b" style="width:' + (100 - paidPct) + '%"></span></div>' +
         '<dl>' + row('#FFFFFF', en ? 'Your money in' : 'Wang anda masuk', rm(paid)) +
-        row('rgba(255,255,255,.35)', en ? 'Total charges' : 'Jumlah caj', '−' + rm(charges)) +
-        row('var(--yellow)', en ? 'Net growth' : 'Pertumbuhan bersih', (net < 0 ? '−' : '') + rm(Math.abs(net))) + '</dl>';
+        (ccCharged ? row('rgba(255,255,255,.35)', en ? 'Total charges' : 'Jumlah caj', '−' + rm(charges)) : '') +
+        row('var(--yellow)', ccCharged ? (en ? 'Net growth' : 'Pertumbuhan bersih') : (en ? 'Growth' : 'Pertumbuhan'), (net < 0 ? '−' : '') + rm(Math.abs(net))) + '</dl>';
 
       var age = Math.floor(num('epfAge')), bal = num('epfBal'), out;
       if (age < 18) {
