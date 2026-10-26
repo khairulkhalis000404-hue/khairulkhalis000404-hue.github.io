@@ -596,11 +596,9 @@
       <label><span data-en="Monthly top-up">Tambahan bulanan</span><span class="inp"><i>RM</i><input id="ccMonthly" type="number" inputmode="decimal" min="0" step="any" value="200"></span></label>
       <label><span data-en="Return per year">Pulangan setahun</span><span class="inp"><input id="ccRate" type="number" inputmode="decimal" min="0" max="50" step="any" value="6"><i>%</i></span></label>
       <label><span data-en="Years">Tempoh</span><span class="inp"><input id="ccYears" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"><i data-en="years">tahun</i></span></label>
-      <label><span data-en="One-time charge">Caj sekali (jualan)</span><span class="inp"><input id="ccSales" type="number" inputmode="decimal" min="0" max="10" step="any" placeholder="0"><i>%</i></span></label>
-      <label><span data-en="Annual charge">Caj tahunan</span><span class="inp"><input id="ccFee" type="number" inputmode="decimal" min="0" max="5" step="any" placeholder="0"><i data-en="% / yr">% / thn</i></span></label>
     </div>
     <div class="result" id="ccResult" aria-live="polite"></div>
-    <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate. The return per year is before the annual charge. The one-time charge is taken from every amount you put in (including monthly top-ups); the annual charge is deducted monthly from your investment value. Actual returns vary and are not guaranteed. See the fund’s PHS / prospectus for its actual charges.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap. Pulangan setahun ialah sebelum caj tahunan. Caj sekali ditolak daripada setiap wang yang anda masukkan (termasuk tambahan bulanan); caj tahunan ditolak setiap bulan daripada nilai pelaburan. Pulangan sebenar berubah-ubah dan tidak dijamin. Rujuk PHS / prospektus dana untuk caj sebenar.</p>
+    <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate. Actual returns vary and are not guaranteed.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap. Pulangan sebenar berubah-ubah dan tidak dijamin.</p>
     <div class="sheet-btns">
       <a class="primary" id="ccToForm" href="/hubungi/?pick=lump,monthly" data-en="Plan this with me on WhatsApp" data-umami-event="Kalkulator kompaun: WhatsApp">Rancang bersama saya di WhatsApp</a>
     </div>
@@ -641,11 +639,9 @@
       <label data-need="fv pv n"><span data-en="Monthly saving">Simpanan bulanan</span><span class="inp"><i>RM</i><input id="tvPmt" type="number" inputmode="decimal" min="0" step="any" value="300"></span></label>
       <label data-need="fv pmt pv n"><span data-en="Return per year">Pulangan setahun</span><span class="inp"><input id="tvRate" type="number" inputmode="decimal" min="0" max="50" step="any" value="6"><i>%</i></span></label>
       <label data-need="fv pmt pv"><span data-en="Years">Tempoh</span><span class="inp"><input id="tvYears" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"><i data-en="years">tahun</i></span></label>
-      <label data-need="fv pmt pv n"><span data-en="One-time charge">Caj sekali (jualan)</span><span class="inp"><input id="tvSales" type="number" inputmode="decimal" min="0" max="10" step="any" placeholder="0"><i>%</i></span></label>
-      <label data-need="fv pmt pv n"><span data-en="Annual charge">Caj tahunan</span><span class="inp"><input id="tvFee" type="number" inputmode="decimal" min="0" max="5" step="any" placeholder="0"><i data-en="% / yr">% / thn</i></span></label>
     </div>
     <div class="result" id="tvmResult" aria-live="polite"></div>
-    <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate, with savings made at the end of each month. The return per year is before the annual charge. The one-time charge is taken from every amount you put in (including monthly savings); the annual charge is deducted monthly from your investment value. Actual returns vary and are not guaranteed. See the fund’s PHS / prospectus for its actual charges.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap, simpanan dibuat pada hujung setiap bulan. Pulangan setahun ialah sebelum caj tahunan. Caj sekali ditolak daripada setiap wang yang anda masukkan (termasuk simpanan bulanan); caj tahunan ditolak setiap bulan daripada nilai pelaburan. Pulangan sebenar berubah-ubah dan tidak dijamin. Rujuk PHS / prospektus dana untuk caj sebenar.</p>
+    <p class="fine" data-en="Illustration only, compounded monthly at a fixed rate, with savings made at the end of each month. Actual returns vary and are not guaranteed.">Ilustrasi sahaja, dikompaun bulanan pada kadar tetap, simpanan dibuat pada hujung setiap bulan. Pulangan sebenar berubah-ubah dan tidak dijamin.</p>
     <div class="sheet-btns">
       <a class="primary" id="tvmToForm" href="/hubungi/" data-en="Plan this with me on WhatsApp" data-umami-event="Kalkulator TVM: WhatsApp">Rancang bersama saya di WhatsApp</a>
     </div>
@@ -892,25 +888,15 @@
 
       var start = num('ccStart'), monthly = num('ccMonthly'), rate = num('ccRate') / 100 / 12;
       var years = Math.min(Math.round(num('ccYears')), 60), n = years * 12;
-      // One-time (sales) charge comes off every amount put in; the annual charge is taken monthly from the value
-      var sales = Math.min(num('ccSales'), 100) / 100, fee = Math.min(num('ccFee'), 100) / 100 / 12;
-      var total = start * (1 - sales), salesPaid = start * sales, feesPaid = 0;
-      for (var m = 0; m < n; m++) {
-        total *= 1 + rate;
-        feesPaid += total * fee;
-        total -= total * fee;
-        total += monthly * (1 - sales);
-        salesPaid += monthly * sales;
-      }
-      var paid = start + monthly * n, net = total - paid, charges = salesPaid + feesPaid;
-      var paidPct = total > paid ? paid / total * 100 : 100, ccCharged = sales > 0 || fee > 0;
+      var g = Math.pow(1 + rate, n);
+      var total = rate ? start * g + monthly * (g - 1) / rate : start + monthly * n;
+      var paid = start + monthly * n;
+      var paidPct = total > paid ? paid / total * 100 : 100;
       document.getElementById('ccResult').innerHTML =
-        '<div class="big"><small>' + (en ? 'Estimated value after ' + years + ' years' : 'Anggaran nilai selepas ' + years + ' tahun') +
-        (ccCharged ? (en ? ', after charges' : ', selepas caj') : '') + '</small><b>' + rm(total) + '</b></div>' +
+        '<div class="big"><small>' + (en ? 'Estimated value after ' + years + ' years' : 'Anggaran nilai selepas ' + years + ' tahun') + '</small><b>' + rm(total) + '</b></div>' +
         '<div class="split"><span class="a" style="width:' + paidPct + '%"></span><span class="b" style="width:' + (100 - paidPct) + '%"></span></div>' +
         '<dl>' + row('#FFFFFF', en ? 'Your money in' : 'Wang anda masuk', rm(paid)) +
-        (ccCharged ? row('rgba(255,255,255,.35)', en ? 'Total charges' : 'Jumlah caj', '−' + rm(charges)) : '') +
-        row('var(--yellow)', ccCharged ? (en ? 'Net growth' : 'Pertumbuhan bersih') : (en ? 'Growth' : 'Pertumbuhan'), (net < 0 ? '−' : '') + rm(Math.abs(net))) + '</dl>';
+        row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(total - paid, 0))) + '</dl>';
 
       var age = Math.floor(num('epfAge')), bal = num('epfBal'), out;
       if (age < 18) {
@@ -937,51 +923,43 @@
       }
       document.getElementById('epfResult').innerHTML = out;
 
-      // TVM with the same charges as the compound calculator: the one-time charge comes off every amount put in,
-      // the annual charge is taken monthly from the value, and savings land at the end of each month.
-      // Net monthly growth q = (1+r)(1-f), so FV = PV(1-s)q^n + PMT(1-s)(q^n-1)/(q-1)
+      // TVM, monthly compounding, savings at the end of each month: FV = PV*g + PMT*(g-1)/r with g = (1+r)^n
       document.querySelectorAll('#calcTvm [data-need]').forEach(function (l) {
         l.hidden = l.getAttribute('data-need').split(' ').indexOf(tvmMode) === -1;
       });
       var tPv = num('tvPv'), tPmt = num('tvPmt'), tFv = num('tvFv'), tr = num('tvRate') / 100 / 12;
       var tYears = Math.min(Math.round(num('tvYears')), 60), tn = tYears * 12;
-      var ts = Math.min(num('tvSales'), 100) / 100, tf = Math.min(num('tvFee'), 100) / 100 / 12, keep = 1 - ts;
-      var tq = (1 + tr) * (1 - tf), tri = tq - 1, charged = ts > 0 || tf > 0;
+      var tq = 1 + tr, tri = tr;
       var grow = function (m) { return Math.pow(tq, m); };
       var annuity = function (m) { return Math.abs(tri) > 1e-12 ? (Math.pow(tq, m) - 1) / tri : m; };
       var tvmRun = function (pv, pmt, m) {
-        var v = pv * keep, sales = pv * ts, fees = 0;
-        for (var i = 0; i < m; i++) { v *= 1 + tr; fees += v * tf; v -= v * tf; v += pmt * keep; sales += pmt * ts; }
-        return { value: v, paid: pv + pmt * m, charges: sales + fees };
+        return { value: pv * grow(m) + pmt * annuity(m), paid: pv + pmt * m };
       };
       var breakdown = function (run) {
-        var net = run.value - run.paid;
         return row('#FFFFFF', en ? 'Your money in' : 'Wang anda masuk', rm(run.paid)) +
-          (charged ? row('rgba(255,255,255,.35)', en ? 'Total charges' : 'Jumlah caj', '−' + rm(run.charges)) : '') +
-          row('var(--yellow)', charged ? (en ? 'Net growth' : 'Pertumbuhan bersih') : (en ? 'Growth' : 'Pertumbuhan'), (net < 0 ? '−' : '') + rm(Math.abs(net)));
+          row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(run.value - run.paid, 0)));
       };
       var yrs = en ? ' years' : ' tahun', perMonth = en ? ' / month' : ' / bulan';
-      var afterCharges = charged ? (en ? ', after charges' : ', selepas caj') : '';
       var big, rows = '', note = '', toForm = {};
       if (tvmMode === 'fv') {
         var run = tvmRun(tPv, tPmt, tn);
-        big = ['<small>' + (en ? 'Estimated value after ' + tYears + yrs : 'Anggaran nilai selepas ' + tYears + yrs) + afterCharges + '</small>', rm(run.value)];
+        big = ['<small>' + (en ? 'Estimated value after ' + tYears + yrs : 'Anggaran nilai selepas ' + tYears + yrs) + '</small>', rm(run.value)];
         rows = breakdown(run);
         toForm = { lump: tPv, monthly: tPmt };
       } else if (tvmMode === 'pmt') {
-        var need = keep > 0 && tn ? (tFv - tPv * keep * grow(tn)) / (keep * annuity(tn)) : 0;
+        var need = tn ? (tFv - tPv * grow(tn)) / annuity(tn) : 0;
         big = ['<small>' + (en ? 'Save every month for ' + tYears + yrs : 'Simpan setiap bulan selama ' + tYears + yrs) + '</small>', rm(Math.max(need, 0)) + perMonth];
         if (need <= 0) note = en ? 'Your lump sum alone is estimated to reach the target.' : 'Jumlah sekali anda sahaja dianggarkan sudah cukup untuk capai sasaran.';
         else rows = breakdown(tvmRun(tPv, need, tn));
         toForm = { lump: tPv, monthly: Math.max(Math.ceil(need), 0) };
       } else if (tvmMode === 'pv') {
-        var needPv = keep > 0 && tn ? (tFv - tPmt * keep * annuity(tn)) / (keep * grow(tn)) : 0;
+        var needPv = tn ? (tFv - tPmt * annuity(tn)) / grow(tn) : 0;
         big = ['<small>' + (en ? 'Invest now, once' : 'Labur sekarang, sekali') + '</small>', rm(Math.max(needPv, 0))];
         if (needPv <= 0) note = en ? 'Your monthly saving alone is estimated to reach the target.' : 'Simpanan bulanan anda sahaja dianggarkan sudah cukup untuk capai sasaran.';
         else rows = breakdown(tvmRun(needPv, tPmt, tn));
         toForm = { lump: Math.max(Math.ceil(needPv), 0), monthly: tPmt };
       } else {
-        var pv0 = tPv * keep, pmt0 = tPmt * keep, months = null;
+        var pv0 = tPv, pmt0 = tPmt, months = null;
         if (tFv <= pv0) months = 0;
         else if (Math.abs(tri) > 1e-12) {
           var ratio = (tFv * tri + pmt0) / (pv0 * tri + pmt0);
@@ -991,7 +969,7 @@
         var unit = function (v, one, many, ms) { return v + (en ? (v === 1 ? one : many) : ms); };
         var span = months === null ? '–' : months > 1200 ? (en ? '100+ years' : '100+ tahun')
           : unit(Math.floor(months / 12), ' year', ' years', ' tahun') + (months % 12 ? ' ' + unit(months % 12, ' month', ' months', ' bulan') : '');
-        big = ['<small>' + (en ? 'Time to reach your target' : 'Masa untuk capai sasaran') + afterCharges + '</small>', span];
+        big = ['<small>' + (en ? 'Time to reach your target' : 'Masa untuk capai sasaran') + '</small>', span];
         if (months === null) note = !tPv && !tPmt
           ? (en ? 'Enter a lump sum or a monthly saving.' : 'Isi jumlah sekali atau simpanan bulanan.')
           : (en ? 'With these numbers the target is not reached.' : 'Dengan angka ini, sasaran tidak dapat dicapai.');
