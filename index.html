@@ -527,7 +527,7 @@
     <h3 id="inappTitle" class="gen" data-en="Open in your phone’s browser">Buka dalam browser telefon anda</h3>
     <h3 class="lnk" data-en="Open in your browser first">Buka dalam browser dulu</h3>
     <p class="why gen" data-en="You’re viewing this inside the {app} app. Guides (PDF) and WhatsApp links work best in Safari or Chrome.">Anda sedang buka page ini dalam aplikasi {app}. Panduan (PDF) dan link WhatsApp lebih lancar dalam Safari atau Chrome.</p>
-    <p class="why lnk" data-en="This button opens WhatsApp. Inside the {app} app, WhatsApp links sometimes don’t open. Open this page in Safari or Chrome first, then tap the button again.">Butang ini akan buka WhatsApp. Dalam aplikasi {app}, link WhatsApp kadang-kadang tak terbuka. Buka page ini dalam Safari atau Chrome dulu, kemudian tekan semula butang tadi.</p>
+    <p class="why lnk" data-en="This button opens <span class='lnk-app'>WhatsApp</span>. Inside the {app} app, such links sometimes don’t open. Open this page in Safari or Chrome first, then tap the button again.">Butang ini akan buka <span class="lnk-app">WhatsApp</span>. Dalam aplikasi {app}, link macam ni kadang-kadang tak terbuka. Buka page ini dalam Safari atau Chrome dulu, kemudian tekan semula butang tadi.</p>
     <ol class="steps">
       <li><span class="n">1</span><span data-en="Tap <span class='k'>⋯</span> at the top-right of your screen">Tekan <span class="k">⋯</span> di penjuru kanan atas skrin</span></li>
       <li><span class="n">2</span><span data-en="Choose <b>“Open in browser”</b>">Pilih <b>“Open in browser”</b> (Buka dalam pelayar)</span></li>
@@ -537,7 +537,7 @@
       <a class="primary" id="openChrome" hidden data-en="Open in Chrome now">Buka terus dalam Chrome</a>
       <button type="button" class="primary" id="copyLink" data-en="Copy link instead">Atau salin link</button>
       <button type="button" class="ghost gen" id="stayHere" data-en="Continue here">Teruskan di sini</button>
-      <a class="ghost lnk" id="continueLink" data-skip-remind target="_blank" rel="noopener" data-en="Continue to WhatsApp anyway">Teruskan juga ke WhatsApp</a>
+      <a class="ghost lnk" id="continueLink" data-skip-remind target="_blank" rel="noopener" data-en="Continue to <span class='lnk-app'>WhatsApp</span> anyway">Teruskan juga ke <span class="lnk-app">WhatsApp</span></a>
     </div>
   </div>
 </div>
@@ -594,7 +594,7 @@
       <a class="save" id="tngQrSave" download="tng-qr-khairul-khalis.png" data-en="Save QR">Simpan QR</a>
     </figure>
     <ol class="steps">
-      <li><span class="n">1</span><span data-en="Pay <b class='amt'></b> with Touch 'n Go">Bayar <b class="amt"></b> melalui Touch 'n Go</span></li>
+      <li><span class="n">1</span><span data-en="Pay exactly <b class='amt'></b> with Touch 'n Go (you type in the amount)">Bayar tepat <b class="amt"></b> melalui Touch 'n Go (masukkan jumlah sendiri)</span></li>
       <li><span class="n">2</span><span data-en="Take a screenshot of the receipt">Screenshot resit bayaran</span></li>
       <li><span class="n">3</span><span data-en="Tap <b>“I've paid”</b> and send the receipt on WhatsApp">Tekan <b>“Saya dah bayar”</b> dan hantar resit melalui WhatsApp</span></li>
       <li><span class="n">4</span><span data-en="The ebook (PDF) is sent to you on WhatsApp">Ebook (PDF) dihantar kepada anda melalui WhatsApp</span></li>
@@ -634,7 +634,7 @@
 
     // Ebook checkout: paste a TNG payment link here and/or add assets/tng-qr.png; until one exists the card keeps its WhatsApp link
     var EBOOK_PRICE = promoOver ? 39 : 29;
-    var TNG_PAY_LINK = '';
+    var TNG_PAY_LINK = 'https://payment.tngdigital.com.my/sc/bDLosGkZ2e';
     var TNG_QR = 'assets/tng-qr.png';
     var qrReady = false;
     var qrProbe = new Image();
@@ -741,15 +741,17 @@
     document.getElementById('stayHere').addEventListener('click', closeSheet);
     document.getElementById('continueLink').addEventListener('click', closeSheet);
 
-    // Inside TikTok/IG/LinkedIn, remind again before any WhatsApp or whatsform link (they often fail to open there)
+    // Inside TikTok/IG/LinkedIn, remind again before any WhatsApp, whatsform or TNG payment link (they often fail to open there)
     document.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('a[href]');
       if (!a || !inApp || a.hasAttribute('data-skip-remind')) return;
-      if (!/(^|\.)(whatsform\.com|wa\.me|whatsapp\.com)$/.test(a.hostname)) return;
+      if (!/(^|\.)(whatsform\.com|wa\.me|whatsapp\.com|tngdigital\.com\.my)$/.test(a.hostname)) return;
       if (a.id === 'paidBook' && (TNG_PAY_LINK || qrReady)) return;
       e.preventDefault();
       e.stopPropagation();
       document.getElementById('continueLink').href = a.href;
+      var target = /tngdigital/.test(a.hostname) ? 'Touch ’n Go' : 'WhatsApp';
+      document.querySelectorAll('#inapp .lnk-app').forEach(function (s) { s.textContent = target; });
       sheet.classList.add('link-mode');
       prepChromeButton();
       sheet.classList.add('show');
