@@ -440,7 +440,7 @@
       return { ready: true, age: age, bal: bal, basic: basic, excess: excess, can: can, ok: can >= 1000 };
     }
     function growCalc(p) {
-      var lump = (has(p, 'lump') || has(p, 'corp') || has(p, 'prs')) ? num('lump') : 0;
+      var lump = (has(p, 'lump') || has(p, 'prs')) ? num('lump') : 0;
       var monthly = (has(p, 'monthly') || has(p, 'prs')) ? num('monthly') : 0;
       var r = num('rate') / 100 / 12, years = Math.min(Math.round(num('years')), 60), n = years * 12;
       var g = Math.pow(1 + r, n);
@@ -451,9 +451,10 @@
     function update() {
       var p = picks(), en = current === 'en';
       $('epfBox').hidden = !has(p, 'epf');
-      var growOn = has(p, 'lump') || has(p, 'monthly') || has(p, 'corp') || has(p, 'prs');
+      // Corporate investment has no calculator; the others do
+      var growOn = has(p, 'lump') || has(p, 'monthly') || has(p, 'prs');
       $('growBox').hidden = !growOn;
-      $('lumpField').hidden = !(has(p, 'lump') || has(p, 'corp') || has(p, 'prs'));
+      $('lumpField').hidden = !(has(p, 'lump') || has(p, 'prs'));
       $('monthlyField').hidden = !(has(p, 'monthly') || has(p, 'prs'));
 
       var e = epfCalc(), out;
