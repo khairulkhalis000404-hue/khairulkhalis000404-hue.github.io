@@ -700,7 +700,7 @@
       <label><span data-en="Years">Tempoh</span><span class="inp"><input id="ccYears" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"><i data-en="years">tahun</i></span></label>
     </div>
     <div class="result" id="ccResult" aria-live="polite"></div>
-    <p class="fine" data-en="Illustration only, based on an assumed fixed return. Actual returns vary and are not guaranteed.">Ilustrasi sahaja, berdasarkan andaian pulangan tetap. Pulangan sebenar berubah-ubah dan tidak dijamin.</p>
+    <p class="fine" data-en="Illustration only, based on an assumed fixed return, compounded yearly (each year's top-ups are counted at the end of that year). Actual returns vary and are not guaranteed.">Ilustrasi sahaja, berdasarkan andaian pulangan tetap, dikompaun setiap tahun (tambahan setahun dikira pada hujung tahun). Pulangan sebenar berubah-ubah dan tidak dijamin.</p>
     <div class="sheet-btns">
       <a class="primary" id="ccToForm" href="/hubungi/?pick=lump,monthly" data-en="Plan this with me on WhatsApp" data-umami-event="Kalkulator kompaun: WhatsApp">Rancang bersama saya di WhatsApp</a>
     </div>
@@ -1021,9 +1021,9 @@
 
     // Compound calculator chart: the user's rate against 5% and 2% a year, value at the end of each year
     function growthPath(start, monthly, pct, years) {
-      var r = pct / 100 / 12, v = start, out = [start];
+      var r = pct / 100, v = start, out = [start];
       for (var y = 1; y <= years; y++) {
-        for (var m = 0; m < 12; m++) v = v * (1 + r) + monthly;
+        v = v * (1 + r) + monthly * 12;
         out.push(v);
       }
       return out;
@@ -1075,11 +1075,11 @@
       document.getElementById('epfToForm').href = '/hubungi/?' + q({ pick: 'epf', age: num('epfAge'), bal: num('epfBal') });
       var en = current === 'en';
 
-      var start = num('ccStart'), monthly = num('ccMonthly'), rate = num('ccRate') / 100 / 12;
-      var years = Math.min(Math.round(num('ccYears')), 60), n = years * 12;
-      var g = Math.pow(1 + rate, n);
-      var total = rate ? start * g + monthly * (g - 1) / rate : start + monthly * n;
-      var paid = start + monthly * n;
+      // Annual compounding: a year's top-ups (monthly x 12) go in at the end of each year
+      var start = num('ccStart'), monthly = num('ccMonthly');
+      var years = Math.min(Math.round(num('ccYears')), 60);
+      var total = growthPath(start, monthly, num('ccRate'), years)[years];
+      var paid = start + monthly * 12 * years;
       var paidPct = total > paid ? paid / total * 100 : 100;
       document.getElementById('ccResult').innerHTML =
         '<div class="big"><small>' + (en ? 'Estimated value after ' + years + ' years' : 'Anggaran nilai selepas ' + years + ' tahun') + '</small><b>' + rm(total) + '</b></div>' +
