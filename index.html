@@ -353,13 +353,16 @@
   .tick { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; }
   .tick input { width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: var(--btn); }
   .ef-goals { display: grid; gap: 8px; }
-  .ef-goal { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
+  .ef-goal { width: 100%; font: inherit; text-align: left; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
   .ef-goal.pick { border-color: var(--accent); background: rgba(255,214,10,.10); }
   .ef-goal small { display: block; font-size: 11px; color: var(--result-muted); }
   .ef-goal b { grid-column: 2; grid-row: 1 / span 2; margin: 0; font: 600 20px/1.1 "Fraunces", Georgia, serif; color: #FFFFFF; }
   .ef-goal.pick b { color: var(--accent); }
   .ef-goal span { display: block; font-size: 12px; color: var(--result-text); }
-  .ef-goal .ef-tag { grid-column: 1; justify-self: start; display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; letter-spacing: .04em; padding: 2px 6px; border-radius: 5px; background: var(--accent); color: var(--on-accent); white-space: nowrap; }
+  .ef-goal.on { border-color: #FFFFFF; box-shadow: inset 0 0 0 1px #FFFFFF; }
+  .ef-goal.pick.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .ef-radio { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; border-radius: 50%; border: 1.5px solid currentColor; }
+  .ef-goal.on .ef-radio { background: currentColor; box-shadow: inset 0 0 0 2px var(--result-bg); }
   /* TVM: choose what to work out */
   .seg {
     display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 14px; padding: 4px;
@@ -973,7 +976,11 @@
     });
     if (document.documentElement.classList.contains('skip-gate')) maybeShowSheet();
 
-    var efMonthlyEdited = false;
+    var efMonthlyEdited = false, efPick = 'ideal';
+    document.getElementById('efResult').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-goal]');
+      if (b) { efPick = b.getAttribute('data-goal'); renderCalcs(); }
+    });
     document.getElementById('efMonthly').addEventListener('input', function () { efMonthlyEdited = this.value !== ''; });
 
     var tvmMode = 'fv';
@@ -1082,26 +1089,25 @@
       if (!efSal) {
         efOut = '<p class="msg">' + (en ? 'Enter your monthly salary.' : 'Isi gaji bulanan anda.') + '</p>';
       } else {
-        var efMin = efSal * 3, efIdeal = efSal * 6, lowPay = efSal <= 5000, aimIdeal = efRatio >= 0.5 || lowPay;
-        var goal = function (pick, label, amt) {
-          return '<div class="ef-goal' + (pick ? ' pick' : '') + '"><small>' + label + '</small><b>' + rm(amt) + '</b><span>' + efSpan(amt) + '</span>' +
-            (pick ? '<span class="ef-tag">' + (en ? 'Suits you' : 'Sesuai untuk anda') + '</span>' : '') + '</div>';
+        var efGoals = {
+          min: { label: en ? 'Minimum · 3 months of salary' : 'Minimum · 3 bulan gaji', amt: efSal * 3 },
+          ideal: { label: en ? 'Ideal · (essentials + 20%) × 6 months' : 'Ideal · (wajib + 20%) × 6 bulan', amt: efNeed * 1.2 * 6 },
+          max: { label: en ? 'Maximum · 6 months of salary' : 'Maksimum · 6 bulan gaji', amt: efSal * 6 }
         };
-        var aim = aimIdeal ? efIdeal : efMin, efCard = document.getElementById('efCard').checked;
+        // Ideal is always yellow; the split below follows whichever card the visitor taps (Ideal by default)
+        var goal = function (key) {
+          var g = efGoals[key], on = key === efPick;
+          return '<button type="button" class="ef-goal' + (key === 'ideal' ? ' pick' : '') + (on ? ' on' : '') + '" data-goal="' + key + '" aria-pressed="' + on + '">' +
+            '<small><i class="ef-radio"></i>' + g.label + '</small><b>' + rm(g.amt) + '</b><span>' + efSpan(g.amt) + '</span></button>';
+        };
+        var aim = efGoals[efPick].amt, efCard = document.getElementById('efCard').checked;
         var efBank = Math.min(Math.max(aim / 3, efSal), 6000, aim);
-        efOut = '<div class="ef-goals">' + goal(!aimIdeal, en ? 'Minimum · 3 months of salary' : 'Minimum · 3 bulan gaji', efMin) +
-          goal(false, en ? 'Ideal · (essentials + 20%) × 6 months' : 'Ideal · (wajib + 20%) × 6 bulan', efNeed * 1.2 * 6) +
-          goal(aimIdeal, en ? 'Maximum · 6 months of salary' : 'Maksimum · 6 bulan gaji', efIdeal) + '</div>' +
-          '<p class="msg">' + (efLeft <= 0
-            ? (en ? 'Your essential expenses are equal to or above your salary. Reduce commitments first, then start building this fund.'
-                  : 'Perbelanjaan wajib anda sama atau melebihi gaji. Kurangkan komitmen dulu, kemudian mula bina dana ini.')
-            : (en ? (efRatio >= 0.5 ? 'Your essential expenses are ' + Math.round(efRatio * 100) + '% of your salary, so aim for the maximum, 6 months.'
-                    : lowPay ? 'With a salary of RM5,000 or less, aim for the maximum, 6 months.'
-                    : 'Your essential expenses are ' + Math.round(efRatio * 100) + '% of your salary, so 3 months is a fair start; 6 months is safer.')
-                  : (efRatio >= 0.5 ? 'Perbelanjaan wajib anda ' + Math.round(efRatio * 100) + '% daripada gaji, jadi sasarkan maksimum, 6 bulan.'
-                    : lowPay ? 'Dengan gaji RM5,000 ke bawah, sasarkan maksimum, 6 bulan.'
-                    : 'Perbelanjaan wajib anda ' + Math.round(efRatio * 100) + '% daripada gaji, jadi 3 bulan dah memadai sebagai permulaan; 6 bulan lebih selamat.'))) + '</p>' +
-          '<dl style="margin-top:12px">' +
+        efOut = '<div class="ef-goals">' + goal('min') + goal('ideal') + goal('max') + '</div>' +
+          (efLeft <= 0
+            ? '<p class="msg warn">' + (en ? 'Your essential expenses are equal to or above your salary. Reduce commitments first, then start building this fund.'
+                  : 'Perbelanjaan wajib anda sama atau melebihi gaji. Kurangkan komitmen dulu, kemudian mula bina dana ini.') + '</p>' : '') +
+          '<p class="msg">' + (en ? 'Where to keep ' + rm(aim) + ' (tap an amount above to change):' : 'Cara simpan ' + rm(aim) + ' (tekan jumlah di atas untuk tukar):') + '</p>' +
+          '<dl style="margin-top:8px">' +
           (efCard
             ? row('var(--yellow)', en ? 'ASB or another fixed-value saving (100%, your credit card covers the first days)' : 'ASB atau simpanan nilai tetap lain (100%, kad kredit tampung hari-hari awal)', rm(aim))
             : row('#FFFFFF', en ? 'Bank account (1/3 or 1 month of salary, up to RM6,000)' : 'Akaun bank (1/3 atau 1 bulan gaji, maksimum RM6,000)', rm(efBank)) +
