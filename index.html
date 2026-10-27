@@ -359,8 +359,7 @@
   .ef-goal b { grid-column: 2; grid-row: 1 / span 2; margin: 0; font: 600 20px/1.1 "Fraunces", Georgia, serif; color: #FFFFFF; }
   .ef-goal.pick b { color: var(--accent); }
   .ef-goal span { display: block; font-size: 12px; color: var(--result-text); }
-  .ef-goal.on { border-color: #FFFFFF; box-shadow: inset 0 0 0 1px #FFFFFF; }
-  .ef-goal.pick.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .ef-goal.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
   .ef-radio { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; border-radius: 50%; border: 1.5px solid currentColor; }
   .ef-goal.on .ef-radio { background: currentColor; box-shadow: inset 0 0 0 2px var(--result-bg); }
   /* TVM: choose what to work out */
@@ -1094,10 +1093,10 @@
           ideal: { label: en ? 'Ideal · (essentials + 20%) × 6 months' : 'Ideal · (wajib + 20%) × 6 bulan', amt: efNeed * 1.2 * 6 },
           max: { label: en ? 'Maximum · 6 months of salary' : 'Maksimum · 6 bulan gaji', amt: efSal * 6 }
         };
-        // Ideal is always yellow; the split below follows whichever card the visitor taps (Ideal by default)
+        // The tapped card turns yellow and the split below follows it (Ideal by default)
         var goal = function (key) {
           var g = efGoals[key], on = key === efPick;
-          return '<button type="button" class="ef-goal' + (key === 'ideal' ? ' pick' : '') + (on ? ' on' : '') + '" data-goal="' + key + '" aria-pressed="' + on + '">' +
+          return '<button type="button" class="ef-goal' + (on ? ' pick on' : '') + '" data-goal="' + key + '" aria-pressed="' + on + '">' +
             '<small><i class="ef-radio"></i>' + g.label + '</small><b>' + rm(g.amt) + '</b><span>' + efSpan(g.amt) + '</span></button>';
         };
         var aim = efGoals[efPick].amt, efCard = document.getElementById('efCard').checked;
