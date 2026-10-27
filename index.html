@@ -348,6 +348,16 @@
     position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; border: 0;
     background: var(--card); color: var(--text); font-size: 22px; line-height: 1; cursor: pointer;
   }
+  /* emergency fund calculator */
+  .fields .hint { font-size: 11px; font-weight: 600; color: var(--link); }
+  .ef-goals { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+  .ef-goal { padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
+  .ef-goal.pick { border-color: var(--accent); background: rgba(255,214,10,.10); }
+  .ef-goal small { display: block; font-size: 11px; color: var(--result-muted); }
+  .ef-goal b { display: block; margin: 2px 0; font: 600 20px/1.1 "Fraunces", Georgia, serif; color: #FFFFFF; }
+  .ef-goal.pick b { color: var(--accent); }
+  .ef-goal span { display: block; font-size: 12px; color: var(--result-text); }
+  .ef-goal .ef-tag { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; letter-spacing: .04em; padding: 2px 6px; border-radius: 5px; background: var(--accent); color: var(--on-accent); white-space: nowrap; }
   /* TVM: choose what to work out */
   .seg {
     display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 14px; padding: 4px;
@@ -504,6 +514,11 @@
 
   <section>
     <h2 class="label" data-en="Calculators">Kalkulator</h2>
+    <button type="button" class="link" data-open="calcEf" data-umami-event="Kalkulator dana kecemasan: buka">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 1 9 9H3a9 9 0 0 1 9-9z"/><path d="M12 12v6.5a2.5 2.5 0 0 1-5 0"/></svg></span>
+      <span class="txt"><span class="t" data-en="Emergency fund calculator">Kalkulator dana kecemasan</span><span class="d" data-en="How much you need, and how long to get there">Berapa perlu ada, dan berapa lama nak capai</span></span>
+      <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
     <button type="button" class="link" data-open="calcCompound" data-umami-event="Kalkulator kompaun: buka">
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M6 16v-3M10 16V10M14 16V7M18 16V4"/></svg></span>
       <span class="txt"><span class="t" data-en="Compound interest calculator">Kalkulator faedah kompaun</span><span class="d" data-en="See how your savings could grow over the years">Lihat potensi simpanan anda membesar dari tahun ke tahun</span></span>
@@ -729,6 +744,25 @@
   </div>
 </div>
 
+<div class="sheet-bg calc" id="calcEf" role="dialog" aria-modal="true" aria-labelledby="efTitle">
+  <div class="sheet">
+    <button type="button" class="x" data-close aria-label="Close">&times;</button>
+    <h3 id="efTitle" data-en="Emergency fund calculator">Kalkulator dana kecemasan</h3>
+    <p class="why" data-en="Aim for 3 to 6 months of your salary. The bigger your commitments, the closer to 6 months.">Sasarkan 3 hingga 6 bulan gaji. Lagi besar komitmen anda, lagi dekat dengan 6 bulan.</p>
+    <div class="fields">
+      <label><span data-en="Monthly salary">Gaji bulanan</span><span class="inp"><i>RM</i><input id="efSalary" type="number" inputmode="decimal" min="0" step="any" value="4000"></span></label>
+      <label><span data-en="Essential expenses / month">Perbelanjaan wajib / bulan</span><span class="inp"><i>RM</i><input id="efNeeds" type="number" inputmode="decimal" min="0" step="any" value="2500"></span></label>
+      <label><span data-en="Emergency fund you have now">Dana kecemasan sedia ada</span><span class="inp"><i>RM</i><input id="efHave" type="number" inputmode="decimal" min="0" step="any" placeholder="0"></span></label>
+      <label><span data-en="Save every month">Simpan setiap bulan</span><span class="inp"><i>RM</i><input id="efMonthly" type="number" inputmode="decimal" min="0" step="any"></span><small class="hint" id="efHint"></small></label>
+    </div>
+    <div class="result" id="efResult" aria-live="polite"></div>
+    <p class="fine" data-en="General guide only. Keep this fund somewhere with a fixed value that you can withdraw quickly. ASB is open to Bumiputera only.">Panduan umum sahaja. Simpan dana ini di tempat yang nilainya tetap dan mudah dikeluarkan. ASB hanya untuk Bumiputera.</p>
+    <div class="sheet-btns">
+      <a class="primary" href="/hubungi/" data-en="Plan this with me on WhatsApp" data-umami-event="Kalkulator dana kecemasan: WhatsApp">Rancang bersama saya di WhatsApp</a>
+    </div>
+  </div>
+</div>
+
 <div class="sheet-bg calc" id="buyEbook" role="dialog" aria-modal="true" aria-labelledby="buyTitle">
   <div class="sheet">
     <button type="button" class="x" data-close aria-label="Close">&times;</button>
@@ -936,6 +970,9 @@
     });
     if (document.documentElement.classList.contains('skip-gate')) maybeShowSheet();
 
+    var efMonthlyEdited = false;
+    document.getElementById('efMonthly').addEventListener('input', function () { efMonthlyEdited = this.value !== ''; });
+
     var tvmMode = 'fv';
     document.querySelectorAll('[data-tvm]').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -1018,6 +1055,50 @@
           '<p class="msg' + (ok ? '' : ' warn') + '">' + msg + '</p>';
       }
       document.getElementById('epfResult').innerHTML = out;
+
+      // Emergency fund, the user's method: 3 months of salary (minimum) to 6 months (ideal); the higher the
+      // commitments, the closer to 6. Suggested saving: 20% of salary, at most half of what is left after essentials.
+      var efSal = num('efSalary'), efNeed = num('efNeeds'), efHave = num('efHave');
+      var efLeft = efSal - efNeed, efRatio = efSal ? efNeed / efSal : 0;
+      var efSuggest = Math.max(Math.floor(Math.min(efSal * 0.2, efLeft * 0.5) / 10) * 10, 0);
+      var efBox = document.getElementById('efMonthly');
+      if (!efMonthlyEdited) efBox.value = efSuggest || '';
+      var efMonthly = num('efMonthly');
+      document.getElementById('efHint').textContent = efSuggest
+        ? (en ? 'Suggested: RM' + efSuggest.toLocaleString('en-MY') + ' (you can change it)' : 'Cadangan: RM' + efSuggest.toLocaleString('en-MY') + ' (boleh ubah)') : '';
+      var efSpan = function (target) {
+        var gap = target - efHave;
+        if (gap <= 0) return en ? 'Already reached' : 'Dah capai';
+        if (!efMonthly) return '–';
+        var m = Math.ceil(gap / efMonthly), y = Math.floor(m / 12), r = m % 12;
+        var part = function (v, one, many, ms) { return v + (en ? (v === 1 ? one : many) : ms); };
+        return (en ? 'in ' : 'dalam ') + (y ? part(y, ' year', ' years', ' tahun') + (r ? ' ' : '') : '') + (r || !y ? part(r || m, ' month', ' months', ' bulan') : '');
+      };
+      var efOut;
+      if (!efSal) {
+        efOut = '<p class="msg">' + (en ? 'Enter your monthly salary.' : 'Isi gaji bulanan anda.') + '</p>';
+      } else {
+        var efMin = efSal * 3, efIdeal = efSal * 6, lowPay = efSal <= 5000, aimIdeal = efRatio >= 0.5 || lowPay;
+        var goal = function (pick, label, months, amt) {
+          return '<div class="ef-goal' + (pick ? ' pick' : '') + '"><small>' + label + ' · ' + months + (en ? ' months' : ' bulan') + '</small><b>' + rm(amt) + '</b><span>' + efSpan(amt) + '</span>' +
+            (pick ? '<span class="ef-tag">' + (en ? 'Suits you' : 'Sesuai untuk anda') + '</span>' : '') + '</div>';
+        };
+        var aim = aimIdeal ? efIdeal : efMin;
+        efOut = '<div class="ef-goals">' + goal(!aimIdeal, en ? 'Minimum' : 'Minimum', 3, efMin) + goal(aimIdeal, en ? 'Ideal' : 'Ideal', 6, efIdeal) + '</div>' +
+          '<p class="msg">' + (efLeft <= 0
+            ? (en ? 'Your essential expenses are equal to or above your salary. Reduce commitments first, then start building this fund.'
+                  : 'Perbelanjaan wajib anda sama atau melebihi gaji. Kurangkan komitmen dulu, kemudian mula bina dana ini.')
+            : (en ? (efRatio >= 0.5 ? 'Your essential expenses are ' + Math.round(efRatio * 100) + '% of your salary, so aim for the ideal 6 months.'
+                    : lowPay ? 'With a salary of RM5,000 or less, aim for the ideal 6 months.'
+                    : 'Your essential expenses are ' + Math.round(efRatio * 100) + '% of your salary, so 3 months is a fair start; 6 months is safer.')
+                  : (efRatio >= 0.5 ? 'Perbelanjaan wajib anda ' + Math.round(efRatio * 100) + '% daripada gaji, jadi sasarkan ideal 6 bulan.'
+                    : lowPay ? 'Dengan gaji RM5,000 ke bawah, sasarkan ideal 6 bulan.'
+                    : 'Perbelanjaan wajib anda ' + Math.round(efRatio * 100) + '% daripada gaji, jadi 3 bulan dah memadai sebagai permulaan; 6 bulan lebih selamat.'))) + '</p>' +
+          '<dl style="margin-top:12px">' +
+          row('#FFFFFF', en ? 'Bank account (1/3, at least 1 month of salary)' : 'Akaun bank (1/3, sekurang-kurangnya 1 bulan gaji)', rm(Math.max(aim / 3, efSal))) +
+          row('var(--yellow)', en ? 'ASB or another fixed-value saving (the rest)' : 'ASB atau simpanan nilai tetap lain (selebihnya)', rm(Math.max(aim - Math.max(aim / 3, efSal), 0))) + '</dl>';
+      }
+      document.getElementById('efResult').innerHTML = efOut;
 
       // TVM, monthly compounding, savings at the end of each month: FV = PV*g + PMT*(g-1)/r with g = (1+r)^n
       document.querySelectorAll('#calcTvm [data-need]').forEach(function (l) {
