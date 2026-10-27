@@ -350,6 +350,8 @@
   }
   /* emergency fund calculator */
   .fields .hint { font-size: 11px; font-weight: 600; color: var(--link); }
+  .tick { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; }
+  .tick input { width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: var(--btn); }
   .ef-goals { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
   .ef-goal { padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
   .ef-goal.pick { border-color: var(--accent); background: rgba(255,214,10,.10); }
@@ -755,6 +757,7 @@
       <label><span data-en="Emergency fund you have now">Dana kecemasan sedia ada</span><span class="inp"><i>RM</i><input id="efHave" type="number" inputmode="decimal" min="0" step="any" placeholder="0"></span></label>
       <label><span data-en="Save every month">Simpan setiap bulan</span><span class="inp"><i>RM</i><input id="efMonthly" type="number" inputmode="decimal" min="0" step="any"></span><small class="hint" id="efHint"></small></label>
     </div>
+    <label class="tick"><input id="efCard" type="checkbox"><span data-en="I have a credit card with enough limit to cover an emergency">Saya ada kad kredit dengan had yang cukup untuk tampung kecemasan</span></label>
     <div class="result" id="efResult" aria-live="polite"></div>
     <p class="fine" data-en="General guide only. Keep this fund somewhere with a fixed value that you can withdraw quickly. ASB is open to Bumiputera only.">Panduan umum sahaja. Simpan dana ini di tempat yang nilainya tetap dan mudah dikeluarkan. ASB hanya untuk Bumiputera.</p>
     <div class="sheet-btns">
@@ -1056,7 +1059,7 @@
       }
       document.getElementById('epfResult').innerHTML = out;
 
-      // Emergency fund, the user's method: 3 months of salary (minimum) to 6 months (ideal); the higher the
+      // Emergency fund, the user's method: 3 months of salary (minimum) to 6 months (maximum); the higher the
       // commitments, the closer to 6. Suggested saving: 20% of salary, at most half of what is left after essentials.
       var efSal = num('efSalary'), efNeed = num('efNeeds'), efHave = num('efHave');
       var efLeft = efSal - efNeed, efRatio = efSal ? efNeed / efSal : 0;
@@ -1083,20 +1086,23 @@
           return '<div class="ef-goal' + (pick ? ' pick' : '') + '"><small>' + label + ' · ' + months + (en ? ' months' : ' bulan') + '</small><b>' + rm(amt) + '</b><span>' + efSpan(amt) + '</span>' +
             (pick ? '<span class="ef-tag">' + (en ? 'Suits you' : 'Sesuai untuk anda') + '</span>' : '') + '</div>';
         };
-        var aim = aimIdeal ? efIdeal : efMin;
-        efOut = '<div class="ef-goals">' + goal(!aimIdeal, en ? 'Minimum' : 'Minimum', 3, efMin) + goal(aimIdeal, en ? 'Ideal' : 'Ideal', 6, efIdeal) + '</div>' +
+        var aim = aimIdeal ? efIdeal : efMin, efCard = document.getElementById('efCard').checked;
+        var efBank = Math.min(Math.max(aim / 3, efSal), 6000, aim);
+        efOut = '<div class="ef-goals">' + goal(!aimIdeal, en ? 'Minimum' : 'Minimum', 3, efMin) + goal(aimIdeal, en ? 'Maximum' : 'Maksimum', 6, efIdeal) + '</div>' +
           '<p class="msg">' + (efLeft <= 0
             ? (en ? 'Your essential expenses are equal to or above your salary. Reduce commitments first, then start building this fund.'
                   : 'Perbelanjaan wajib anda sama atau melebihi gaji. Kurangkan komitmen dulu, kemudian mula bina dana ini.')
-            : (en ? (efRatio >= 0.5 ? 'Your essential expenses are ' + Math.round(efRatio * 100) + '% of your salary, so aim for the ideal 6 months.'
-                    : lowPay ? 'With a salary of RM5,000 or less, aim for the ideal 6 months.'
+            : (en ? (efRatio >= 0.5 ? 'Your essential expenses are ' + Math.round(efRatio * 100) + '% of your salary, so aim for the maximum, 6 months.'
+                    : lowPay ? 'With a salary of RM5,000 or less, aim for the maximum, 6 months.'
                     : 'Your essential expenses are ' + Math.round(efRatio * 100) + '% of your salary, so 3 months is a fair start; 6 months is safer.')
-                  : (efRatio >= 0.5 ? 'Perbelanjaan wajib anda ' + Math.round(efRatio * 100) + '% daripada gaji, jadi sasarkan ideal 6 bulan.'
-                    : lowPay ? 'Dengan gaji RM5,000 ke bawah, sasarkan ideal 6 bulan.'
+                  : (efRatio >= 0.5 ? 'Perbelanjaan wajib anda ' + Math.round(efRatio * 100) + '% daripada gaji, jadi sasarkan maksimum, 6 bulan.'
+                    : lowPay ? 'Dengan gaji RM5,000 ke bawah, sasarkan maksimum, 6 bulan.'
                     : 'Perbelanjaan wajib anda ' + Math.round(efRatio * 100) + '% daripada gaji, jadi 3 bulan dah memadai sebagai permulaan; 6 bulan lebih selamat.'))) + '</p>' +
           '<dl style="margin-top:12px">' +
-          row('#FFFFFF', en ? 'Bank account (1/3, at least 1 month of salary)' : 'Akaun bank (1/3, sekurang-kurangnya 1 bulan gaji)', rm(Math.max(aim / 3, efSal))) +
-          row('var(--yellow)', en ? 'ASB or another fixed-value saving (the rest)' : 'ASB atau simpanan nilai tetap lain (selebihnya)', rm(Math.max(aim - Math.max(aim / 3, efSal), 0))) + '</dl>';
+          (efCard
+            ? row('var(--yellow)', en ? 'ASB or another fixed-value saving (100%, your credit card covers the first days)' : 'ASB atau simpanan nilai tetap lain (100%, kad kredit tampung hari-hari awal)', rm(aim))
+            : row('#FFFFFF', en ? 'Bank account (1/3 or 1 month of salary, up to RM6,000)' : 'Akaun bank (1/3 atau 1 bulan gaji, maksimum RM6,000)', rm(efBank)) +
+              row('var(--yellow)', en ? 'ASB or another fixed-value saving (the rest)' : 'ASB atau simpanan nilai tetap lain (selebihnya)', rm(aim - efBank))) + '</dl>';
       }
       document.getElementById('efResult').innerHTML = efOut;
 
