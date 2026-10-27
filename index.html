@@ -352,14 +352,14 @@
   .fields .hint { font-size: 11px; font-weight: 600; color: var(--link); }
   .tick { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; }
   .tick input { width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: var(--btn); }
-  .ef-goals { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
-  .ef-goal { padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
+  .ef-goals { display: grid; gap: 8px; }
+  .ef-goal { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
   .ef-goal.pick { border-color: var(--accent); background: rgba(255,214,10,.10); }
   .ef-goal small { display: block; font-size: 11px; color: var(--result-muted); }
-  .ef-goal b { display: block; margin: 2px 0; font: 600 20px/1.1 "Fraunces", Georgia, serif; color: #FFFFFF; }
+  .ef-goal b { grid-column: 2; grid-row: 1 / span 2; margin: 0; font: 600 20px/1.1 "Fraunces", Georgia, serif; color: #FFFFFF; }
   .ef-goal.pick b { color: var(--accent); }
   .ef-goal span { display: block; font-size: 12px; color: var(--result-text); }
-  .ef-goal .ef-tag { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; letter-spacing: .04em; padding: 2px 6px; border-radius: 5px; background: var(--accent); color: var(--on-accent); white-space: nowrap; }
+  .ef-goal .ef-tag { grid-column: 1; justify-self: start; display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; letter-spacing: .04em; padding: 2px 6px; border-radius: 5px; background: var(--accent); color: var(--on-accent); white-space: nowrap; }
   /* TVM: choose what to work out */
   .seg {
     display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 14px; padding: 4px;
@@ -1059,7 +1059,8 @@
       }
       document.getElementById('epfResult').innerHTML = out;
 
-      // Emergency fund, the user's method: 3 months of salary (minimum) to 6 months (maximum); the higher the
+      // Emergency fund, the user's method: 3 months of salary (minimum) to 6 months (maximum), plus an ideal of
+      // essential expenses + 20% for 6 months; the higher the
       // commitments, the closer to 6. Suggested saving: 20% of salary, at most half of what is left after essentials.
       var efSal = num('efSalary'), efNeed = num('efNeeds'), efHave = num('efHave');
       var efLeft = efSal - efNeed, efRatio = efSal ? efNeed / efSal : 0;
@@ -1082,13 +1083,15 @@
         efOut = '<p class="msg">' + (en ? 'Enter your monthly salary.' : 'Isi gaji bulanan anda.') + '</p>';
       } else {
         var efMin = efSal * 3, efIdeal = efSal * 6, lowPay = efSal <= 5000, aimIdeal = efRatio >= 0.5 || lowPay;
-        var goal = function (pick, label, months, amt) {
-          return '<div class="ef-goal' + (pick ? ' pick' : '') + '"><small>' + label + ' · ' + months + (en ? ' months' : ' bulan') + '</small><b>' + rm(amt) + '</b><span>' + efSpan(amt) + '</span>' +
+        var goal = function (pick, label, amt) {
+          return '<div class="ef-goal' + (pick ? ' pick' : '') + '"><small>' + label + '</small><b>' + rm(amt) + '</b><span>' + efSpan(amt) + '</span>' +
             (pick ? '<span class="ef-tag">' + (en ? 'Suits you' : 'Sesuai untuk anda') + '</span>' : '') + '</div>';
         };
         var aim = aimIdeal ? efIdeal : efMin, efCard = document.getElementById('efCard').checked;
         var efBank = Math.min(Math.max(aim / 3, efSal), 6000, aim);
-        efOut = '<div class="ef-goals">' + goal(!aimIdeal, en ? 'Minimum' : 'Minimum', 3, efMin) + goal(aimIdeal, en ? 'Maximum' : 'Maksimum', 6, efIdeal) + '</div>' +
+        efOut = '<div class="ef-goals">' + goal(!aimIdeal, en ? 'Minimum · 3 months of salary' : 'Minimum · 3 bulan gaji', efMin) +
+          goal(false, en ? 'Ideal · (essentials + 20%) × 6 months' : 'Ideal · (wajib + 20%) × 6 bulan', efNeed * 1.2 * 6) +
+          goal(aimIdeal, en ? 'Maximum · 6 months of salary' : 'Maksimum · 6 bulan gaji', efIdeal) + '</div>' +
           '<p class="msg">' + (efLeft <= 0
             ? (en ? 'Your essential expenses are equal to or above your salary. Reduce commitments first, then start building this fund.'
                   : 'Perbelanjaan wajib anda sama atau melebihi gaji. Kurangkan komitmen dulu, kemudian mula bina dana ini.')
