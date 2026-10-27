@@ -200,12 +200,14 @@
   /* why-invest facts and section intros */
   .facts { display: grid; gap: 10px; }
   .fact {
-    display: grid; grid-template-columns: 92px 1fr; column-gap: 14px; align-items: center;
+    display: grid; grid-template-columns: 108px 1fr; column-gap: 14px; align-items: center;
     padding: 14px 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
   }
   .fact b { grid-row: span 3; font: 600 24px/1.1 "Fraunces", Georgia, serif; color: var(--emph); }
   .fact span { font-size: 13.5px; line-height: 1.45; color: var(--text); }
   .fact small { margin-top: 3px; font-size: 11px; color: var(--muted); }
+  .fact b.n2 { font-size: 39.5px; }
+  .fact b.n3 { font-size: 45px; }
   .fact strong { font-weight: 700; color: var(--heading); }
   .section-note { margin-top: 12px; font-size: 13.5px; color: var(--muted); }
   .hero-link { display: inline-block; margin-top: 16px; font-size: 13px; font-weight: 700; color: var(--link); }
@@ -246,24 +248,20 @@
   .arrow { flex: none; color: var(--muted); transition: transform .15s ease, color .15s ease; }
   .link:hover .arrow { color: var(--link); transform: translateX(3px); }
 
-  /* ebooks: compact rows with a small cover */
-  .books { display: grid; gap: 10px; }
+  /* ebooks: 2x2 grid, cover on top cropped square so the cards are a little shorter */
+  .books { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .book {
-    display: flex; gap: 14px; padding: 12px; background: var(--card); border: 1px solid var(--line);
-    border-radius: var(--radius); transition: border-color .15s ease, transform .15s ease;
+    display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); overflow: hidden; transition: border-color .15s ease, transform .15s ease;
   }
-  .book:hover { border-color: var(--hover-line); transform: translateY(-1px); }
-  .cover {
-    flex: none; align-self: flex-start; width: 72px; aspect-ratio: 3 / 4; border-radius: 8px; overflow: hidden;
-    background: var(--card-hover); position: relative; box-shadow: 0 4px 12px -6px rgba(0,0,0,.35);
-  }
-  .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .book:hover { border-color: var(--hover-line); transform: translateY(-2px); }
+  .cover { aspect-ratio: 1 / 1; overflow: hidden; background: var(--card-hover); position: relative; }
+  .cover img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
   /* combo: the two covers fanned out */
-  .cover.duo { overflow: visible; background: none; box-shadow: none; }
-  .cover.duo img { position: absolute; width: 76%; height: 76%; border-radius: 6px; box-shadow: 0 4px 10px -4px rgba(0,0,0,.45); }
-  .cover.duo img:first-child { left: 0; top: 0; }
-  .cover.duo img:last-child { right: 0; bottom: 0; }
-  .book .body { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .cover.duo img { position: absolute; width: 58%; height: auto; aspect-ratio: 3 / 4; border-radius: 6px; box-shadow: 0 6px 14px -6px rgba(0,0,0,.5); }
+  .cover.duo img:first-child { left: 12%; top: 7%; }
+  .cover.duo img:last-child { right: 12%; bottom: 7%; }
+  .book .body { padding: 10px 12px 12px; display: flex; flex-direction: column; flex: 1; min-width: 0; }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
   .tag {
     font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
@@ -272,9 +270,9 @@
   .tag.free, .tag.promo { background: var(--accent); color: var(--on-accent); }
   .tag.promo { letter-spacing: .02em; text-transform: none; }
   .book .t { font-size: 14.5px; }
-  .book .d { font-size: 12.5px; }
+  .book .d { flex: 1; font-size: 12.5px; }
   .book .d b { color: var(--heading); }
-  .book .foot { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 8px; }
+  .book .foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 10px; margin-top: 8px; }
   .price { display: flex; align-items: baseline; gap: 6px; }
   .price b { font: 600 20px/1 "Fraunces", Georgia, serif; color: var(--heading); }
   .price s { font-size: 12.5px; font-weight: 600; color: var(--muted); }
@@ -463,8 +461,8 @@
   <section>
     <h2 class="label" data-en="Why invest?">Kenapa perlu melabur?</h2>
     <div class="facts">
-      <div class="fact"><b>−45%</b><span data-en="With 3% inflation a year, your RM1,000 loses almost half its value in 20 years, even if it’s left in a bank account.">Dengan inflasi 3% setahun, RM1,000 anda hilang hampir separuh nilai dalam 20 tahun, walaupun dibiarkan dalam akaun bank.</span></div>
-      <div class="fact"><b>6/10</b><span data-en="€PF members aren’t on track to retire. <strong>Are you one of them?</strong>">pencarum KW$P belum cukup simpanan untuk bersara. <strong>Anda salah seorang?</strong></span><small data-en="Source: Free Malaysia Today, July 2026">Sumber: Free Malaysia Today, Julai 2026</small></div>
+      <div class="fact"><b class="n2">−45%</b><span data-en="With 3% inflation a year, your RM1,000 loses almost half its value in 20 years, even if it’s left in a bank account.">Dengan inflasi 3% setahun, RM1,000 anda hilang hampir separuh nilai dalam 20 tahun, walaupun dibiarkan dalam akaun bank.</span></div>
+      <div class="fact"><b class="n3">6/10</b><span data-en="€PF members aren’t on track to retire. <strong>Are you one of them?</strong>">pencarum KW$P belum cukup simpanan untuk bersara. <strong>Anda salah seorang?</strong></span><small data-en="Source: Free Malaysia Today, July 2026">Sumber: Free Malaysia Today, Julai 2026</small></div>
       <div class="fact"><b>RM390k</b><span data-en="the minimum €PF savings target at age 60 for basic retirement needs">sasaran simpanan minimum KW$P pada umur 60 untuk keperluan asas persaraan</span><small data-en="Source: €PF i-Invest page">Sumber: laman i-Invest KW$P</small></div>
     </div>
     <p class="section-note" data-en="Saving alone may not be enough. A plan matched to your goals can help close the gap.">Simpanan sahaja belum tentu cukup. Pelaburan yang dirancang ikut matlamat boleh bantu tutup jurang ni.</p>
