@@ -396,6 +396,8 @@
   .result dt { display: flex; align-items: center; gap: 8px; color: var(--result-muted); }
   .result dt i { width: 9px; height: 9px; border-radius: 3px; flex: none; }
   .result dd { font-weight: 700; color: #FFFFFF; }
+  .result .cc-chart { display: block; width: 100%; height: auto; margin: 16px 0 8px; }
+  .result .cc-chart text { font: 600 10px "Plus Jakarta Sans", system-ui, sans-serif; fill: var(--result-muted); }
   .result .msg { font-size: 13px; color: var(--result-text); margin-top: 10px; line-height: 1.5; }
   .result .msg.warn { color: var(--accent); }
   .fine { margin-top: 10px; font-size: 11px; color: var(--muted); line-height: 1.5; }
@@ -1017,6 +1019,51 @@
       return '<div><dt><i style="background:' + color + '"></i>' + label + '</dt><dd>' + value + '</dd></div>';
     }
 
+    // Compound calculator chart: the user's rate against 5% and 2% a year, value at the end of each year
+    function growthPath(start, monthly, pct, years) {
+      var r = pct / 100 / 12, v = start, out = [start];
+      for (var y = 1; y <= years; y++) {
+        for (var m = 0; m < 12; m++) v = v * (1 + r) + monthly;
+        out.push(v);
+      }
+      return out;
+    }
+    function rmShort(v) {
+      if (v >= 1e6) return 'RM' + (v / 1e6).toFixed(v >= 1e7 ? 0 : 1).replace(/\.0$/, '') + (current === 'en' ? 'm' : 'j');
+      if (v >= 1e3) return 'RM' + Math.round(v / 1e3) + 'k';
+      return 'RM' + Math.round(v);
+    }
+    function growthChart(start, monthly, pct, years, en) {
+      if (!years || (!start && !monthly)) return '';
+      var lines = [
+        { pct: 2, color: 'rgba(255,255,255,.5)', dash: '4 4', label: en ? '2% a year' : '2% setahun' },
+        { pct: 5, color: '#FFFFFF', dash: '', label: en ? '5% a year' : '5% setahun' },
+        { pct: pct, color: 'var(--accent)', dash: '', label: (en ? 'Your rate ' : 'Kadar anda ') + pct + '%' }
+      ].filter(function (l, i, all) { return i === 2 || l.pct !== pct; });
+      lines.forEach(function (l) { l.vals = growthPath(start, monthly, l.pct, years); });
+      var max = Math.max.apply(null, lines.map(function (l) { return l.vals[years]; })) || 1;
+      var step = Math.pow(10, Math.floor(Math.log10(max / 3)));
+      step = [1, 2, 2.5, 5, 10].map(function (k) { return k * step; }).filter(function (s) { return max / s <= 4; })[0];
+      var top = Math.ceil(max / step) * step;
+      var W = 300, H = 160, L = 46, R = 8, T = 8, B = 22, pw = W - L - R, ph = H - T - B;
+      var X = function (i) { return L + pw * i / years; }, Y = function (v) { return T + ph * (1 - v / top); };
+      var svg = '<svg class="cc-chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + (en ? 'Growth compared at 2%, 5% and your rate' : 'Pertumbuhan dibanding pada 2%, 5% dan kadar anda') + '">';
+      for (var v = 0; v <= top + 1e-9; v += step) {
+        svg += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '" stroke="rgba(255,255,255,.14)"/>' +
+          '<text x="' + (L - 6) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end">' + rmShort(v) + '</text>';
+      }
+      [0, Math.round(years / 2), years].filter(function (y, i, a) { return a.indexOf(y) === i; }).forEach(function (y) {
+        svg += '<text x="' + X(y).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="' + (y === 0 ? 'start' : y === years ? 'end' : 'middle') + '">' +
+          (en ? 'Year ' : 'Tahun ') + y + '</text>';
+      });
+      lines.forEach(function (l) {
+        svg += '<polyline fill="none" stroke="' + l.color + '" stroke-width="2.4" stroke-linejoin="round"' + (l.dash ? ' stroke-dasharray="' + l.dash + '"' : '') +
+          ' points="' + l.vals.map(function (v, i) { return X(i).toFixed(1) + ',' + Y(v).toFixed(1); }).join(' ') + '"/>';
+      });
+      svg += '</svg>';
+      return svg + '<dl class="cc-legend">' + lines.slice().reverse().map(function (l) { return row(l.color, l.label, rm(l.vals[years])); }).join('') + '</dl>';
+    }
+
     // €PF Basic Savings in Akaun Persaraan by age, effective 1 Jan 2026 (ages 18 to 55)
     var BASIC = [900, 1100, 1500, 1900, 4000, 6200, 8500, 11000, 13700, 16600, 19600, 22900, 26300, 30000, 33900,
       38100, 42400, 47000, 51900, 57000, 62400, 68100, 74000, 80200, 86700, 93600, 100000, 108000, 115000, 124000,
@@ -1038,7 +1085,8 @@
         '<div class="big"><small>' + (en ? 'Estimated value after ' + years + ' years' : 'Anggaran nilai selepas ' + years + ' tahun') + '</small><b>' + rm(total) + '</b></div>' +
         '<div class="split"><span class="a" style="width:' + paidPct + '%"></span><span class="b" style="width:' + (100 - paidPct) + '%"></span></div>' +
         '<dl>' + row('#FFFFFF', en ? 'Your money in' : 'Wang anda masuk', rm(paid)) +
-        row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(total - paid, 0))) + '</dl>';
+        row('var(--yellow)', en ? 'Growth' : 'Pertumbuhan', rm(Math.max(total - paid, 0))) + '</dl>' +
+        growthChart(start, monthly, num('ccRate'), years, en);
 
       var age = Math.floor(num('epfAge')), bal = num('epfBal'), out;
       if (age < 18) {
