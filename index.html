@@ -982,7 +982,11 @@
       var b = e.target.closest('[data-goal]');
       if (b) { efPick = b.getAttribute('data-goal'); renderCalcs(); }
     });
-    document.getElementById('efMonthly').addEventListener('input', function () { efMonthlyEdited = this.value !== ''; });
+    // Once the person types in "save every month" it stays theirs, even when empty, so they can clear it and type
+    // a new amount; leaving it empty brings the suggestion back
+    var efMonthlyInput = document.getElementById('efMonthly');
+    efMonthlyInput.addEventListener('input', function () { efMonthlyEdited = true; });
+    efMonthlyInput.addEventListener('blur', function () { if (this.value === '') { efMonthlyEdited = false; renderCalcs(); } });
 
     var tvmMode = 'fv';
     document.querySelectorAll('[data-tvm]').forEach(function (b) {
@@ -1114,7 +1118,7 @@
       document.getElementById('epfResult').innerHTML = out;
 
       // Emergency fund, the user's method: 3 months of salary (minimum) to 6 months (maximum), plus an ideal of
-      // essential expenses + 20% for 6 months; the higher the
+      // essential expenses + 20% for 6 months, kept within the 3–6 months of salary range; the higher the
       // commitments, the closer to 6. Suggested saving: 20% of salary, at most half of what is left after essentials.
       var efSal = num('efSalary'), efNeed = num('efNeeds'), efHave = num('efHave');
       var efLeft = efSal - efNeed, efRatio = efSal ? efNeed / efSal : 0;
@@ -1138,7 +1142,7 @@
       } else {
         var efGoals = {
           min: { label: en ? 'Minimum · 3 months of salary' : 'Minimum · 3 bulan gaji', amt: efSal * 3 },
-          ideal: { label: 'Ideal', amt: efNeed * 1.2 * 6 },
+          ideal: { label: 'Ideal', amt: Math.min(Math.max(efNeed * 1.2 * 6, efSal * 3), efSal * 6) },
           max: { label: en ? 'Maximum · 6 months of salary' : 'Maksimum · 6 bulan gaji', amt: efSal * 6 }
         };
         // The tapped card turns yellow and the split below follows it (Ideal by default)
