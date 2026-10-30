@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "ebook-kalkulator",
+    "date": "2026-10-31",
+    "img": "2026-10-31-ebook-kalkulator.jpg",
+    "w": 720,
+    "h": 900,
+    "title_ms": "Ebook & kalkulator untuk mula urus duit",
+    "title_en": "Ebooks & calculators to start managing your money",
+    "alt": "Ebook Sebelum Anda Labur, Unit Trust Dari Zero, Urus Duit Dari Zero dan 3 kalkulator percuma"
+  },
+  {
+    "slug": "dana-kecemasan",
+    "date": "2026-10-28",
+    "img": "2026-10-28-dana-kecemasan.jpg",
+    "w": 720,
+    "h": 900,
+    "title_ms": "Dana kecemasan dulu: 3–6 bulan gaji sebelum labur",
+    "title_en": "Emergency fund first: 3–6 months of salary before you invest",
+    "alt": "Emergency fund: 3–6 months of salary, 1/3 bank and 2/3 ASB or Tabung Haji"
+  },
+  {
+    "slug": "dca-rm100",
+    "date": "2026-10-28",
+    "img": "2026-10-28-dca-rm100.jpg",
+    "w": 720,
+    "h": 900,
+    "title_ms": "Sama RM100, setiap bulan: cara DCA berfungsi",
+    "title_en": "Same RM100, every month: how DCA works",
+    "alt": "Carta DCA: RM100 sebulan membeli lebih banyak unit bila harga turun"
+  }
+]

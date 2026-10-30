@@ -284,6 +284,38 @@
   .book .go { font-size: 12.5px; font-weight: 700; color: var(--link); white-space: nowrap; }
   .note { margin-top: 10px; font-size: 11.5px; color: var(--muted); text-align: center; }
 
+  /* latest WhatsApp Channel posts: a swipe row that bleeds to the screen edge; only the row scrolls sideways */
+  .posts {
+    display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 16px;
+    margin: 0 -16px; padding: 2px 16px 10px; scrollbar-width: thin; -webkit-overflow-scrolling: touch;
+  }
+  .post {
+    flex: 0 0 232px; scroll-snap-align: start; display: flex; flex-direction: column;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .post:hover { border-color: var(--hover-line); transform: translateY(-2px); }
+  .post .shot { aspect-ratio: 4 / 5; background: var(--card-hover); }
+  .post .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .post .body { padding: 10px 12px 12px; display: flex; flex-direction: column; flex: 1; }
+  .post .meta { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+  .post .t {
+    flex: 1; margin-top: 4px; font-size: 14px; line-height: 1.35;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .post .read {
+    display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 10px; padding: 9px 8px; white-space: nowrap;
+    border-radius: 99px; border: 1px solid var(--line); background: var(--surface);
+    font-size: 12px; font-weight: 700; color: var(--link); text-align: center; transition: all .15s ease;
+  }
+  .post .read svg { width: 14px; height: 14px; flex: none; }
+  .post:hover .read { background: var(--btn); border-color: var(--btn); color: var(--on-btn); }
+  /* wider screens: keep the row inside the column, two cards plus a peek of the next */
+  @media (min-width: 560px) {
+    .posts { margin: 0; padding: 2px 0 10px; scroll-padding: 0; }
+    .post { flex-basis: 220px; }
+  }
+
   /* guides */
   .guide { display: flex; align-items: center; gap: 14px; padding: 12px 12px 12px 16px; margin-bottom: 10px;
     background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
@@ -590,6 +622,12 @@
     </a>
   </section>
 
+  <!-- Latest posts: cards are built from /assets/posts/posts.json (newest 3 by date). To add a post, see projects/link-in-bio/POSTS-README.md. Stays hidden if the file can't load. -->
+  <section id="latestPosts" hidden>
+    <h2 class="label" data-en="Latest posts">Post terkini</h2>
+    <div class="posts" id="postList"></div>
+  </section>
+
   <section>
     <h2 class="label" data-en="Start investing">Mula melabur</h2>
     <p class="section-note" style="margin:-2px 0 14px" data-en="Ready? Fill in a short form, or open your account directly.">Dah bersedia? Isi borang ringkas, atau terus daftar akaun.</p>
@@ -881,6 +919,7 @@
       renderCalcs();
       renderPrices();
       renderBuy();
+      renderPosts();
     }
 
     function renderBuy() {
@@ -1225,6 +1264,54 @@
       document.getElementById('tvmToForm').href = '/hubungi/?' + q({ pick: picks, lump: Math.round(toForm.lump || 0), monthly: Math.round(toForm.monthly || 0),
         rate: num('tvRate'), years: toForm.years !== undefined ? toForm.years : tYears });
     }
+
+    // Latest posts from the public WhatsApp Channel (no API, so the list lives in assets/posts/posts.json)
+    var CHANNEL_URL = 'https://whatsapp.com/channel/0029Vb6tZx5ADTOEl9TRTX2B';
+    var POSTS_SHOWN = 3;
+    var posts = [];
+    var MONTHS = {
+      ms: ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'],
+      en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    };
+    function renderPosts() {
+      var list = document.getElementById('postList');
+      if (!posts.length) return;
+      var en = current === 'en';
+      list.innerHTML = '';
+      posts.forEach(function (p, i) {
+        var d = p.date.split('-').map(Number);
+        var isNew = i === 0 && (Date.now() - new Date(d[0], d[1] - 1, d[2]).getTime()) < 7 * 864e5;
+        var a = document.createElement('a');
+        a.className = 'post';
+        a.href = CHANNEL_URL;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.setAttribute('data-umami-event', 'Post terkini: ' + p.slug);
+        a.innerHTML = '<div class="shot"><img loading="lazy" width="' + (p.w || 720) + '" height="' + (p.h || 900) + '"></div>' +
+          '<div class="body"><span class="meta">' + (isNew ? '<span class="tag free">' + (en ? 'New' : 'Baru') + '</span>' : '') + '<time></time></span>' +
+          '<span class="t"></span><span class="read">' +
+          '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.4 13.4 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.6-.4zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.9L.1 24l6.3-1.6A11.8 11.8 0 0 0 24 12.2a11.7 11.7 0 0 0-3.6-8.6z"/></svg>' +
+          (en ? 'Read on WhatsApp Channel' : 'Baca di WhatsApp Channel') + '</span></div>';
+        var img = a.querySelector('img');
+        img.src = '/assets/posts/' + p.img;
+        img.alt = p.alt || '';
+        var time = a.querySelector('time');
+        time.dateTime = p.date;
+        time.textContent = d[2] + ' ' + MONTHS[en ? 'en' : 'ms'][d[1] - 1] + ' ' + d[0];
+        a.querySelector('.t').textContent = en ? (p.title_en || p.title_ms) : p.title_ms;
+        list.appendChild(a);
+      });
+      document.getElementById('latestPosts').hidden = false;
+    }
+    fetch('/assets/posts/posts.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (data) {
+        posts = (Array.isArray(data) ? data : []).filter(function (p) { return p && p.img && p.date && p.title_ms; })
+          .sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; })
+          .slice(0, POSTS_SHOWN);
+        renderPosts();
+      })
+      .catch(function () {});
 
     var initial = new URLSearchParams(location.search).get('lang');
     if (!initial) { try { initial = localStorage.getItem('langChosen'); } catch (e) {} }
