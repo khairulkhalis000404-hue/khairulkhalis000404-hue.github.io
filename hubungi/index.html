@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Daftar & rancang pelaburan · Khairul Khalis</title>
-<meta name="description" content="Daftar akaun unit trust, PRS atau pelaburan KW$P bersama Khairul Khalis, perunding unit trust berdaftar FIMM.">
+<meta name="description" content="Daftar akaun unit trust, PRS atau pelaburan Simpanan Persaraan (Akaun 1) bersama Khairul Khalis, perunding unit trust berdaftar FIMM.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
@@ -297,7 +297,7 @@
         <label class="choice"><input type="checkbox" name="pick" value="monthly"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
           <span><b data-en="Regular savings plan">Simpanan bulanan</b><span class="d" data-en="Monthly deduction from your bank account">Potongan bulanan dari akaun bank</span></span></label>
         <label class="choice"><input type="checkbox" name="pick" value="epf"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-          <span><b data-en="Invest with €PF">Labur guna KW$P</b><span class="d" data-en="From your Akaun Persaraan">Dari Akaun Persaraan</span></span></label>
+          <span><b data-en="Invest with Retirement Savings (Account 1)">Labur guna Simpanan Persaraan (Akaun 1)</b><span class="d" data-en="From your Akaun Persaraan">Dari Akaun Persaraan</span></span></label>
         <label class="choice"><input type="checkbox" name="pick" value="corp"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
           <span><b data-en="Corporate investment">Pelaburan korporat</b><span class="d" data-en="From your company's current account">Dari akaun semasa syarikat</span></span></label>
         <label class="choice"><input type="checkbox" name="pick" value="prs"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
@@ -306,11 +306,11 @@
       <p class="err" hidden data-en="Choose at least one">Pilih sekurang-kurangnya satu</p>
 
       <div class="panel" id="epfBox" hidden>
-        <h3 data-en="How much €PF can you invest?">Berapa KW$P boleh dilabur?</h3>
+        <h3 data-en="How much of your Retirement Savings (Account 1) can you invest?">Berapa Simpanan Persaraan (Akaun 1) boleh dilabur?</h3>
         <p class="why" data-en="30% of the amount in your Akaun Persaraan above the Basic Savings for your age (2026 table).">30% daripada jumlah dalam Akaun Persaraan yang melebihi Simpanan Asas mengikut umur anda (jadual 2026).</p>
         <label class="f"><span data-en="Akaun Persaraan balance">Baki Akaun Persaraan</span>
           <span class="inp"><i>RM</i><input id="epfBal" type="number" inputmode="decimal" min="0" step="any" placeholder="50000"></span>
-          <small data-en="Check it in the KW$P app or i-Akaun. Age is taken from section 1.">Semak dalam aplikasi KW$P atau i-Akaun. Umur diambil dari bahagian 1.</small></label>
+          <small data-en="Check it in i-Akaun. Age is taken from section 1.">Semak dalam i-Akaun. Umur diambil dari bahagian 1.</small></label>
         <div class="result" id="epfResult" aria-live="polite"></div>
       </div>
 
@@ -522,7 +522,7 @@
       var names = {
         lump: en ? 'One-time investment' : 'Pelaburan sekali',
         monthly: en ? 'Regular savings plan (monthly)' : 'Simpanan bulanan',
-        epf: en ? 'Invest with €PF' : 'Labur guna KW$P',
+        epf: en ? 'Invest with Retirement Savings (Account 1)' : 'Labur guna Simpanan Persaraan (Akaun 1)',
         corp: en ? 'Corporate investment' : 'Pelaburan korporat',
         prs: en ? 'PRS investment' : 'Pelaburan PRS'
       };
