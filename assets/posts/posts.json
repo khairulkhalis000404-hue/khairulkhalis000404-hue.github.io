@@ -1,5 +1,18 @@
 [
   {
+    "slug": "threads-prs-tax",
+    "topic": "post5-prs-tax",
+    "platform": "threads",
+    "url": "https://www.threads.com/@khrlkhls/post/DfmfAZsDPgH",
+    "date": "2026-11-11",
+    "img": "2026-11-11-threads-prs-tax.jpg",
+    "w": 720,
+    "h": 900,
+    "title_ms": "Reminder: tahun taksiran 2026 habis 31 Disember. PRS boleh dapat tax relief sampai RM3,000",
+    "title_en": "Reminder: year of assessment 2026 ends 31 December. PRS can get you up to RM3,000 tax relief",
+    "alt": "PRS tax relief YA2026: masuk RM3,000, jimat cukai kira-kira RM330 (kadar 11%) atau RM570 (kadar 19%)"
+  },
+  {
     "slug": "whatsapp-ut-beginner",
     "topic": "unit-trust-beginner",
     "platform": "whatsapp",
@@ -13,16 +26,16 @@
     "alt": "Unit trust ibarat satu periuk: pelabur berkongsi dana, dan tahap risiko dana dari Money Market hingga Equity"
   },
   {
-    "slug": "threads-inflasi",
+    "slug": "linkedin-inflation",
     "topic": "post3-inflation",
-    "platform": "threads",
-    "url": "https://www.threads.com/@khrlkhls/post/DfXCT0yDrNS",
-    "date": "2026-11-05",
-    "img": "2026-11-05-threads-inflasi.jpg",
+    "platform": "linkedin",
+    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7525361716025667584/",
+    "date": "2026-11-09",
+    "img": "2026-11-09-linkedin-inflation.jpg",
     "w": 720,
     "h": 900,
     "title_ms": "RM100 hari ni, 20 tahun lagi nilai dia lebih kurang RM55 je",
-    "title_en": "RM100 today is worth only about RM55 in 20 years",
+    "title_en": "RM100 today. RM55 in 20 years.",
     "alt": "Carta inflasi: RM100 hari ini jadi kira-kira RM55 dalam 20 tahun pada inflasi 3% setahun"
   },
   {
@@ -63,18 +76,5 @@
     "title_ms": "Ebook & kalkulator untuk mula urus duit",
     "title_en": "Ebooks & calculators to start managing your money",
     "alt": "Ebook Sebelum Anda Labur, Unit Trust Dari Zero, Urus Duit Dari Zero dan 3 kalkulator percuma"
-  },
-  {
-    "slug": "threads-kalkulator-dana-kecemasan",
-    "topic": "kalkulator-dana-kecemasan",
-    "platform": "threads",
-    "url": "https://www.threads.com/@khrlkhls/post/De_Ei3BiArr",
-    "date": "2026-10-27",
-    "img": "2026-10-27-threads-kalkulator-dana-kecemasan.jpg",
-    "w": 720,
-    "h": 900,
-    "title_ms": "Dana kecemasan sebenarnya kena ada berapa? Kira dengan kalkulator percuma",
-    "title_en": "How much emergency fund do you really need? Work it out with the free calculator",
-    "alt": "Kalkulator dana kecemasan: jumlah minimum, ideal dan MAX ikut gaji"
   }
 ]
