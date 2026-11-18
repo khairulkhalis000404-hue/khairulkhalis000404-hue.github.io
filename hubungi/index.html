@@ -328,7 +328,7 @@
             <span class="inp"><input id="years" type="number" inputmode="numeric" min="1" max="60" step="1" value="10"><i data-en="years">tahun</i></span></label>
         </div>
         <div class="result" id="growResult" aria-live="polite"></div>
-        <p class="fine" data-en="Illustration only, based on an assumed fixed return. Actual returns vary and are not guaranteed.">Ilustrasi sahaja, berdasarkan andaian pulangan tetap. Pulangan sebenar berubah-ubah dan tidak dijamin.</p>
+        <p class="fine" data-en="Illustration only, based on an assumed fixed return a year.">Ilustrasi sahaja, berdasarkan andaian pulangan tetap setahun.</p>
       </div>
     </section>
 
@@ -437,9 +437,11 @@
     function growCalc(p) {
       var lump = (has(p, 'lump') || has(p, 'prs')) ? num('lump') : 0;
       var monthly = (has(p, 'monthly') || has(p, 'prs')) ? num('monthly') : 0;
-      var r = num('rate') / 100 / 12, years = Math.min(Math.round(num('years')), 60), n = years * 12;
-      var g = Math.pow(1 + r, n);
-      var total = r ? lump * g + monthly * (g - 1) / r : lump + monthly * n;
+      // Same method as the compound calculator on the home page: top-ups at the start of each month,
+      // growing monthly at the rate equal to the yearly return
+      var years = Math.min(Math.round(num('years')), 60), n = years * 12;
+      var g = Math.pow(1 + num('rate') / 100, 1 / 12), total = lump;
+      for (var i = 0; i < n; i++) total = (total + monthly) * g;
       return { lump: lump, monthly: monthly, rate: num('rate'), years: years, total: total, paid: lump + monthly * n };
     }
 
