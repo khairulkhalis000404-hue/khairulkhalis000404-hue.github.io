@@ -1186,9 +1186,9 @@
         efOut = '<p class="msg">' + (en ? 'Enter your monthly salary.' : 'Isi gaji bulanan anda.') + '</p>';
       } else {
         var efGoals = {
-          min: { label: en ? 'Minimum · 3 months of salary' : 'Minimum · 3 bulan gaji', amt: efSal * 3 },
-          ideal: { label: 'Ideal', amt: Math.min(Math.max(efNeed * 1.2 * 6, efSal * 3), efSal * 6) },
-          max: { label: en ? 'Maximum · 6 months of salary' : 'Maksimum · 6 bulan gaji', amt: efSal * 6 }
+          min: { label: en ? 'Minimum · 3 months of salary' : 'Minimum · 3 bulan gaji', amt: Math.max(efSal * 3, 10000) },
+          ideal: { label: 'Ideal', amt: Math.max(Math.min(Math.max(efNeed * 1.2 * 6, efSal * 3), efSal * 6), 10000) },
+          max: { label: en ? 'Maximum · 6 months of salary' : 'Maksimum · 6 bulan gaji', amt: Math.max(efSal * 6, 10000) }
         };
         // The tapped card turns yellow and the split below follows it (Ideal by default)
         var goal = function (key) {
