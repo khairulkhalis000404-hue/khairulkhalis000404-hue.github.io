@@ -297,7 +297,7 @@
         <label class="choice"><input type="checkbox" name="pick" value="monthly"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
           <span><b data-en="Regular savings plan">Simpanan bulanan</b><span class="d" data-en="Monthly deduction from your bank account">Potongan bulanan dari akaun bank</span></span></label>
         <label class="choice"><input type="checkbox" name="pick" value="epf"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-          <span><b data-en="Invest with Retirement Savings (Account 1)">Labur guna Simpanan Persaraan (Akaun 1)</b><span class="d" data-en="From your Akaun Persaraan">Dari Akaun Persaraan</span></span></label>
+          <span><b data-en="Invest with Retirement Fund (Account 1)">Labur guna Simpanan Persaraan (Akaun 1)</b><span class="d" data-en="From your Retirement Fund (Account 1)">Dari Simpanan Persaraan (Akaun 1)</span></span></label>
         <label class="choice"><input type="checkbox" name="pick" value="corp"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
           <span><b data-en="Corporate investment">Pelaburan korporat</b><span class="d" data-en="From your company's current account">Dari akaun semasa syarikat</span></span></label>
         <label class="choice"><input type="checkbox" name="pick" value="prs"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
@@ -306,13 +306,13 @@
       <p class="err" hidden data-en="Choose at least one">Pilih sekurang-kurangnya satu</p>
 
       <div class="panel" id="epfBox" hidden>
-        <h3 data-en="How much of your Retirement Savings (Account 1) can you invest?">Berapa Simpanan Persaraan (Akaun 1) boleh dilabur?</h3>
-        <p class="why" data-en="30% of the amount in your Akaun Persaraan above the Basic Savings for your age (2026 table).">30% daripada jumlah dalam Akaun Persaraan yang melebihi Simpanan Asas mengikut umur anda (jadual 2026).</p>
-        <div class="grid">
+        <h3 data-en="How much of your Retirement Fund (Account 1) can you invest?">Berapa Simpanan Persaraan (Akaun 1) boleh dilabur?</h3>
+        <p class="why" data-en="30% of the amount in your Retirement Fund (Account 1) above the Basic Savings for your age (2026 table).">30% daripada jumlah dalam Simpanan Persaraan (Akaun 1) yang melebihi Simpanan Asas mengikut umur anda (jadual 2026).</p>
+        <div class="grid" style="align-items:end">
         <label class="f"><span data-en="Age">Umur</span>
           <span class="inp"><input id="epfAge" type="number" inputmode="numeric" min="18" max="100" step="1"><i data-en="years">tahun</i></span>
           <small data-en="Same as your age in section 1.">Sama dengan umur di bahagian 1.</small></label>
-        <label class="f"><span data-en="Akaun Persaraan balance">Baki Akaun Persaraan</span>
+        <label class="f"><span data-en="Retirement Fund (Account 1) balance">Baki Simpanan Persaraan (Akaun 1)</span>
           <span class="inp"><i>RM</i><input id="epfBal" type="number" inputmode="decimal" min="0" step="any" placeholder="50000"></span>
           <small data-en="Check it in i-Akaun.">Semak dalam i-Akaun.</small></label>
         </div>
@@ -426,7 +426,7 @@
     }
     function has(p, v) { return p.indexOf(v) !== -1; }
 
-    // KW$P Basic Savings in Akaun Persaraan by age, effective 1 Jan 2026 (ages 18 to 55), from the official i-Invest table
+    // KW$P Basic Savings in Simpanan Persaraan (Akaun 1) by age, effective 1 Jan 2026 (ages 18 to 55), from the official i-Invest table
     var BASIC = [900, 1100, 1500, 1900, 4000, 6200, 8500, 11000, 13700, 16600, 19600, 22900, 26300, 30000, 33900,
       38100, 42400, 47000, 51900, 57000, 62400, 68100, 74000, 80200, 86700, 93600, 100000, 108000, 115000, 124000,
       132000, 141000, 150000, 160000, 170000, 181000, 192000, 203000];
@@ -461,7 +461,7 @@
 
       var e = epfCalc(), out;
       if (!e.ready) {
-        out = '<p class="msg">' + (en ? 'Enter your age and your Akaun Persaraan balance.' : 'Isi umur dan baki Akaun Persaraan anda.') + '</p>';
+        out = '<p class="msg">' + (en ? 'Enter your age and your Retirement Fund (Account 1) balance.' : 'Isi umur dan baki Simpanan Persaraan (Akaun 1) anda.') + '</p>';
       } else if (e.note === 'young') {
         out = '<p class="msg warn">' + (en ? 'Available from age 18.' : 'Untuk umur 18 tahun ke atas.') + '</p>';
       } else if (e.note === 'over55') {
@@ -493,7 +493,7 @@
       }
 
     }
-    // One age, two boxes: section 1 and the Akaun Persaraan panel mirror each other (added first so update() sees it)
+    // One age, two boxes: section 1 and the Simpanan Persaraan (Akaun 1) panel mirror each other (added first so update() sees it)
     [['age', 'epfAge'], ['epfAge', 'age']].forEach(function (m) {
       $(m[0]).addEventListener('input', function () { $(m[1]).value = $(m[0]).value; $('age').closest('[data-field]').classList.remove('invalid'); });
     });
@@ -533,7 +533,7 @@
       var names = {
         lump: en ? 'One-time investment' : 'Pelaburan sekali',
         monthly: en ? 'Regular savings plan (monthly)' : 'Simpanan bulanan',
-        epf: en ? 'Invest with Retirement Savings (Account 1)' : 'Labur guna Simpanan Persaraan (Akaun 1)',
+        epf: en ? 'Invest with Retirement Fund (Account 1)' : 'Labur guna Simpanan Persaraan (Akaun 1)',
         corp: en ? 'Corporate investment' : 'Pelaburan korporat',
         prs: en ? 'PRS investment' : 'Pelaburan PRS'
       };
@@ -554,7 +554,7 @@
       if (has(p, 'epf')) {
         var e = epfCalc();
         if (e.ready) {
-          L.push((en ? 'Akaun Persaraan balance: ' : 'Baki Akaun Persaraan: ') + rm(e.bal));
+          L.push((en ? 'Retirement Fund (Account 1) balance: ' : 'Baki Simpanan Persaraan (Akaun 1): ') + rm(e.bal));
           if (e.can !== undefined) L.push((en ? 'Can invest (30% above Basic Savings): ' : 'Boleh labur (30% melebihi Simpanan Asas): ') + rm(e.ok ? e.can : 0));
           if (e.note === 'over55') L.push(en ? 'Age 55+: Age 55/60 Withdrawal (Investment)' : 'Umur 55+: Pengeluaran Umur 55/60 (Pelaburan)');
         }
