@@ -1,5 +1,31 @@
 [
   {
+    "slug": "linkedin-dca",
+    "topic": "post7-dca",
+    "platform": "linkedin",
+    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7531159919840972800/",
+    "date": "2026-11-25",
+    "img": "2026-11-25-linkedin-dca.jpg",
+    "w": 720,
+    "h": 900,
+    "title_ms": "Gaji masuk minggu ni? Satu habit pelabur lama saya: labur hari gaji, sebelum belanja",
+    "title_en": "Payday this week? The one habit my long-term investors have in common",
+    "alt": "Ilustrasi DCA: RM100 setiap bulan, bila harga unit turun duit sama dapat lebih banyak unit (80 hingga 143 unit sebulan)"
+  },
+  {
+    "slug": "linkedin-ali-badrul",
+    "topic": "post6-ali-badrul",
+    "platform": "linkedin",
+    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7529710205916360704/",
+    "date": "2026-11-21",
+    "img": "2026-11-21-linkedin-ali-badrul.jpg",
+    "w": 720,
+    "h": 900,
+    "title_ms": "Dua orang, pelaburan sama, hasil sangat berbeza",
+    "title_en": "Two people. Same investment. Very different outcome.",
+    "alt": "Ali dan Badrul labur RM20,000, market turun 20%: Ali tiada dana kecemasan dan tinggal RM10,000, Badrul guna dana kecemasan dan kekal RM16,000"
+  },
+  {
     "slug": "whatsapp-sebelum-keluar",
     "topic": "market-drop-sebelum-keluar",
     "platform": "whatsapp",
@@ -50,44 +76,5 @@
     "title_ms": "Reminder: tahun taksiran 2026 habis 31 Disember. PRS boleh dapat tax relief sampai RM3,000",
     "title_en": "Reminder: year of assessment 2026 ends 31 December. PRS can get you up to RM3,000 tax relief",
     "alt": "PRS tax relief YA2026: masuk RM3,000, jimat cukai kira-kira RM330 (kadar 11%) atau RM570 (kadar 19%)"
-  },
-  {
-    "slug": "whatsapp-ut-beginner",
-    "topic": "unit-trust-beginner",
-    "platform": "whatsapp",
-    "url": "https://whatsapp.com/channel/0029Vb6tZx5ADTOEl9TRTX2B",
-    "date": "2026-11-09",
-    "img": "2026-11-09-whatsapp-ut-beginner.jpg",
-    "w": 720,
-    "h": 900,
-    "title_ms": "Unit trust untuk beginner: faham 2 benda ni dulu",
-    "title_en": "Unit trusts for beginners: understand these 2 things first",
-    "alt": "Unit trust ibarat satu periuk: pelabur berkongsi dana, dan tahap risiko dana dari Money Market hingga Equity"
-  },
-  {
-    "slug": "linkedin-inflation",
-    "topic": "post3-inflation",
-    "platform": "linkedin",
-    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7525361716025667584/",
-    "date": "2026-11-09",
-    "img": "2026-11-09-linkedin-inflation.jpg",
-    "w": 720,
-    "h": 900,
-    "title_ms": "RM100 hari ni, 20 tahun lagi nilai dia lebih kurang RM55 je",
-    "title_en": "RM100 today. RM55 in 20 years.",
-    "alt": "Carta inflasi: RM100 hari ini jadi kira-kira RM55 dalam 20 tahun pada inflasi 3% setahun"
-  },
-  {
-    "slug": "linkedin-intro",
-    "topic": "post1-intro",
-    "platform": "linkedin",
-    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7522462545744678912/",
-    "date": "2026-11-01",
-    "img": "2026-11-01-linkedin-intro.jpg",
-    "w": 720,
-    "h": 900,
-    "title_ms": "6 tahun dalam kewangan, 300+ pelabur: 3 perkara sebelum mula melabur",
-    "title_en": "6 years in finance. 300+ investors. 3 things I wish everyone knew before they start",
-    "alt": "Khairul Khalis memegang trofi Champion Top Regional Producer Southern 2026"
   }
 ]
